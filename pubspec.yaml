@@ -42,6 +42,7 @@ dependencies:
   flutter_full_pdf_viewer: ^1.0.6
   share: ^0.6.5+2
   country_code_picker: ^1.7.0
+  chopper: ^2.4.0
   flutter_localizations:
     sdk: flutter
   flutter:
@@ -55,6 +56,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  chopper_generator: ^2.3.4
+    # No version number means the latest version
+  build_runner:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
