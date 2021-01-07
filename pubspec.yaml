@@ -43,6 +43,7 @@ dependencies:
   share: ^0.6.5+2
   country_code_picker: ^1.7.0
   chopper: ^2.4.0
+  cached_network_image: ^2.5.0
   flutter_localizations:
     sdk: flutter
   flutter:

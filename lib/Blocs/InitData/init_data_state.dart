@@ -16,13 +16,18 @@ class InitDataLoading extends InitDataState {
 class InitDataLoaded extends InitDataState {
   final List<Battery> batteries;
   final List<CarType> carTypes;
-  final List<CarProperty> CarProperties;
+  final List<CarProperty> carProperties;
   final List<Market> markets;
 
   InitDataLoaded(
-      this.batteries, this.carTypes, this.CarProperties, this.markets);
+      this.batteries, this.carTypes, this.carProperties, this.markets);
+
+
 }
 
 class InitDataError extends InitDataState {
-  InitDataError();
+  final String messageEn;
+  final String messageAr;
+
+  InitDataError(this.messageEn, this.messageAr);
 }

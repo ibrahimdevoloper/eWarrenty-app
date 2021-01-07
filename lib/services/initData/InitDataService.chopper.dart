@@ -17,6 +17,7 @@ class _$InitDataService extends InitDataService {
   Future<Response> getData() {
     final $url = '/initData';
     final $request = Request('GET', $url, client.baseUrl);
+    print($request.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 }
