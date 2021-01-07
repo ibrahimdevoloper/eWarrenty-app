@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:ewarrenty/Icons/warranty_icons_icons.dart';
-import 'package:ewarrenty/Models/Battery.dart';
+import 'package:ewarrenty/Models/battery.dart';
 import 'package:ewarrenty/Wrappers/SuggestionsBoxWrapper.dart';
 import 'package:ewarrenty/app_localizations.dart';
 import 'package:ewarrenty/customPainters/CurvePainter.dart';
@@ -22,42 +22,42 @@ class AddWarrantyPage extends StatefulWidget {
 class _AddWarrantyPageState extends State<AddWarrantyPage> {
   List<Battery> _battaryModels = [
     Battery(
-        battreyNumber: "42B19L",
+        number: "42B19L",
         capacity: 35,
         image: "assets/images/home/1.png",
         previewImage: "assets/images/home/1.png"),
     Battery(
-        battreyNumber: "54459",
+        number: "54459",
         capacity: 44,
         image: "assets/images/home/2.png",
         previewImage: "assets/images/home/2.png"),
     Battery(
-        battreyNumber: "55B24L",
+        number: "55B24L",
         capacity: 45,
         image: "assets/images/home/3.png",
         previewImage: "assets/images/home/3.png"),
     Battery(
-        battreyNumber: "55B24LS",
+        number: "55B24LS",
         capacity: 45,
         image: "assets/images/home/4.png",
         previewImage: "assets/images/home/4.png"),
     Battery(
-        battreyNumber: "50D20L",
+        number: "50D20L",
         capacity: 50,
         image: "assets/images/home/1.png",
         previewImage: "assets/images/home/1.png"),
     Battery(
-        battreyNumber: "55559",
+        number: "55559",
         capacity: 55,
         image: "assets/images/home/2.png",
         previewImage: "assets/images/home/2.png"),
     Battery(
-        battreyNumber: "55D26L",
+        number: "55D26L",
         capacity: 60,
         image: "assets/images/home/3.png",
         previewImage: "assets/images/home/3.png"),
     Battery(
-        battreyNumber: "56638",
+        number: "56638",
         capacity: 35,
         image: "assets/images/home/4.png",
         previewImage: "assets/images/home/4.png"),
