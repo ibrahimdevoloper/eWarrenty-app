@@ -4,7 +4,8 @@ class Battery {
   int _ccaAmpere;
   String _weight;
   String _number;
-  String _info;
+  String _infoAr;
+  String _infoEn;
   String _dimensions;
   String _description;
   String _image;
@@ -21,7 +22,8 @@ class Battery {
   int get ccaAmpere => _ccaAmpere;
   String get weight => _weight;
   String get number => _number;
-  String get info => _info;
+  String get infoEn => _infoEn;
+  String get infoAr => _infoAr;
   String get dimensions => _dimensions;
   String get description => _description;
   String get image => _image;
@@ -39,8 +41,9 @@ class Battery {
       int ccaAmpere, 
       String weight, 
       String number, 
-      String info, 
-      String dimensions, 
+      String infoEn,
+      String infoAr,
+      String dimensions,
       String description, 
       String image, 
       String frontImage, 
@@ -55,7 +58,8 @@ class Battery {
     _ccaAmpere = ccaAmpere;
     _weight = weight;
     _number = number;
-    _info = info;
+    _infoEn = infoEn;
+    _infoAr = infoAr;
     _dimensions = dimensions;
     _description = description;
     _image = image;
@@ -74,7 +78,8 @@ class Battery {
     _ccaAmpere = json["cca_ampere"];
     _weight = json["weight"];
     _number = json["number"];
-    _info = json["info"];
+    _infoEn = json["info_en"];
+    _infoAr = json["info_ar"];
     _dimensions = json["dimensions"];
     _description = json["description"];
     _image = json["image"];
@@ -94,7 +99,8 @@ class Battery {
     map["cca_ampere"] = _ccaAmpere;
     map["weight"] = _weight;
     map["number"] = _number;
-    map["info"] = _info;
+    map["info_en"] = _infoEn;
+    map["info_ar"] = _infoAr;
     map["dimensions"] = _dimensions;
     map["description"] = _description;
     map["image"] = _image;

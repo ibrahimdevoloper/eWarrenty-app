@@ -114,5 +114,6 @@
   "marketAddress": "عنوان الموزع",
   "marketEMail": "إيميل الموزع",
   "marketPhone": "هاتف الموزع",
-  "carNumber": "رقم السيارة"
+  "carNumber": "رقم السيارة",
+  "selectYourMarket": "رجاءً اختر موزعك"
 }

@@ -44,6 +44,7 @@ dependencies:
   country_code_picker: ^1.7.0
   chopper: ^2.4.0
   cached_network_image: ^2.5.0
+  rxdart:
   flutter_localizations:
     sdk: flutter
   flutter:
@@ -58,7 +59,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   chopper_generator: ^2.3.4
-    # No version number means the latest version
   build_runner:
 
 # For information on the generic Dart part of this file, see the

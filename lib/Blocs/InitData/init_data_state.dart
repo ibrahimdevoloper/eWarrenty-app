@@ -31,3 +31,31 @@ class InitDataError extends InitDataState {
 
   InitDataError(this.messageEn, this.messageAr);
 }
+
+class InitDataBillDate extends InitDataState {
+  final String billDate;
+
+  InitDataBillDate(this.billDate);
+}
+
+class InitDataBatteryChosen extends InitDataState {
+  final Battery battery;
+
+  InitDataBatteryChosen(this.battery);
+}
+
+class InitDataFrontBatteryImage extends InitDataState {
+  final String imagePath;
+
+  InitDataFrontBatteryImage(this.imagePath);
+}
+class InitDataFixedBatteryImage extends InitDataState {
+  final String imagePath;
+
+  InitDataFixedBatteryImage(this.imagePath);
+}
+class InitDataCarNumber extends InitDataState {
+  final String imagePath;
+
+  InitDataCarNumber(this.imagePath);
+}

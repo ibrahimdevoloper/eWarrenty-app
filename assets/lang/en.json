@@ -112,5 +112,6 @@
   "marketAddress": "Market Address",
   "marketEMail": "Market E-mail",
   "marketPhone": "Market Phone",
-  "carNumber": "Car Number"
+  "carNumber": "Car Number",
+  "selectYourMarket": "Please Select Your Distributor"
 }
