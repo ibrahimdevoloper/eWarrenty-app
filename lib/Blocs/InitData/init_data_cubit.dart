@@ -25,6 +25,7 @@ class InitDataCubit extends Cubit<InitDataState> {
   int _carPropertyId;
   Market _market;
 
+
   Battery _battery;
   String _country;
   String _billDate;
