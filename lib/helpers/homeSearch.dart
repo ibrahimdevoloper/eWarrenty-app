@@ -143,7 +143,7 @@
 //                       : products[i].productNameEn,
 //                   myURL,
 //                   products[i],
-//                   //todo: modifey the like if true or not
+//                   //TODO: modifey the like if true or not
 //                   false,
 //                   // _controller,
 //                   _scaffoldKey);
@@ -222,7 +222,7 @@
 //                   builder:(_,provider,__)=> LikeButton(
 //                     onTap: (isLiked) async {
 //
-//                       //todo: like Button
+//                       //TODO: like Button
 //                       return await addLike(
 //                           isLiked,
 //                           provider.token,
@@ -234,7 +234,7 @@
 //                     },
 //                     circleColor: CircleColor(
 //                         start: Colors.blueAccent, end: Colors.deepOrange),
-//                     //todo: parse the Like
+//                     //TODO: parse the Like
 //                     isLiked: widget.like,
 //                     likeBuilder: (bool isLiked) {
 //                       return Icon(
@@ -264,7 +264,7 @@
 //                       showDialog(
 //                         context: context,
 //                         builder: (context) => addPurchaseAlertDialog(
-//                           //todo: test with user roles
+//                           //TODO: test with user roles
 //                             CartItem(
 //                                 product: widget.product,
 //                                 productId:int.parse (widget.product.id),

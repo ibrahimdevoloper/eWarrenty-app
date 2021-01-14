@@ -29,8 +29,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     // _animController = AnimationController(
     //   vsync: this,
     //   duration: Duration(milliseconds: 1200),
@@ -60,8 +58,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     // _animController.forward();
 
-    _animeController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
+    _animeController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1000));
     _curvedAnimation =
         CurvedAnimation(curve: Curves.easeInCubic, parent: _animeController);
     _offsetAnimation = Tween<Offset>(begin: Offset(0, -1), end: Offset(0, 0))
@@ -75,7 +73,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _fadeController.dispose();
     super.dispose();
     // _animController.dispose();
-
   }
 
   @override
@@ -108,27 +105,39 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       height: 20,
                       width: 25,
                       child: AspectRatio(
-                        aspectRatio: 4/3,
-                        child: provider.languageCode.contains("en")?Container(
-                          color: Colors.indigo[800],
-                          child: Center(
-                            child: Text("EN",style: TextStyle(
-                                color: Colors.white,
-                                fontSize: Theme.of(context).textTheme.caption.fontSize
-                            ),),
-                          ),
-                        ):AspectRatio(
-                          aspectRatio: 4/3,
-                          child: Container(
-                            color: Colors.green[800],
-                            child: Center(
-                              child: Text("ع",style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: Theme.of(context).textTheme.caption.fontSize
-                              ),),
-                            ),
-                          ),
-                        ),
+                        aspectRatio: 4 / 3,
+                        child: provider.languageCode.contains("en")
+                            ? Container(
+                                color: Colors.indigo[800],
+                                child: Center(
+                                  child: Text(
+                                    "EN",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: Theme.of(context)
+                                            .textTheme
+                                            .caption
+                                            .fontSize),
+                                  ),
+                                ),
+                              )
+                            : AspectRatio(
+                                aspectRatio: 4 / 3,
+                                child: Container(
+                                  color: Colors.green[800],
+                                  child: Center(
+                                    child: Text(
+                                      "ع",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: Theme.of(context)
+                                              .textTheme
+                                              .caption
+                                              .fontSize),
+                                    ),
+                                  ),
+                                ),
+                              ),
                       ),
                       // child: Image.asset(
                       //   provider.languageCode.contains("en")
@@ -180,7 +189,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       Image.asset(
                         "assets/images/carBackground1.png",
                         fit: BoxFit.cover,
-
                       ),
                       Wrap(alignment: WrapAlignment.center, children: [
                         Container(

@@ -50,7 +50,7 @@
 //       FlatButton(
 //           onPressed: () {
 //             double no;
-//             //todo: check product Quantity before ordering
+//             //TODO: check product Quantity before ordering
 //             if (provider.quantity.isNotEmpty) {
 //               no = double.parse(provider.quantity);
 //             } else {
@@ -81,7 +81,7 @@
 //                 });
 //               }
 //             } else {
-//               /*todo: sufficient quantity
+//               /*TODO: sufficient quantity
 //               * don't forget parsing the message
 //               * by the the thresholds */
 //               Navigator.pop(context);

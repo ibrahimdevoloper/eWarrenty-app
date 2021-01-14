@@ -12,7 +12,7 @@ class LoginProvider extends ChangeNotifier {
   int _userId = 5;
   bool _loginProgress = false;
 
-  // todo: don't forget about the token
+  // TODO: don't forget about the token
   String _token = "";
   bool _isPasswordShown = true;
   String _userRole = "";
@@ -21,12 +21,12 @@ class LoginProvider extends ChangeNotifier {
   String _restoredUsername = "";
   String _usingEmailToRestore = "";
   String _usingPhoneToRestore = "";
-  bool _emailValidator= false;
+  bool _emailValidator = false;
 
-  int _failedLoginCounter=0;
+  int _failedLoginCounter = 0;
 
   LoginProvider() {
-    //todo: don't forget to test
+    //TODO: don't forget to test
     // print("LoginProvider constructor");
     SharedPreferences.getInstance().then((value) {
       _prefs = value;
@@ -49,7 +49,6 @@ class LoginProvider extends ChangeNotifier {
     });
   }
 
-
   bool get emailValidator => _emailValidator;
 
   set emailValidator(bool value) {
@@ -68,7 +67,6 @@ class LoginProvider extends ChangeNotifier {
   set usingEmailToRestore(String value) {
     _usingEmailToRestore = value;
   }
-
 
   String get restoredPassword => _restoredPassword;
 

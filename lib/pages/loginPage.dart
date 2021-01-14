@@ -47,11 +47,11 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(16.0),
               child: ListView(
                 children: [
-                  //todo: don't forget about "forgot password button"
+                  //TODO: don't forget about "forgot password button"
                   Consumer<LoginProvider>(builder: (context, provider, _) {
                     return TextFormField(
                       onChanged: (value) {
-                        //todo: username validetion
+                        //TODO: username validetion
                         provider.username = value;
                       },
                       style: TextStyle(color: Colors.white),
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                     builder: (context, provider, _) {
                       return TextFormField(
                         onChanged: (value) {
-                          //todo: password validetion
+                          //TODO: password validetion
                           provider.password = value;
                         },
                         style: TextStyle(color: Colors.white),
@@ -130,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: (provider.failedLoginCounter >= 3)
                             ? Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Icon(Icons.vpn_key),
                                   SizedBox(

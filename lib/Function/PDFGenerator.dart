@@ -98,8 +98,7 @@ Future PDFGenerator(String path, String warrantyCode, String batteryModel,
                   ),
                   Directionality(
                     textDirection: TextDirection.ltr,
-                    child:
-                        Text(dateFormater(startDate), style: englishStyle),
+                    child: Text(dateFormater(startDate), style: englishStyle),
                   ),
                   // Directionality(
                   //   textDirection: TextDirection.rtl,
@@ -121,8 +120,7 @@ Future PDFGenerator(String path, String warrantyCode, String batteryModel,
                     ),
                     Directionality(
                       textDirection: TextDirection.ltr,
-                      child:
-                          Text(dateFormater(endDate), style: englishStyle),
+                      child: Text(dateFormater(endDate), style: englishStyle),
                     ),
                     // Directionality(
                     //   textDirection: TextDirection.rtl,
@@ -132,7 +130,7 @@ Future PDFGenerator(String path, String warrantyCode, String batteryModel,
                   ],
                 )),
             Container(height: 4, color: PdfColors.grey),
-            //todo: add image for the battery
+            //TODO: add image for the battery
           ],
         ),
       );

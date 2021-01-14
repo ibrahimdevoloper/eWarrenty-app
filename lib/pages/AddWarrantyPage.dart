@@ -103,107 +103,107 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
         appBar: AppBar(
           title: Text(AppLocalizations.of(context).translate("addWarranty")),
         ),
-        bottomNavigationBar: FlatButton(
+        bottomNavigationBar: Container(
           color: Theme.of(context).primaryColor,
           textColor: Colors.white,
-          //todo: translate submit
+          //TODO: translate submit
           child: Text("submit"),
           onPressed: () {
-            //todo: submit button
+            //TODO: submit button
             var mCubit = BlocProvider.of<InitDataCubit>(context);
             if (mCubit.battery == null) {
-              //todo: translate "choose battery model"
+              //TODO: translate "choose battery model"
               var snackBar = SnackBar(
                 content: Text("please choose battery model"),
                 duration: Duration(milliseconds: 600),
               );
               Scaffold.of(context).showSnackBar(snackBar);
             } else if (mCubit.billDate == null) {
-              //todo: translate "choose bill date"
+              //TODO: translate "choose bill date"
               var snackBar = SnackBar(
                 content: Text("choose bill date"),
                 duration: Duration(milliseconds: 600),
               );
               Scaffold.of(context).showSnackBar(snackBar);
             } else if (mCubit.serialNumber == null) {
-              //todo: tanslate "add Serial Number"
+              //TODO: tanslate "add Serial Number"
               var snackBar = SnackBar(
                 content: Text("Please Add Serial Number"),
                 duration: Duration(milliseconds: 600),
               );
               Scaffold.of(context).showSnackBar(snackBar);
             } else if (mCubit.fullName == null) {
-              //todo: tanslate "Please Add Your Full Name In English"
+              //TODO: tanslate "Please Add Your Full Name In English"
               var snackBar = SnackBar(
                 content: Text("Please Your Full Name In English"),
                 duration: Duration(milliseconds: 600),
               );
               Scaffold.of(context).showSnackBar(snackBar);
             } else if (mCubit.address == null) {
-              //todo: tanslate "Please Add Your Address In English"
+              //TODO: tanslate "Please Add Your Address In English"
               var snackBar = SnackBar(
                 content: Text("Please Add Your Address In English"),
                 duration: Duration(milliseconds: 600),
               );
               Scaffold.of(context).showSnackBar(snackBar);
             } else if (mCubit.eMail == null) {
-              //todo: tanslate "Please Add Your E-mail"
+              //TODO: tanslate "Please Add Your E-mail"
               var snackBar = SnackBar(
                 content: Text("Please Add Your E-mail"),
                 duration: Duration(milliseconds: 600),
               );
               Scaffold.of(context).showSnackBar(snackBar);
             } else if (mCubit.phoneNumber == null) {
-              //todo: tanslate "Please Add Your phone number"
+              //TODO: tanslate "Please Add Your phone number"
               var snackBar = SnackBar(
                 content: Text("Please Add Your phone number"),
                 duration: Duration(milliseconds: 600),
               );
               Scaffold.of(context).showSnackBar(snackBar);
             } else if (mCubit.carPropertyId == null) {
-              //todo: tanslate "Please Add Your Car Property Type"
+              //TODO: tanslate "Please Add Your Car Property Type"
               var snackBar = SnackBar(
                 content: Text("Please Add Your Car Property Type"),
                 duration: Duration(milliseconds: 600),
               );
               Scaffold.of(context).showSnackBar(snackBar);
             } else if (mCubit.carTypeId == null) {
-              //todo: tanslate "Please Add Your Car Type"
+              //TODO: tanslate "Please Add Your Car Type"
               var snackBar = SnackBar(
                 content: Text("Please Add Your Car Type"),
                 duration: Duration(milliseconds: 600),
               );
               Scaffold.of(context).showSnackBar(snackBar);
             } else if (mCubit.country == null) {
-              //todo: tanslate "Please Add Your Country"
+              //TODO: tanslate "Please Add Your Country"
               var snackBar = SnackBar(
                 content: Text("Please Add Your Country"),
                 duration: Duration(milliseconds: 600),
               );
               Scaffold.of(context).showSnackBar(snackBar);
             } else if (mCubit.market == null) {
-              //todo: tanslate "Please Add Your Market"
+              //TODO: tanslate "Please Add Your Market"
               var snackBar = SnackBar(
                 content: Text("Please Add Your Market"),
                 duration: Duration(milliseconds: 600),
               );
               Scaffold.of(context).showSnackBar(snackBar);
             } else if (mCubit.frontBatteryPath == null) {
-              //todo: tanslate "Please capture Your battery front"
+              //TODO: tanslate "Please capture Your battery front"
               var snackBar = SnackBar(
                 content: Text("Please capture Your battery front"),
                 duration: Duration(milliseconds: 600),
               );
               Scaffold.of(context).showSnackBar(snackBar);
             } else if (mCubit.fixedBatteryPath == null) {
-              //todo: tanslate "Please capture Your fixed battery"
+              //TODO: tanslate "Please capture Your fixed battery"
               var snackBar = SnackBar(
                 content: Text("Please capture Your fixed battery"),
                 duration: Duration(milliseconds: 600),
               );
               Scaffold.of(context).showSnackBar(snackBar);
             } else if (mCubit.carNumberPath == null) {
-              //todo: tanslate "Please capture Your car"
+              //TODO: tanslate "Please capture Your car"
               var snackBar = SnackBar(
                 content: Text("Please capture Your Car "),
                 duration: Duration(milliseconds: 600),
@@ -240,7 +240,8 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
               // return WarrantyAddetionForm(
               //     batteries, markets, carTypes, carProperties);
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                 child: ListView(
                   shrinkWrap: true,
                   children: [
@@ -257,7 +258,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                       //         textColor: Colors.white,
                       //         color: Theme.of(context).primaryColor,
                       //         onPressed: () {
-                      //           //todo: add new Customer
+                      //           //TODO: add new Customer
                       //           Navigator.of(context).push(MaterialPageRoute(
                       //               builder: (context) => AddNewCustomer()));
                       //         },
@@ -299,18 +300,22 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                         keyboardType: TextInputType.number,
                         controller: this._batteryController,
                         decoration: InputDecoration(
-                          // todo : fix amprage word
+                          // TODO : fix amprage word
                           errorText: "slkdnv",
                           labelText: AppLocalizations.of(context)
                               .translate("enterBatteryAmperage"),
-                          hintText: AppLocalizations.of(context).translate("ex40"),
+                          hintText:
+                              AppLocalizations.of(context).translate("ex40"),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(4.0)),
                             borderSide: BorderSide(color: Colors.black45),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                            borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(4.0)),
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor),
                           ),
                         ),
                       ),
@@ -321,7 +326,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                           searchedCapacity = int.parse(pattern);
                           print(searchedCapacity);
                         } catch (e) {
-                          //todo: handle Error
+                          //TODO: handle Error
                           print(e);
                         }
 
@@ -348,11 +353,13 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                 Container(
                                   child: CachedNetworkImage(
                                     height: 125,
-                                    imageUrl: "$baseUrl${suggestedBattry.image}",
+                                    imageUrl:
+                                        "$baseUrl${suggestedBattry.image}",
                                     // imageUrl: "http://via.placeholder.com/350x150",
                                     // placeholder: (context,text)=>CircularProgressIndicator(),
                                     progressIndicatorBuilder:
-                                        (context, url, downloadProgress) => Center(
+                                        (context, url, downloadProgress) =>
+                                            Center(
                                       child: CircularProgressIndicator(
                                           value: downloadProgress.progress),
                                     ),
@@ -380,11 +387,12 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                             suggestionsBox);
                       },
                       onSuggestionSelected: (suggestion) {
-                        //todo:save Battery "id" in the form provider
+                        //TODO:save Battery "id" in the form provider
                         Battery suggestedBattry = suggestion;
                         BlocProvider.of<InitDataCubit>(context)
                             .emit(InitDataBatteryChosen(suggestedBattry));
-                        BlocProvider.of<InitDataCubit>(context).battery = suggestedBattry;
+                        BlocProvider.of<InitDataCubit>(context).battery =
+                            suggestedBattry;
                         // print(BlocProvider.of<InitDataCubit>(context).batteryId);
                         this._batteryController.text = suggestedBattry.number;
                       },
@@ -400,26 +408,30 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     ),
                     BlocBuilder<InitDataCubit, InitDataState>(
                         buildWhen: (previous, current) {
-                          // print(current is InitDataBillDate);
-                          return current is InitDataBillDate;
-                        }, builder: (context, state) {
+                      // print(current is InitDataBillDate);
+                      return current is InitDataBillDate;
+                    }, builder: (context, state) {
                       return FlatButton(
                         textColor: Colors.white,
                         color: Theme.of(context).primaryColor,
-                        child: Text(BlocProvider.of<InitDataCubit>(context).billDate ??
-                            AppLocalizations.of(context).translate("boughtDate")),
+                        child: Text(
+                            BlocProvider.of<InitDataCubit>(context).billDate ??
+                                AppLocalizations.of(context)
+                                    .translate("boughtDate")),
                         onPressed: () {
                           showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
-                            firstDate: DateTime.now().add(Duration(days: -365 * 120)),
+                            firstDate:
+                                DateTime.now().add(Duration(days: -365 * 120)),
                             lastDate: DateTime.now().add(Duration(days: 1)),
                             // helpText: "Select Bill Date",
                           ).then((value) {
                             BlocProvider.of<InitDataCubit>(context).billDate =
-                            "${value.year}-${value.month}-${value.day}";
-                            BlocProvider.of<InitDataCubit>(context).emit(InitDataBillDate(
-                                "${value.year}-${value.month}-${value.day}"));
+                                "${value.year}-${value.month}-${value.day}";
+                            BlocProvider.of<InitDataCubit>(context).emit(
+                                InitDataBillDate(
+                                    "${value.year}-${value.month}-${value.day}"));
                             // setState(() {
                             //   // billDate = "${value.year}-${value.month}-${value.day}";
                             //
@@ -440,20 +452,24 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                         suffixIcon: IconButton(
                           icon: Icon(WarrantyIcons.warrenty_comment),
                           onPressed: () {
-                            //todo: display a dialog -or a tooltip- that explaine how to find the serial number with a image preview
-                            if (BlocProvider.of<InitDataCubit>(context).battery != null) {
+                            //TODO: display a dialog -or a tooltip- that explaine how to find the serial number with a image preview
+                            if (BlocProvider.of<InitDataCubit>(context)
+                                    .battery !=
+                                null) {
                               var serialNumberImage =
                                   BlocProvider.of<InitDataCubit>(context)
                                       .battery
                                       .serialNumberImage;
                               var info = AppLocalizations.of(context)
-                                  .locale
-                                  .languageCode
-                                  .contains("ar")
-                                  ? BlocProvider.of<InitDataCubit>(context).battery.infoAr
+                                      .locale
+                                      .languageCode
+                                      .contains("ar")
+                                  ? BlocProvider.of<InitDataCubit>(context)
+                                      .battery
+                                      .infoAr
                                   : BlocProvider.of<InitDataCubit>(context)
-                                  .battery
-                                  .infoEn;
+                                      .battery
+                                      .infoEn;
                               showDialog(
                                 context: context,
                                 builder: (context) => whereIsSerialNumberDialog(
@@ -463,7 +479,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                 ),
                               );
                             } else {
-                              //todo: translate "didn't select Battery to help you with instructions"
+                              //TODO: translate "didn't select Battery to help you with instructions"
                               var snackbar = SnackBar(
                                 content: Text(
                                     "didn't select Battery to help you with instructions"),
@@ -472,14 +488,16 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                             }
                           },
                         ),
-                        labelText: AppLocalizations.of(context).translate("serialNumber"),
+                        labelText: AppLocalizations.of(context)
+                            .translate("serialNumber"),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
                           borderSide: BorderSide(color: Colors.black45),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                          borderSide:
+                              BorderSide(color: Theme.of(context).primaryColor),
                         ),
                       ),
                       onChanged: (value) {},
@@ -489,19 +507,22 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context).translate("yourName"),
+                        labelText:
+                            AppLocalizations.of(context).translate("yourName"),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
                           borderSide: BorderSide(color: Colors.black45),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                          borderSide:
+                              BorderSide(color: Theme.of(context).primaryColor),
                         ),
                       ),
                       onChanged: (value) {
-                        //todo: make the user enter his name in english
-                        BlocProvider.of<InitDataCubit>(context).fullName = value;
+                        //TODO: make the user enter his name in english
+                        BlocProvider.of<InitDataCubit>(context).fullName =
+                            value;
                       },
                     ),
                     SizedBox(
@@ -510,18 +531,20 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
 
                     TextFormField(
                       decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context).translate("yourAddress"),
+                        labelText: AppLocalizations.of(context)
+                            .translate("yourAddress"),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
                           borderSide: BorderSide(color: Colors.black45),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                          borderSide:
+                              BorderSide(color: Theme.of(context).primaryColor),
                         ),
                       ),
                       onChanged: (value) {
-                        //todo: make the user enter his name in english
+                        //TODO: make the user enter his name in english
                         BlocProvider.of<InitDataCubit>(context).address = value;
                       },
                     ),
@@ -531,14 +554,16 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context).translate("yourEmail"),
+                        labelText:
+                            AppLocalizations.of(context).translate("yourEmail"),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
                           borderSide: BorderSide(color: Colors.black45),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                          borderSide:
+                              BorderSide(color: Theme.of(context).primaryColor),
                         ),
                       ),
                       onChanged: (value) {
@@ -552,15 +577,16 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     TextFormField(
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
-                        labelText:
-                        AppLocalizations.of(context).translate("yourPhoneNumber"),
+                        labelText: AppLocalizations.of(context)
+                            .translate("yourPhoneNumber"),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
                           borderSide: BorderSide(color: Colors.black45),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                          borderSide:
+                              BorderSide(color: Theme.of(context).primaryColor),
                         ),
                       ),
                       onChanged: (value) {
@@ -574,15 +600,15 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     Row(
                       children: [
                         Expanded(
-                          //todo: String Search like car model
+                          //TODO: String Search like car model
                           child: StreamBuilder<int>(
-                              stream:
-                              BlocProvider.of<InitDataCubit>(context).carTypeIdStream,
+                              stream: BlocProvider.of<InitDataCubit>(context)
+                                  .carTypeIdStream,
                               initialData: null,
                               builder: (context, snapshot) {
                                 return DropdownButton<int>(
                                   onChanged: (e) {
-                                    //todo: save CarType "id" in form state managment
+                                    //TODO: save CarType "id" in form state managment
                                     // setState(() {
                                     //   _carTypeValue = e;
                                     // });
@@ -590,19 +616,20 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                         .carTypeIdSelectedValue(e);
                                   },
                                   isExpanded: true,
-                                  hint: Text(
-                                      AppLocalizations.of(context).translate("carModel")),
+                                  hint: Text(AppLocalizations.of(context)
+                                      .translate("carModel")),
                                   value: snapshot.data,
                                   items: carTypes
                                       .map((e) => DropdownMenuItem<int>(
-                                    value: e.id,
-                                    child: Text(AppLocalizations.of(context)
-                                        .locale
-                                        .languageCode
-                                        .contains("ar")
-                                        ? e.nameAr
-                                        : e.nameEn),
-                                  ))
+                                            value: e.id,
+                                            child: Text(
+                                                AppLocalizations.of(context)
+                                                        .locale
+                                                        .languageCode
+                                                        .contains("ar")
+                                                    ? e.nameAr
+                                                    : e.nameEn),
+                                          ))
                                       .toList(),
                                 );
                               }),
@@ -631,14 +658,15 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                   value: snapshot.data,
                                   items: carProperties
                                       .map((e) => DropdownMenuItem<int>(
-                                    value: e.id,
-                                    child: Text(AppLocalizations.of(context)
-                                        .locale
-                                        .languageCode
-                                        .contains("ar")
-                                        ? e.nameAr
-                                        : e.nameEn),
-                                  ))
+                                            value: e.id,
+                                            child: Text(
+                                                AppLocalizations.of(context)
+                                                        .locale
+                                                        .languageCode
+                                                        .contains("ar")
+                                                    ? e.nameAr
+                                                    : e.nameEn),
+                                          ))
                                       .toList(),
                                 );
                               }),
@@ -657,16 +685,20 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                         // keyboardType: TextInputType.number,
                         controller: this._marketController,
                         decoration: InputDecoration(
-                          // todo : fix amperage word
-                          labelText: AppLocalizations.of(context).translate("marketName"),
+                          // TODO : fix amperage word
+                          labelText: AppLocalizations.of(context)
+                              .translate("marketName"),
                           // hintText: AppLocalizations.of(context).translate("ex40"),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(4.0)),
                             borderSide: BorderSide(color: Colors.black45),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                            borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(4.0)),
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor),
                           ),
                         ),
                       ),
@@ -677,7 +709,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                         //   searchedCapacity = int.parse(pattern);
                         //   print(searchedCapacity);
                         // } catch (e) {
-                        //   //todo: handle Error
+                        //   //TODO: handle Error
                         //   print(e);
                         // }
                         markets.forEach((market) {
@@ -685,7 +717,8 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                           //   results.add(battreyModel);
                           if (market.nameAr.contains(pattern) ||
                               (market.nameEn.toLowerCase())
-                                  .contains(pattern.toLowerCase())) results.add(market);
+                                  .contains(pattern.toLowerCase()))
+                            results.add(market);
                         });
 
                         return results;
@@ -698,15 +731,15 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                           return Card(
                             child: ListTile(
                               title: Text(AppLocalizations.of(context)
-                                  .locale
-                                  .languageCode
-                                  .contains("ar")
+                                      .locale
+                                      .languageCode
+                                      .contains("ar")
                                   ? suggestedMarket.nameAr
                                   : suggestedMarket.nameEn),
                               subtitle: Text(AppLocalizations.of(context)
-                                  .locale
-                                  .languageCode
-                                  .contains("ar")
+                                      .locale
+                                      .languageCode
+                                      .contains("ar")
                                   ? suggestedMarket.addressAr
                                   : suggestedMarket.addressEn),
                             ),
@@ -719,19 +752,22 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                       },
                       transitionBuilder: (context, suggestionsBox, controller) {
                         return SuggestionsBoxWrapper(
-                            AppLocalizations.of(context).translate("selectYourMarket"),
+                            AppLocalizations.of(context)
+                                .translate("selectYourMarket"),
                             suggestionsBox);
                       },
                       onSuggestionSelected: (suggestion) {
-                        //todo:save Battery "id" in the form provider
+                        //TODO:save Battery "id" in the form provider
                         Market suggestedMarket = suggestion;
-                        this._marketController.text = AppLocalizations.of(context)
-                            .locale
-                            .languageCode
-                            .contains("ar")
-                            ? suggestedMarket.nameAr
-                            : suggestedMarket.nameEn;
-                        BlocProvider.of<InitDataCubit>(context).market = suggestedMarket;
+                        this._marketController.text =
+                            AppLocalizations.of(context)
+                                    .locale
+                                    .languageCode
+                                    .contains("ar")
+                                ? suggestedMarket.nameAr
+                                : suggestedMarket.nameEn;
+                        BlocProvider.of<InitDataCubit>(context).market =
+                            suggestedMarket;
                       },
                     ),
                     SizedBox(
@@ -803,20 +839,22 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                         if (state is InitDataBatteryChosen)
                           return FlatButton(
                             child: ImagePreview(
-                              AppLocalizations.of(context).translate("batteryFrontImage"),
+                              AppLocalizations.of(context)
+                                  .translate("batteryFrontImage"),
                               AppLocalizations.of(context).translate("example"),
                               CachedNetworkImage(
-                                imageUrl: "$baseUrl/${state.battery.frontImage}",
+                                imageUrl:
+                                    "$baseUrl/${state.battery.frontImage}",
                                 fit: BoxFit.cover,
                               ),
                             ),
                             onPressed: () async {
                               final picker = ImagePicker();
-                              final pickedFile =
-                              await picker.getImage(source: ImageSource.camera);
+                              final pickedFile = await picker.getImage(
+                                  source: ImageSource.camera);
                               print(pickedFile.path);
-                              BlocProvider.of<InitDataCubit>(context)
-                                  .emit(InitDataFrontBatteryImage(pickedFile.path));
+                              BlocProvider.of<InitDataCubit>(context).emit(
+                                  InitDataFrontBatteryImage(pickedFile.path));
                             },
                             textColor: Colors.white,
                             color: Theme.of(context).primaryColor,
@@ -831,11 +869,11 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                 Image.file(File(state.imagePath))),
                             onPressed: () async {
                               final picker = ImagePicker();
-                              final pickedFile =
-                              await picker.getImage(source: ImageSource.camera);
+                              final pickedFile = await picker.getImage(
+                                  source: ImageSource.camera);
                               print(pickedFile.path);
-                              BlocProvider.of<InitDataCubit>(context)
-                                  .emit(InitDataFrontBatteryImage(pickedFile.path));
+                              BlocProvider.of<InitDataCubit>(context).emit(
+                                  InitDataFrontBatteryImage(pickedFile.path));
                             },
                             textColor: Colors.white,
                             color: Theme.of(context).primaryColor,
@@ -845,10 +883,11 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                             child: ImagePreview(
                                 AppLocalizations.of(context)
                                     .translate("batteryFrontImage"),
-                                //todo: translate "didn't select Battery to help you with instructions"
+                                //TODO: translate "didn't select Battery to help you with instructions"
                                 "didn't select Battery to help you with instructions",
                                 Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     Icon(
                                       WarrantyIcons.warrenty_clear,
@@ -858,7 +897,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                   ],
                                 )),
                             onPressed: () async {
-                              //todo: translate "didn't select Battery to help you with instructions"
+                              //TODO: translate "didn't select Battery to help you with instructions"
                               var snackbar = SnackBar(
                                 content: Text(
                                     "didn't select Battery to help you with instructions"),
@@ -882,24 +921,26 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     ),
                     BlocBuilder<InitDataCubit, InitDataState>(
                         buildWhen: (previous, current) {
-                          return current is InitDataFixedBatteryImage;
-                        }, builder: (context, state) {
+                      return current is InitDataFixedBatteryImage;
+                    }, builder: (context, state) {
                       if (state is InitDataFixedBatteryImage)
                         return FlatButton(
                           child: ImagePreview(
-                              AppLocalizations.of(context).translate("fixedBatteryImage"),
-                              AppLocalizations.of(context).translate("tapAgainToChange"),
+                              AppLocalizations.of(context)
+                                  .translate("fixedBatteryImage"),
+                              AppLocalizations.of(context)
+                                  .translate("tapAgainToChange"),
                               Image.file(
                                 File(state.imagePath),
                                 fit: BoxFit.cover,
                               )),
                           onPressed: () async {
                             final picker = ImagePicker();
-                            final pickedFile =
-                            await picker.getImage(source: ImageSource.camera);
+                            final pickedFile = await picker.getImage(
+                                source: ImageSource.camera);
                             print(pickedFile.path);
-                            BlocProvider.of<InitDataCubit>(context)
-                                .emit(InitDataFixedBatteryImage(pickedFile.path));
+                            BlocProvider.of<InitDataCubit>(context).emit(
+                                InitDataFixedBatteryImage(pickedFile.path));
                             // setState(() {
                             //   _fixedBatteryImage = pickedFile.path;
                             // });
@@ -910,7 +951,8 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                       else
                         return FlatButton(
                           child: ImagePreview(
-                              AppLocalizations.of(context).translate("fixedBatteryImage"),
+                              AppLocalizations.of(context)
+                                  .translate("fixedBatteryImage"),
                               AppLocalizations.of(context).translate("example"),
                               Image.asset(
                                 "assets/images/bill.jpg",
@@ -918,11 +960,11 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                               )),
                           onPressed: () async {
                             final picker = ImagePicker();
-                            final pickedFile =
-                            await picker.getImage(source: ImageSource.camera);
+                            final pickedFile = await picker.getImage(
+                                source: ImageSource.camera);
                             print(pickedFile.path);
-                            BlocProvider.of<InitDataCubit>(context)
-                                .emit(InitDataFixedBatteryImage(pickedFile.path));
+                            BlocProvider.of<InitDataCubit>(context).emit(
+                                InitDataFixedBatteryImage(pickedFile.path));
                             // setState(() {
                             //   _fixedBatteryImage = pickedFile.path;
                             // });
@@ -936,22 +978,23 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     ),
                     BlocBuilder<InitDataCubit, InitDataState>(
                         buildWhen: (previous, current) {
-                          return current is InitDataCarNumber;
-                        }, builder: (context, state) {
+                      return current is InitDataCarNumber;
+                    }, builder: (context, state) {
                       if (state is InitDataCarNumber)
                         return FlatButton(
                           child: ImagePreview(
                               AppLocalizations.of(context)
                                   .translate("carNumberIncludingItsColorImage"),
-                              AppLocalizations.of(context).translate("tapAgainToChange"),
+                              AppLocalizations.of(context)
+                                  .translate("tapAgainToChange"),
                               Image.file(
                                 File(state.imagePath),
                                 fit: BoxFit.cover,
                               )),
                           onPressed: () async {
                             final picker = ImagePicker();
-                            final pickedFile =
-                            await picker.getImage(source: ImageSource.camera);
+                            final pickedFile = await picker.getImage(
+                                source: ImageSource.camera);
                             print(pickedFile.path);
                             BlocProvider.of<InitDataCubit>(context)
                                 .emit(InitDataCarNumber(pickedFile.path));
@@ -974,8 +1017,8 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                               )),
                           onPressed: () async {
                             final picker = ImagePicker();
-                            final pickedFile =
-                            await picker.getImage(source: ImageSource.camera);
+                            final pickedFile = await picker.getImage(
+                                source: ImageSource.camera);
                             print(pickedFile.path);
                             BlocProvider.of<InitDataCubit>(context)
                                 .emit(InitDataCarNumber(pickedFile.path));
@@ -1035,7 +1078,6 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
   int _carPropertyValue;
   int _countryValue;
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -1056,7 +1098,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
             //         textColor: Colors.white,
             //         color: Theme.of(context).primaryColor,
             //         onPressed: () {
-            //           //todo: add new Customer
+            //           //TODO: add new Customer
             //           Navigator.of(context).push(MaterialPageRoute(
             //               builder: (context) => AddNewCustomer()));
             //         },
@@ -1098,7 +1140,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
               keyboardType: TextInputType.number,
               controller: this._batteryController,
               decoration: InputDecoration(
-                // todo : fix amprage word
+                // TODO : fix amprage word
                 labelText: AppLocalizations.of(context)
                     .translate("enterBatteryAmperage"),
                 hintText: AppLocalizations.of(context).translate("ex40"),
@@ -1119,7 +1161,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
                 searchedCapacity = int.parse(pattern);
                 print(searchedCapacity);
               } catch (e) {
-                //todo: handle Error
+                //TODO: handle Error
                 print(e);
               }
 
@@ -1178,7 +1220,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
                   suggestionsBox);
             },
             onSuggestionSelected: (suggestion) {
-              //todo:save Battery "id" in the form provider
+              //TODO:save Battery "id" in the form provider
               Battery suggestedBattry = suggestion;
               BlocProvider.of<InitDataCubit>(context)
                   .emit(InitDataBatteryChosen(suggestedBattry));
@@ -1238,7 +1280,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
               suffixIcon: IconButton(
                 icon: Icon(WarrantyIcons.warrenty_comment),
                 onPressed: () {
-                  //todo: display a dialog -or a tooltip- that explaine how to find the serial number with a image preview
+                  //TODO: display a dialog -or a tooltip- that explaine how to find the serial number with a image preview
                   if (BlocProvider.of<InitDataCubit>(context).battery != null) {
                     var serialNumberImage =
                         BlocProvider.of<InitDataCubit>(context)
@@ -1261,7 +1303,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
                       ),
                     );
                   } else {
-                    //todo: translate "didn't select Battery to help you with instructions"
+                    //TODO: translate "didn't select Battery to help you with instructions"
                     var snackbar = SnackBar(
                       content: Text(
                           "didn't select Battery to help you with instructions"),
@@ -1298,7 +1340,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
               ),
             ),
             onChanged: (value) {
-              //todo: make the user enter his name in english
+              //TODO: make the user enter his name in english
               BlocProvider.of<InitDataCubit>(context).fullName = value;
             },
           ),
@@ -1319,7 +1361,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
               ),
             ),
             onChanged: (value) {
-              //todo: make the user enter his name in english
+              //TODO: make the user enter his name in english
               BlocProvider.of<InitDataCubit>(context).address = value;
             },
           ),
@@ -1372,7 +1414,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
           Row(
             children: [
               Expanded(
-                //todo: String Search like car model
+                //TODO: String Search like car model
                 child: StreamBuilder<int>(
                     stream:
                         BlocProvider.of<InitDataCubit>(context).carTypeIdStream,
@@ -1380,7 +1422,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
                     builder: (context, snapshot) {
                       return DropdownButton<int>(
                         onChanged: (e) {
-                          //todo: save CarType "id" in form state managment
+                          //TODO: save CarType "id" in form state managment
                           // setState(() {
                           //   _carTypeValue = e;
                           // });
@@ -1455,7 +1497,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
               // keyboardType: TextInputType.number,
               controller: this._marketController,
               decoration: InputDecoration(
-                // todo : fix amperage word
+                // TODO : fix amperage word
                 labelText: AppLocalizations.of(context).translate("marketName"),
                 // hintText: AppLocalizations.of(context).translate("ex40"),
                 enabledBorder: OutlineInputBorder(
@@ -1475,7 +1517,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
               //   searchedCapacity = int.parse(pattern);
               //   print(searchedCapacity);
               // } catch (e) {
-              //   //todo: handle Error
+              //   //TODO: handle Error
               //   print(e);
               // }
               widget._markets.forEach((market) {
@@ -1521,7 +1563,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
                   suggestionsBox);
             },
             onSuggestionSelected: (suggestion) {
-              //todo:save Battery "id" in the form provider
+              //TODO:save Battery "id" in the form provider
               Market suggestedMarket = suggestion;
               this._marketController.text = AppLocalizations.of(context)
                       .locale
@@ -1643,7 +1685,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
                   child: ImagePreview(
                       AppLocalizations.of(context)
                           .translate("batteryFrontImage"),
-                      //todo: translate "didn't select Battery to help you with instructions"
+                      //TODO: translate "didn't select Battery to help you with instructions"
                       "didn't select Battery to help you with instructions",
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -1656,7 +1698,7 @@ class _WarrantyAddetionFormState extends State<WarrantyAddetionForm> {
                         ],
                       )),
                   onPressed: () async {
-                    //todo: translate "didn't select Battery to help you with instructions"
+                    //TODO: translate "didn't select Battery to help you with instructions"
                     var snackbar = SnackBar(
                       content: Text(
                           "didn't select Battery to help you with instructions"),

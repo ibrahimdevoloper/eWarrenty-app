@@ -44,7 +44,7 @@
 //       FlatButton(
 //           onPressed: () {
 //             double no;
-//             // todo: check If the ordered quantity is larger
+//             // TODO: check If the ordered quantity is larger
 //             if (provider.quantity.isNotEmpty) {
 //               no = double.parse(provider.quantity);
 //             } else {

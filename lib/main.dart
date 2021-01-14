@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
                 ],
                 // Returns a locale which will be used by the app
                 localeResolutionCallback: (locale, supportedLocales) {
-                  //todo: here save the lang
+                  //TODO: here save the lang
                   print("Main ${locale.languageCode}");
                   // Check if THERE IS A SAVED LOCALE
                   if (provider.prefs.containsKey(PrefKeys.lang)) {
@@ -109,7 +109,7 @@ class MyApp extends StatelessWidget {
               ],
               // Returns a locale which will be used by the app
               localeResolutionCallback: (locale, supportedLocales) {
-                //todo: here save the lang
+                //TODO: here save the lang
                 print("Splash Screen ${locale.languageCode}");
                 // Check if the current device locale is supported
                 // if (provider.prefs != null) if (provider.prefs

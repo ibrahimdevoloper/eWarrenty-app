@@ -25,7 +25,6 @@ class InitDataCubit extends Cubit<InitDataState> {
   int _carPropertyId;
   Market _market;
 
-
   Battery _battery;
   String _country;
   String _billDate;
@@ -40,9 +39,8 @@ class InitDataCubit extends Cubit<InitDataState> {
   String _fixedBatteryPath;
   String _carNumberPath;
 
-  InitDataCubit() : super(InitDataInitial()){
-
-    // todo: replace with BehaviorSubject from rxdart package
+  InitDataCubit() : super(InitDataInitial()) {
+    // TODO: replace with BehaviorSubject from rxdart package
     // it destroy the lisener  when the widget rebuilds
 
     _carTypesStreamController = BehaviorSubject<int>();
@@ -53,15 +51,13 @@ class InitDataCubit extends Cubit<InitDataState> {
     // _carPropertiesStreamController.add(null);
     // _marketStreamController.add(null);
 
-    _batteries=[];
-    _carTypes=[];
-    _carProperties=[];
-    _markets=[];
+    _batteries = [];
+    _carTypes = [];
+    _carProperties = [];
+    _markets = [];
 
     _getInitData();
-
   }
-
 
   List<Battery> get batteries => _batteries;
 
@@ -69,54 +65,51 @@ class InitDataCubit extends Cubit<InitDataState> {
     _batteries = value;
   }
 
-  get carTypeIdStream =>_carTypesStreamController.stream;
+  get carTypeIdStream => _carTypesStreamController.stream;
   carTypeIdSelectedValue(value) {
-    _carTypeId=value;
+    _carTypeId = value;
     print(_carTypeId);
     _carTypesStreamController.sink.add(value);
   }
 
-  get carPropertyIdStream =>_carPropertiesStreamController.stream;
+  get carPropertyIdStream => _carPropertiesStreamController.stream;
   carPropertyIdSelectedValue(value) {
-    _carPropertyId=value;
+    _carPropertyId = value;
     _carPropertiesStreamController.sink.add(value);
   }
 
-  get marketIdStream =>_marketStreamController.stream;
+  get marketIdStream => _marketStreamController.stream;
   marketSelectedValue(value) {
-    _market=value;
+    _market = value;
     _marketStreamController.sink.add(value);
   }
 
-  _getInitData(){
+  _getInitData() {
     emit(InitDataLoading());
     InitDataService initDataService = InitDataService.create();
-    initDataService.getData().then((value){
-      //todo: handle statues Codes
-      print (value.body);
-      var data =value.body;
-      for(var JSONItem in data['batteries']){
+    initDataService.getData().then((value) {
+      //TODO: handle statues Codes
+      print(value.body);
+      var data = value.body;
+      for (var JSONItem in data['batteries']) {
         _batteries.add(Battery.fromJson(JSONItem));
       }
 
-      for(var JSONItem in data['carProperties']){
+      for (var JSONItem in data['carProperties']) {
         _carProperties.add(CarProperty.fromJson(JSONItem));
       }
-      for(var JSONItem in data['carTypes']){
+      for (var JSONItem in data['carTypes']) {
         _carTypes.add(CarType.fromJson(JSONItem));
       }
 
-      for(var JSONItem in data['markets']){
+      for (var JSONItem in data['markets']) {
         _markets.add(Market.fromJson(JSONItem));
       }
 
-      emit(InitDataLoaded(_batteries,_carTypes,_carProperties,_markets));
-
-    }).catchError((e){
-
+      emit(InitDataLoaded(_batteries, _carTypes, _carProperties, _markets));
+    }).catchError((e) {
       print('InitDataCubit $e');
       emit(InitDataError("no network", "لا توجد شبكة"));
-
     });
   }
 

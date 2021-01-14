@@ -21,8 +21,6 @@ class _RequestDetailPageState extends State<RequestDetailPage>
 
   @override
   void initState() {
-    // TODO: implement initState
-
     _animController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 3000),
@@ -41,11 +39,12 @@ class _RequestDetailPageState extends State<RequestDetailPage>
     // _animController.forward();
   }
 
-    @override
+  @override
   void dispose() {
     super.dispose();
     _animController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,183 +73,186 @@ class _RequestDetailPageState extends State<RequestDetailPage>
           //             MaterialPageRoute(builder: (context) => LoginPage()));
           //       })
           // ],
-          title: Text(AppLocalizations.of(context).translate("requestWarranty")),
+          title:
+              Text(AppLocalizations.of(context).translate("requestWarranty")),
         ),
         body: Center(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  flex: 5,
-                  child: Container(
-                    child: Stack(
-                      alignment: AlignmentDirectional.topCenter,
-                      fit: StackFit.expand,
-                      children: [
-                        Image.asset(
-                          "assets/images/carBackground1.png",
-                          fit: BoxFit.cover,
-
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              flex: 5,
+              child: Container(
+                child: Stack(
+                  alignment: AlignmentDirectional.topCenter,
+                  fit: StackFit.expand,
+                  children: [
+                    Image.asset(
+                      "assets/images/carBackground1.png",
+                      fit: BoxFit.cover,
+                    ),
+                    Wrap(alignment: WrapAlignment.center, children: [
+                      Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(16),
+                              bottomRight: Radius.circular(16),
+                            ),
+                            border: Border(
+                              bottom: BorderSide(
+                                  width: 4,
+                                  color: Theme.of(context).primaryColor),
+                              top: BorderSide(
+                                  width: 4,
+                                  color: Theme.of(context).primaryColor),
+                              left: BorderSide(
+                                  width: 4,
+                                  color: Theme.of(context).primaryColor),
+                              right: BorderSide(
+                                  width: 4,
+                                  color: Theme.of(context).primaryColor),
+                            ),
+                            color: Colors.white,
+                          ),
+                          child: Image.asset(
+                            "assets/images/logo.png",
+                            fit: BoxFit.scaleDown,
+                            height: 86,
+                          ))
+                    ]),
+                  ],
+                ),
+              ),
+            ),
+            Divider(
+              height: 4,
+              color: Theme.of(context).primaryColor,
+              thickness: 4,
+            ),
+            // Expanded(
+            //   flex: 5,
+            //   child: Container(
+            //     child: SlideTransition(
+            //       position: _offsetAnimation,
+            //       child: Card(
+            //         margin: EdgeInsets.zero,
+            //         shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.only(
+            //                 bottomLeft: Radius.circular(16),
+            //                 bottomRight: Radius.circular(16))),
+            //         elevation: 0,
+            //         color: Theme.of(context).primaryColor,
+            //         child: Center(
+            //           child: Center(
+            //               child: CircleAvatar(
+            //                   backgroundColor: Theme.of(context).accentColor,
+            //                   radius: 72,
+            //                   child: Text("Golden Warranty"))),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            Expanded(
+              flex: 4,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)
+                            .translate("warrantyCode"),
+                        hintText:
+                            AppLocalizations.of(context).translate("ex15FSD"),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                          borderSide: BorderSide(color: Colors.black45),
                         ),
-                        Wrap(alignment: WrapAlignment.center, children: [
-                          Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(16),
-                                  bottomRight: Radius.circular(16),
-                                ),
-                                border: Border(
-                                  bottom: BorderSide(
-                                      width: 4,
-                                      color: Theme.of(context).primaryColor),
-                                  top: BorderSide(
-                                      width: 4,
-                                      color: Theme.of(context).primaryColor),
-                                  left: BorderSide(
-                                      width: 4,
-                                      color: Theme.of(context).primaryColor),
-                                  right: BorderSide(
-                                      width: 4,
-                                      color: Theme.of(context).primaryColor),
-                                ),
-                                color: Colors.white,
-                              ),
-                              child: Image.asset(
-                                "assets/images/logo.png",
-                                fit: BoxFit.scaleDown,
-                                height: 86,
-                              ))
-                        ]),
-                      ],
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                          borderSide:
+                              BorderSide(color: Theme.of(context).primaryColor),
+                        ),
+                      ),
+                      onChanged: (value) {},
                     ),
                   ),
-                ),
-                Divider(
-                  height: 4,
-                  color: Theme.of(context).primaryColor,
-                  thickness: 4,
-                ),
-                // Expanded(
-                //   flex: 5,
-                //   child: Container(
-                //     child: SlideTransition(
-                //       position: _offsetAnimation,
-                //       child: Card(
-                //         margin: EdgeInsets.zero,
-                //         shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.only(
-                //                 bottomLeft: Radius.circular(16),
-                //                 bottomRight: Radius.circular(16))),
-                //         elevation: 0,
-                //         color: Theme.of(context).primaryColor,
-                //         child: Center(
-                //           child: Center(
-                //               child: CircleAvatar(
-                //                   backgroundColor: Theme.of(context).accentColor,
-                //                   radius: 72,
-                //                   child: Text("Golden Warranty"))),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                Expanded(
-                  flex: 4,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                    Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                labelText: AppLocalizations.of(context).translate("warrantyCode"),
-                                hintText: AppLocalizations.of(context).translate("ex15FSD"),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                                  borderSide: BorderSide(color: Colors.black45),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                                  borderSide:
-                                      BorderSide(color: Theme.of(context).primaryColor),
-                                ),
-                              ),
-                              onChanged: (value) {},
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: FlatButton(
-                              textColor: Colors.white,
-                              color: Theme.of(context).primaryColor,
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => WarrantyDetailPage()));
-                              },
-                              child: Text(AppLocalizations.of(context).translate("requestWarranty")),
-                            ),
-                          ),
-
-                      // Consumer<LangProvider>(
-                      //   builder: (context, provider, _) => MyFlatButton(
-                      //       function: () {
-                      //         // var provider = Provider.of<LangProvider>(context);
-                      //         Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //                 builder: (context) => RequestDetailPage()));
-                      //       },
-                      //       title: AppLocalizations.of(context)
-                      //           .translate("requestWarranty"),
-                      //       // child: SvgPicture.asset(
-                      //       //   "assets/images/english.svg",
-                      //       //   height: 50,
-                      //       //   width: 60,
-                      //       //   fit: BoxFit.cover,
-                      //       // ),
-                      //       child: Icon(
-                      //         WarrantyIcons.warrenty_correct,
-                      //         size: 56,
-                      //         color: Theme.of(context).accentColor,
-                      //       )
-                      //     // child: Icon(IconData(0xe911)),
-                      //     // child: Container(
-                      //     //   color: Colors.red,
-                      //     //   height: 50,
-                      //     //   width: 50,
-                      //     // ),
-                      //   ),
-                      // ),
-                      // Consumer<LangProvider>(
-                      //   builder: (context, provider, _) => MyFlatButton(
-                      //       function: () {
-                      //         // var provider = Provider.of<LangProvider>(context);
-                      //         Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //                 builder: (context) => AddWarrantyPage()));
-                      //       },
-                      //       title: AppLocalizations.of(context)
-                      //           .translate("addWarranty"),
-                      //       // child: SvgPicture.asset(
-                      //       //   "assets/images/arabic.svg",
-                      //       //   height: 50,
-                      //       //   width: 60,
-                      //       //   fit: BoxFit.cover,
-                      //       // ),
-                      //       child: Icon(
-                      //         WarrantyIcons.warrenty_add,
-                      //         size: 56,
-                      //         color: Theme.of(context).accentColor,
-                      //       )),
-                      // ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: FlatButton(
+                      textColor: Colors.white,
+                      color: Theme.of(context).primaryColor,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WarrantyDetailPage()));
+                      },
+                      child: Text(AppLocalizations.of(context)
+                          .translate("requestWarranty")),
+                    ),
                   ),
-                ),
-              ],
-            )),
+
+                  // Consumer<LangProvider>(
+                  //   builder: (context, provider, _) => MyFlatButton(
+                  //       function: () {
+                  //         // var provider = Provider.of<LangProvider>(context);
+                  //         Navigator.push(
+                  //             context,
+                  //             MaterialPageRoute(
+                  //                 builder: (context) => RequestDetailPage()));
+                  //       },
+                  //       title: AppLocalizations.of(context)
+                  //           .translate("requestWarranty"),
+                  //       // child: SvgPicture.asset(
+                  //       //   "assets/images/english.svg",
+                  //       //   height: 50,
+                  //       //   width: 60,
+                  //       //   fit: BoxFit.cover,
+                  //       // ),
+                  //       child: Icon(
+                  //         WarrantyIcons.warrenty_correct,
+                  //         size: 56,
+                  //         color: Theme.of(context).accentColor,
+                  //       )
+                  //     // child: Icon(IconData(0xe911)),
+                  //     // child: Container(
+                  //     //   color: Colors.red,
+                  //     //   height: 50,
+                  //     //   width: 50,
+                  //     // ),
+                  //   ),
+                  // ),
+                  // Consumer<LangProvider>(
+                  //   builder: (context, provider, _) => MyFlatButton(
+                  //       function: () {
+                  //         // var provider = Provider.of<LangProvider>(context);
+                  //         Navigator.push(
+                  //             context,
+                  //             MaterialPageRoute(
+                  //                 builder: (context) => AddWarrantyPage()));
+                  //       },
+                  //       title: AppLocalizations.of(context)
+                  //           .translate("addWarranty"),
+                  //       // child: SvgPicture.asset(
+                  //       //   "assets/images/arabic.svg",
+                  //       //   height: 50,
+                  //       //   width: 60,
+                  //       //   fit: BoxFit.cover,
+                  //       // ),
+                  //       child: Icon(
+                  //         WarrantyIcons.warrenty_add,
+                  //         size: 56,
+                  //         color: Theme.of(context).accentColor,
+                  //       )),
+                  // ),
+                ],
+              ),
+            ),
+          ],
+        )),
         // body:
         // Center(
         //   child: ListView(

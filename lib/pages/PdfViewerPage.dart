@@ -12,16 +12,25 @@ class PdfViewerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PDFViewerScaffold(
-        appBar: AppBar(title: Text(AppLocalizations.of(context).translate("preview")),actions: [
-          IconButton(icon: Icon(
-            FontAwesomeIcons.shareAlt
-            ,color: Colors.white,)
-          ,onPressed: (){
-            // todo: share the file
-              Share.shareFiles([path],text:"hi see you soon",);
-            },)
-        ],),
-        path: path,
-      );
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context).translate("preview")),
+        actions: [
+          IconButton(
+            icon: Icon(
+              FontAwesomeIcons.shareAlt,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              // TODO: share the file
+              Share.shareFiles(
+                [path],
+                text: "hi see you soon",
+              );
+            },
+          )
+        ],
+      ),
+      path: path,
+    );
   }
 }

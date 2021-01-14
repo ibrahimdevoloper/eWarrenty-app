@@ -32,7 +32,7 @@
 //             ),
 //           );
 //         } else if (state is ForgetPasswordError) {
-//           // todo: Error Message for ForgotPassword
+//           // TODO: Error Message for ForgotPassword
 //         }
 //       },
 //     ),
@@ -135,7 +135,7 @@
 //                 color: Theme.of(context).primaryColor,
 //                 textColor: Colors.white,
 //                 onPressed:provider.emailValidator? () {
-//                   //todo :send password request
+//                   //TODO :send password request
 //                 }:null,
 //                 child: Text(
 //                   AppLocalizations.of(context).translate("ok"),
