@@ -42,7 +42,7 @@ dependencies:
   flutter_full_pdf_viewer: ^1.0.6
   share: ^0.6.5+2
   country_code_picker: ^1.7.0
-  chopper: ^2.4.0
+  chopper: ^3.0.2
   cached_network_image: ^2.5.0
   rxdart:
   flutter_localizations:
@@ -58,7 +58,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  chopper_generator: ^2.3.4
+  chopper_generator: ^3.0.4
   build_runner:
 
 # For information on the generic Dart part of this file, see the
