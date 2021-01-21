@@ -25,23 +25,41 @@ class InitDataCubit extends Cubit<InitDataState> {
   int _carPropertyId;
   Market _market;
 
+  bool _carTypeIdIsError = false;
+  bool _carPropertyIdIsError = false;
+  bool _marketIsError = false;
 
   Battery _battery;
   String _country;
   String _billDate;
   String _serialNumber;
 
+  bool _batteryIsError = false;
+  bool _countryIsError = false;
+  bool _billDateIsError = false;
+  bool _serialNumberIsError = false;
+
   String _fullName;
   String _address;
   String _eMail;
   String _phoneNumber;
+  String _carNumber;
+
+  bool _fullNameIsError = false;
+  bool _addressIsError = false;
+  bool _eMailIsError = false;
+  bool _phoneNumberIsError = false;
+  bool _carNumberIsError = false;
 
   String _frontBatteryPath;
   String _fixedBatteryPath;
   String _carNumberPath;
 
-  InitDataCubit() : super(InitDataInitial()){
+  bool _frontBatteryPathIsError = false;
+  bool _fixedBatteryPathIsError = false;
+  bool _carNumberPathIsError = false;
 
+  InitDataCubit() : super(InitDataInitial()) {
     // todo: replace with BehaviorSubject from rxdart package
     // it destroy the lisener  when the widget rebuilds
 
@@ -53,15 +71,31 @@ class InitDataCubit extends Cubit<InitDataState> {
     // _carPropertiesStreamController.add(null);
     // _marketStreamController.add(null);
 
-    _batteries=[];
-    _carTypes=[];
-    _carProperties=[];
-    _markets=[];
+    _batteries = [];
+    _carTypes = [];
+    _carProperties = [];
+    _markets = [];
 
     _getInitData();
-
   }
 
+  getFinalValidtion() {
+    return !(_carTypeIdIsError ||
+        _carPropertyIdIsError ||
+        _marketIsError ||
+        _batteryIsError ||
+        _countryIsError ||
+        _billDateIsError ||
+        _serialNumberIsError ||
+        _fullNameIsError ||
+        _addressIsError ||
+        _eMailIsError ||
+        _phoneNumberIsError ||
+        _carNumberIsError ||
+        _frontBatteryPathIsError ||
+        _fixedBatteryPathIsError ||
+        _carNumberPathIsError);
+  }
 
   List<Battery> get batteries => _batteries;
 
@@ -69,54 +103,54 @@ class InitDataCubit extends Cubit<InitDataState> {
     _batteries = value;
   }
 
-  get carTypeIdStream =>_carTypesStreamController.stream;
+  get carTypeIdStream => _carTypesStreamController.stream;
+
   carTypeIdSelectedValue(value) {
-    _carTypeId=value;
+    _carTypeId = value;
     print(_carTypeId);
     _carTypesStreamController.sink.add(value);
   }
 
-  get carPropertyIdStream =>_carPropertiesStreamController.stream;
+  get carPropertyIdStream => _carPropertiesStreamController.stream;
+
   carPropertyIdSelectedValue(value) {
-    _carPropertyId=value;
+    _carPropertyId = value;
     _carPropertiesStreamController.sink.add(value);
   }
 
-  get marketIdStream =>_marketStreamController.stream;
+  get marketIdStream => _marketStreamController.stream;
+
   marketSelectedValue(value) {
-    _market=value;
+    _market = value;
     _marketStreamController.sink.add(value);
   }
 
-  _getInitData(){
+  _getInitData() {
     emit(InitDataLoading());
     InitDataService initDataService = InitDataService.create();
-    initDataService.getData().then((value){
+    initDataService.getData().then((value) {
       //todo: handle statues Codes
-      print (value.body);
-      var data =value.body;
-      for(var JSONItem in data['batteries']){
+      print(value.body);
+      var data = value.body;
+      for (var JSONItem in data['batteries']) {
         _batteries.add(Battery.fromJson(JSONItem));
       }
 
-      for(var JSONItem in data['carProperties']){
+      for (var JSONItem in data['carProperties']) {
         _carProperties.add(CarProperty.fromJson(JSONItem));
       }
-      for(var JSONItem in data['carTypes']){
+      for (var JSONItem in data['carTypes']) {
         _carTypes.add(CarType.fromJson(JSONItem));
       }
 
-      for(var JSONItem in data['markets']){
+      for (var JSONItem in data['markets']) {
         _markets.add(Market.fromJson(JSONItem));
       }
 
-      emit(InitDataLoaded(_batteries,_carTypes,_carProperties,_markets));
-
-    }).catchError((e){
-
+      emit(InitDataLoaded(_batteries, _carTypes, _carProperties, _markets));
+    }).catchError((e) {
       print('InitDataCubit $e');
       emit(InitDataError("no network", "لا توجد شبكة"));
-
     });
   }
 
@@ -221,5 +255,122 @@ class InitDataCubit extends Cubit<InitDataState> {
 
   set carTypes(List<CarType> value) {
     _carTypes = value;
+  }
+
+  String get carNumber => _carNumber;
+
+  set carNumber(String value) {
+    _carNumber = value;
+  }
+
+  StreamController<Market> get marketStreamController =>
+      _marketStreamController;
+
+  set marketStreamController(StreamController<Market> value) {
+    _marketStreamController = value;
+  }
+
+  StreamController<int> get carPropertiesStreamController =>
+      _carPropertiesStreamController;
+
+  set carPropertiesStreamController(StreamController<int> value) {
+    _carPropertiesStreamController = value;
+  }
+
+  StreamController<int> get carTypesStreamController =>
+      _carTypesStreamController;
+
+  set carTypesStreamController(StreamController<int> value) {
+    _carTypesStreamController = value;
+  }
+
+  bool get carNumberPathIsError => _carNumberPathIsError;
+
+  set carNumberPathIsError(bool value) {
+    _carNumberPathIsError = value;
+  }
+
+  bool get fixedBatteryPathIsError => _fixedBatteryPathIsError;
+
+  set fixedBatteryPathIsError(bool value) {
+    _fixedBatteryPathIsError = value;
+  }
+
+  bool get frontBatteryPathIsError => _frontBatteryPathIsError;
+
+  set frontBatteryPathIsError(bool value) {
+    _frontBatteryPathIsError = value;
+  }
+
+  bool get carNumberIsError => _carNumberIsError;
+
+  set carNumberIsError(bool value) {
+    _carNumberIsError = value;
+  }
+
+  bool get phoneNumberIsError => _phoneNumberIsError;
+
+  set phoneNumberIsError(bool value) {
+    _phoneNumberIsError = value;
+  }
+
+  bool get eMailIsError => _eMailIsError;
+
+  set eMailIsError(bool value) {
+    _eMailIsError = value;
+  }
+
+  bool get addressIsError => _addressIsError;
+
+  set addressIsError(bool value) {
+    _addressIsError = value;
+  }
+
+  bool get fullNameIsError => _fullNameIsError;
+
+  set fullNameIsError(bool value) {
+    _fullNameIsError = value;
+  }
+
+  bool get serialNumberIsError => _serialNumberIsError;
+
+  set serialNumberIsError(bool value) {
+    _serialNumberIsError = value;
+  }
+
+  bool get billDateIsError => _billDateIsError;
+
+  set billDateIsError(bool value) {
+    _billDateIsError = value;
+  }
+
+  bool get countryIsError => _countryIsError;
+
+  set countryIsError(bool value) {
+    _countryIsError = value;
+  }
+
+  bool get batteryIsError => _batteryIsError;
+
+  set batteryIsError(bool value) {
+    _batteryIsError = value;
+  }
+
+  bool get marketIsError => _marketIsError;
+
+  set marketIsError(bool value) {
+    _marketIsError = value;
+  }
+
+  bool get carPropertyIdIsError => _carPropertyIdIsError;
+
+  set carPropertyIdIsError(bool value) {
+    _carPropertyIdIsError = value;
+  }
+
+  bool get carTypeIdIsError => _carTypeIdIsError;
+
+  set carTypeIdIsError(bool value) {
+    _carTypeIdIsError = value;
   }
 }

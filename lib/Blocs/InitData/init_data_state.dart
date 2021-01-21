@@ -134,3 +134,53 @@ class InitDataPhoneNumberReset extends InitDataState {
 class InitDataPhoneNumberError extends InitDataState {
   InitDataPhoneNumberError();
 }
+
+// to Car Number field reset
+class InitDataCarNumberReset extends InitDataState {
+  InitDataCarNumberReset();
+}
+
+// to Car Number field error
+class InitDataCarNumberError extends InitDataState {
+  InitDataCarNumberError();
+}
+
+// to Car Number field reset
+class InitDataCarTypeReset extends InitDataState {
+  InitDataCarTypeReset();
+}
+
+// to Car Number field error
+class InitDataCarTypeError extends InitDataState {
+  InitDataCarTypeError();
+}
+
+// to Car Number field reset
+class InitDataCarPropertyReset extends InitDataState {
+  InitDataCarPropertyReset();
+}
+
+// to Car Number field error
+class InitDataCarPropertyError extends InitDataState {
+  InitDataCarPropertyError();
+}
+
+// to Car Number field reset
+class InitDataMarketReset extends InitDataState {
+  InitDataMarketReset();
+}
+
+// to Car Number field error
+class InitDataMarketError extends InitDataState {
+  InitDataMarketError();
+}
+
+// to Car Number field reset
+class InitDataCountryReset extends InitDataState {
+  InitDataCountryReset();
+}
+
+// to Car Number field error
+class InitDataCountryError extends InitDataState {
+  InitDataCountryError();
+}

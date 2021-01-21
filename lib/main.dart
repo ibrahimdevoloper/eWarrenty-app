@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
               }
             }
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
                 locale: provider.languageCode.isEmpty
                     ? null
                     : Locale(provider.languageCode),
@@ -91,6 +92,7 @@ class MyApp extends StatelessWidget {
           });
         } else {
           return MaterialApp(
+              debugShowCheckedModeBanner: false,
               // locale: provider.languageCode.isEmpty
               //     ? null
               //     : Locale(provider.languageCode),
