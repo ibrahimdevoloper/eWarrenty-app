@@ -15,8 +15,6 @@ import 'package:rxdart/rxdart.dart';
 part 'init_data_state.dart';
 
 class InitDataCubit extends Cubit<InitDataState> {
-
-
   List<Battery> _batteries;
   List<CarType> _carTypes;
   List<CarProperty> _carProperties;
@@ -134,7 +132,7 @@ class InitDataCubit extends Cubit<InitDataState> {
     emit(InitDataLoading());
     InitDataService initDataService = InitDataService.create();
     initDataService.getData().then((value) {
-      //todo: handle statues Codes
+      //TODO: handle statues Codes
       print(value.body);
       var data = value.body;
       for (var JSONItem in data['batteries']) {
@@ -426,5 +424,4 @@ class InitDataCubit extends Cubit<InitDataState> {
   set carTypeIdIsError(bool value) {
     _carTypeIdIsError = value;
   }
-
 }

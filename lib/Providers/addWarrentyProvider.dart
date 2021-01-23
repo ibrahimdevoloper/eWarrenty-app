@@ -48,7 +48,7 @@ class AddWarrentyProvider extends ChangeNotifier {
     notifyListeners();
     InitDataService initDataService = InitDataService.create();
     initDataService.getData().then((value) {
-      //todo: handle statues Codes
+      //TODO: handle statues Codes
       print(value.body);
       var data = value.body;
       for (var JSONItem in data['batteries']) {
@@ -206,5 +206,3 @@ class AddWarrentyProvider extends ChangeNotifier {
     _isAPILoading = value;
   }
 }
-
-

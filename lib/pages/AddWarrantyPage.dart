@@ -47,14 +47,14 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
           builder: (context, state) => FlatButton(
             color: Theme.of(context).primaryColor,
             textColor: Colors.white,
-            //todo: translate submit
+            //TODO: translate submit
             child: Text("submit"),
             onPressed: () {
               print("submit");
-              //todo: submit button
+              //TODO: submit button
               InitDataCubit mCubit = BlocProvider.of<InitDataCubit>(context);
               if (mCubit.battery == null) {
-                //todo: translate "choose battery model"
+                //TODO: translate "choose battery model"
                 mCubit.batteryIsError = true;
                 mCubit.emit(InitDataBatteryChoosenTextFieldError());
                 var snackBar = SnackBar(
@@ -64,7 +64,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                 Scaffold.of(context).showSnackBar(snackBar);
               }
               if (mCubit.billDate == null) {
-                //todo: translate "choose bill date"
+                //TODO: translate "choose bill date"
                 mCubit.emit(InitDataBillDateError());
                 mCubit.billDateIsError = true;
                 var snackBar = SnackBar(
@@ -74,7 +74,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                 Scaffold.of(context).showSnackBar(snackBar);
               }
               if (mCubit.serialNumber == null) {
-                //todo: tanslate "add Serial Number"
+                //TODO: tanslate "add Serial Number"
                 mCubit.emit(InitDataSerialNumberError());
                 mCubit.serialNumberIsError = true;
                 var snackBar = SnackBar(
@@ -84,7 +84,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                 Scaffold.of(context).showSnackBar(snackBar);
               }
               if (mCubit.fullName == null) {
-                //todo: tanslate "Please Add Your Full Name In English"
+                //TODO: tanslate "Please Add Your Full Name In English"
                 mCubit.emit(InitDataFullNameError());
                 mCubit.fullNameIsError = true;
                 var snackBar = SnackBar(
@@ -94,7 +94,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                 Scaffold.of(context).showSnackBar(snackBar);
               }
               if (mCubit.address == null) {
-                //todo: tanslate "Please Add Your Address In English"
+                //TODO: tanslate "Please Add Your Address In English"
                 mCubit.emit(InitDataAddressError());
                 mCubit.addressIsError = true;
                 var snackBar = SnackBar(
@@ -104,7 +104,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                 Scaffold.of(context).showSnackBar(snackBar);
               }
               if (mCubit.eMail == null) {
-                //todo: tanslate "Please Add Your E-mail"
+                //TODO: tanslate "Please Add Your E-mail"
                 mCubit.emit(InitDataEmailError());
                 mCubit.eMailIsError = true;
                 var snackBar = SnackBar(
@@ -114,7 +114,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                 Scaffold.of(context).showSnackBar(snackBar);
               }
               if (mCubit.phoneNumber == null) {
-                //todo: tanslate "Please Add Your phone number"
+                //TODO: tanslate "Please Add Your phone number"
                 mCubit.emit(InitDataPhoneNumberError());
                 mCubit.phoneNumberIsError = true;
                 var snackBar = SnackBar(
@@ -124,7 +124,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                 Scaffold.of(context).showSnackBar(snackBar);
               }
               if (mCubit.carPropertyId == null) {
-                //todo: tanslate "Please Add Your Car Property Type"
+                //TODO: tanslate "Please Add Your Car Property Type"
                 // mCubit.emit(InitDataCarNumberError());
                 mCubit.carNumberIsError = true;
                 var snackBar = SnackBar(
@@ -134,7 +134,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                 Scaffold.of(context).showSnackBar(snackBar);
               }
               if (mCubit.carTypeId == null) {
-                //todo: tanslate "Please Add Your Car Type"
+                //TODO: tanslate "Please Add Your Car Type"
                 // mCubit.emit(InitDataCarTypeError());
                 mCubit.phoneNumberIsError = true;
                 var snackBar = SnackBar(
@@ -144,7 +144,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                 Scaffold.of(context).showSnackBar(snackBar);
               }
               if (mCubit.country == null) {
-                //todo: tanslate "Please Add Your Country"
+                //TODO: tanslate "Please Add Your Country"
                 mCubit.emit(InitDataCountryError());
                 mCubit.countryIsError = true;
                 var snackBar = SnackBar(
@@ -154,7 +154,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                 Scaffold.of(context).showSnackBar(snackBar);
               }
               if (mCubit.market == null) {
-                //todo: tanslate "Please Add Your Market"
+                //TODO: tanslate "Please Add Your Market"
                 mCubit.emit(InitDataMarketError());
                 mCubit.marketIsError = true;
                 var snackBar = SnackBar(
@@ -164,7 +164,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                 Scaffold.of(context).showSnackBar(snackBar);
               }
               if (mCubit.frontBatteryPath == null) {
-                //todo: tanslate "Please capture Your battery front"
+                //TODO: tanslate "Please capture Your battery front"
                 var snackBar = SnackBar(
                   content: Text("Please capture Your battery front"),
                   duration: Duration(milliseconds: 600),
@@ -172,7 +172,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                 Scaffold.of(context).showSnackBar(snackBar);
               }
               if (mCubit.fixedBatteryPath == null) {
-                //todo: tanslate "Please capture Your fixed battery"
+                //TODO: tanslate "Please capture Your fixed battery"
                 var snackBar = SnackBar(
                   content: Text("Please capture Your fixed battery"),
                   duration: Duration(milliseconds: 600),
@@ -180,7 +180,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                 Scaffold.of(context).showSnackBar(snackBar);
               }
               if (mCubit.carNumberPath == null) {
-                //todo: tanslate "Please capture Your car"
+                //TODO: tanslate "Please capture Your car"
                 var snackBar = SnackBar(
                   content: Text("Please capture Your Car "),
                   duration: Duration(milliseconds: 600),
@@ -282,7 +282,8 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     BlocBuilder<InitDataCubit, InitDataState>(
                       buildWhen: (previous, current) {
                         // print(current is InitDataBillDate);
-                        return current is InitDataBatteryChoosenTextFieldError ||
+                        return current
+                                is InitDataBatteryChoosenTextFieldError ||
                             current is InitDataBatteryChoosenTextFieldReset;
                       },
                       builder: (context, state) => TypeAheadFormField(
@@ -330,7 +331,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                             searchedCapacity = int.parse(pattern);
                             print(searchedCapacity);
                           } catch (e) {
-                            //todo: handle Error
+                            //TODO: handle Error
                             print(e);
                           }
 
@@ -392,10 +393,10 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                               suggestionsBox);
                         },
                         onSuggestionSelected: (suggestion) {
-                          //todo:save Battery "id" in the form provider
+                          //TODO:save Battery "id" in the form provider
                           Battery suggestedBattry = suggestion;
-                          BlocProvider.of<InitDataCubit>(context)
-                              .emit(InitDataBatteryChosenForImage(suggestedBattry));
+                          BlocProvider.of<InitDataCubit>(context).emit(
+                              InitDataBatteryChosenForImage(suggestedBattry));
                           BlocProvider.of<InitDataCubit>(context).battery =
                               suggestedBattry;
                           // print(BlocProvider.of<InitDataCubit>(context).batteryId);
@@ -483,7 +484,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                           suffixIcon: IconButton(
                             icon: Icon(WarrantyIcons.warrenty_comment),
                             onPressed: () {
-                              //todo: display a dialog -or a tooltip- that explaine how to find the serial number with a image preview
+                              //TODO: display a dialog -or a tooltip- that explaine how to find the serial number with a image preview
                               if (BlocProvider.of<InitDataCubit>(context)
                                       .battery !=
                                   null) {
@@ -511,7 +512,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                   ),
                                 );
                               } else {
-                                //todo: translate "didn't select Battery to help you with instructions"
+                                //TODO: translate "didn't select Battery to help you with instructions"
                                 var snackbar = SnackBar(
                                   content: Text(
                                       "didn't select Battery to help you with instructions"),
@@ -582,7 +583,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                           ),
                         ),
                         onChanged: (value) {
-                          //todo: make the user enter his name in english
+                          //TODO: make the user enter his name in english
                           BlocProvider.of<InitDataCubit>(context).fullName =
                               value;
                         },
@@ -631,7 +632,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                           ),
                         ),
                         onChanged: (value) {
-                          //todo: make the user enter his name in english
+                          //TODO: make the user enter his name in english
                           BlocProvider.of<InitDataCubit>(context).address =
                               value;
                         },
@@ -731,7 +732,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                       //TODO: check design when error is null
                       children: [
                         Expanded(
-                          //todo: String Search like car model
+                          //TODO: String Search like car model
                           child: StreamBuilder<int>(
                               stream: BlocProvider.of<InitDataCubit>(context)
                                   .carTypeIdStream,
@@ -739,7 +740,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                               builder: (context, snapshot) {
                                 return DropdownButton<int>(
                                   onChanged: (e) {
-                                    //todo: save CarType "id" in fo rm state managment
+                                    //TODO: save CarType "id" in fo rm state managment
                                     // setState(() {
                                     //   _carTypeValue = e;
                                     // });
@@ -857,7 +858,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                           //   searchedCapacity = int.parse(pattern);
                           //   print(searchedCapacity);
                           // } catch (e) {
-                          //   //todo: handle Error
+                          //   //TODO: handle Error
                           //   print(e);
                           // }
                           markets.forEach((market) {
@@ -906,7 +907,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                               suggestionsBox);
                         },
                         onSuggestionSelected: (suggestion) {
-                          //todo:save Battery "id" in the form provider
+                          //TODO:save Battery "id" in the form provider
                           Market suggestedMarket = suggestion;
                           _marketTextEditingController.text =
                               AppLocalizations.of(context)
@@ -1047,15 +1048,15 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                             subtitle: AppLocalizations.of(context)
                                 .translate("example"),
                             child: CachedNetworkImage(
-
                               imageUrl:
                                   "$baseUrl/${BlocProvider.of<InitDataCubit>(context).battery.frontImage}",
                               fit: BoxFit.cover,
-                              errorWidget: (context,url,error)=>Container(
+                              errorWidget: (context, url, error) => Container(
                                 height: 100,
                                 child: Center(
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       Icon(WarrantyIcons.warrenty_clear),
                                       //TODO: translate error loading image
@@ -1150,7 +1151,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                             isError: false,
                             title: AppLocalizations.of(context)
                                 .translate("batteryFrontImage"),
-                            subtitle: //todo: translate "didn't select Battery to help you with instructions"
+                            subtitle: //TODO: translate "didn't select Battery to help you with instructions"
                                 "didn't select Battery to help you with instructions",
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -1163,7 +1164,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                               ],
                             ),
                             onTap: () async {
-                              //todo: translate "didn't select Battery to help you with instructions"
+                              //TODO: translate "didn't select Battery to help you with instructions"
                               var snackbar = SnackBar(
                                 content: Text(
                                     "didn't select Battery to help you with instructions"),
@@ -1181,17 +1182,17 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                       return current is InitDataFixedBatteryImage;
                     }, builder: (context, state) {
                       if (state is InitDataFixedBatteryImage)
-                        return FlatButton(
-                          child: ImagePreview(
-                              AppLocalizations.of(context)
-                                  .translate("fixedBatteryImage"),
-                              AppLocalizations.of(context)
-                                  .translate("tapAgainToChange"),
-                              Image.file(
-                                File(state.imagePath),
-                                fit: BoxFit.cover,
-                              )),
-                          onPressed: () async {
+                        return CustomButtonForImagePreview(
+                          isError: false,
+                          title: AppLocalizations.of(context)
+                              .translate("fixedBatteryImage"),
+                          subtitle: AppLocalizations.of(context)
+                              .translate("tapAgainToChange"),
+                          child: Image.file(
+                            File(state.imagePath),
+                            fit: BoxFit.cover,
+                          ),
+                          onTap: () async {
                             final picker = ImagePicker();
                             final pickedFile = await picker.getImage(
                                 source: ImageSource.camera);
@@ -1204,9 +1205,33 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                             //   _fixedBatteryImage = pickedFile.path;
                             // });
                           },
-                          textColor: Colors.white,
-                          color: Theme.of(context).primaryColor,
                         );
+                      // return FlatButton(
+                      //   child: ImagePreview(
+                      //       AppLocalizations.of(context)
+                      //           .translate("fixedBatteryImage"),
+                      //       AppLocalizations.of(context)
+                      //           .translate("tapAgainToChange"),
+                      //       Image.file(
+                      //         File(state.imagePath),
+                      //         fit: BoxFit.cover,
+                      //       )),
+                      //   onPressed: () async {
+                      //     final picker = ImagePicker();
+                      //     final pickedFile = await picker.getImage(
+                      //         source: ImageSource.camera);
+                      //     print(pickedFile.path);
+                      //     BlocProvider.of<InitDataCubit>(context).emit(
+                      //         InitDataFixedBatteryImage(pickedFile.path));
+                      //     BlocProvider.of<InitDataCubit>(context)
+                      //         .fixedBatteryPath = pickedFile.path;
+                      //     // setState(() {
+                      //     //   _fixedBatteryImage = pickedFile.path;
+                      //     // });
+                      //   },
+                      //   textColor: Colors.white,
+                      //   color: Theme.of(context).primaryColor,
+                      // );
                       else
                         return CustomButtonForImagePreview(
                           isError: false,
@@ -1241,17 +1266,17 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                       return current is InitDataCarNumber;
                     }, builder: (context, state) {
                       if (state is InitDataCarNumber)
-                        return FlatButton(
-                          child: ImagePreview(
-                              AppLocalizations.of(context)
-                                  .translate("carNumberIncludingItsColorImage"),
-                              AppLocalizations.of(context)
-                                  .translate("tapAgainToChange"),
-                              Image.file(
-                                File(state.imagePath),
-                                fit: BoxFit.cover,
-                              )),
-                          onPressed: () async {
+                        return CustomButtonForImagePreview(
+                          isError: false,
+                          title: AppLocalizations.of(context)
+                              .translate("carNumberIncludingItsColorImage"),
+                          subtitle: AppLocalizations.of(context)
+                              .translate("tapAgainToChange"),
+                          child: Image.file(
+                            File(state.imagePath),
+                            fit: BoxFit.cover,
+                          ),
+                          onTap: () async {
                             final picker = ImagePicker();
                             final pickedFile = await picker.getImage(
                                 source: ImageSource.camera);
@@ -1264,20 +1289,45 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                             //   _fixedBatteryImage = pickedFile.path;
                             // });
                           },
-                          textColor: Colors.white,
-                          color: Theme.of(context).primaryColor,
                         );
+                      // return FlatButton(
+                      //   child: ImagePreview(
+                      //       AppLocalizations.of(context)
+                      //           .translate("carNumberIncludingItsColorImage"),
+                      //       AppLocalizations.of(context)
+                      //           .translate("tapAgainToChange"),
+                      //       Image.file(
+                      //         File(state.imagePath),
+                      //         fit: BoxFit.cover,
+                      //       )),
+                      //   onPressed: () async {
+                      //     final picker = ImagePicker();
+                      //     final pickedFile = await picker.getImage(
+                      //         source: ImageSource.camera);
+                      //     print(pickedFile.path);
+                      //     BlocProvider.of<InitDataCubit>(context)
+                      //         .emit(InitDataCarNumber(pickedFile.path));
+                      //     BlocProvider.of<InitDataCubit>(context)
+                      //         .carNumberPath = pickedFile.path;
+                      //     // setState(() {
+                      //     //   _fixedBatteryImage = pickedFile.path;
+                      //     // });
+                      //   },
+                      //   textColor: Colors.white,
+                      //   color: Theme.of(context).primaryColor,
+                      // );
                       else
-                        return FlatButton(
-                          child: ImagePreview(
-                              AppLocalizations.of(context)
-                                  .translate("carNumberIncludingItsColorImage"),
+                        return CustomButtonForImagePreview(
+                          isError: false,
+                          title: AppLocalizations.of(context)
+                              .translate("carNumberIncludingItsColorImage"),
+                          subtitle:
                               AppLocalizations.of(context).translate("example"),
-                              Image.asset(
-                                "assets/images/number.jpg",
-                                fit: BoxFit.cover,
-                              )),
-                          onPressed: () async {
+                          child: Image.asset(
+                            "assets/images/number.jpg",
+                            fit: BoxFit.cover,
+                          ),
+                          onTap: () async {
                             final picker = ImagePicker();
                             final pickedFile = await picker.getImage(
                                 source: ImageSource.camera);
@@ -1290,9 +1340,32 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                             //   _fixedBatteryImage = pickedFile.path;
                             // });
                           },
-                          textColor: Colors.white,
-                          color: Theme.of(context).primaryColor,
                         );
+                      // return FlatButton(
+                      //   child: ImagePreview(
+                      //       AppLocalizations.of(context)
+                      //           .translate("carNumberIncludingItsColorImage"),
+                      //       AppLocalizations.of(context).translate("example"),
+                      //       Image.asset(
+                      //         "assets/images/number.jpg",
+                      //         fit: BoxFit.cover,
+                      //       )),
+                      //   onPressed: () async {
+                      //     final picker = ImagePicker();
+                      //     final pickedFile =
+                      //         await picker.getImage(source: ImageSource.camera);
+                      //     print(pickedFile.path);
+                      //     BlocProvider.of<InitDataCubit>(context)
+                      //         .emit(InitDataCarNumber(pickedFile.path));
+                      //     BlocProvider.of<InitDataCubit>(context)
+                      //         .carNumberPath = pickedFile.path;
+                      //     // setState(() {
+                      //     //   _fixedBatteryImage = pickedFile.path;
+                      //     // });
+                      //   },
+                      //   textColor: Colors.white,
+                      //   color: Theme.of(context).primaryColor,
+                      // );
                     }),
                     SizedBox(
                       height: 8,
@@ -1320,7 +1393,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
   }
 }
 
-class CustomButtonForContreyDialog extends StatelessWidget {
+class CustomButtonForConteryDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container();
