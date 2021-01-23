@@ -17,20 +17,44 @@ class _$SendWarrantyService extends SendWarrantyService {
   final definitionType = SendWarrantyService;
 
   @override
-  Future<Response<dynamic>> SendWarrenty(
-      Map<String, dynamic> body,
+  Future<Response<dynamic>> sendWarrenty(
+      {String battery_serial_number,
+      String bought_date,
+      String car_number,
+      int battery_model_id,
+      int car_property_id,
+      int car_type_id,
+      int market_id,
+      String customer_name,
+      String customer_email,
+      String customer_country,
+      String customer_address,
+      String customer_phone_number,
+      String notes,
       String car_number_image,
       String battery_front_image,
-      String fixed_battery_image) {
+      String fixed_battery_image}) {
     final $url = '/Warranty';
-    final $body = body;
     final $parts = <PartValue>[
+      PartValue<String>('battery_serial_number', battery_serial_number),
+      PartValue<String>('bought_date', bought_date),
+      PartValue<String>('car_number', car_number),
+      PartValue<int>('battery_model_id', battery_model_id),
+      PartValue<int>('car_property_id', car_property_id),
+      PartValue<int>('car_type_id', car_type_id),
+      PartValue<int>('market_id', market_id),
+      PartValue<String>('customer_name', customer_name),
+      PartValue<String>('customer_email', customer_email),
+      PartValue<String>('customer_country', customer_country),
+      PartValue<String>('customer_address', customer_address),
+      PartValue<String>('customer_phone_number', customer_phone_number),
+      PartValue<String>('notes', notes),
       PartValueFile<String>('car_number_image', car_number_image),
       PartValueFile<String>('battery_front_image', battery_front_image),
       PartValueFile<String>('fixed_battery_image', fixed_battery_image)
     ];
-    final $request = Request('POST', $url, client.baseUrl,
-        body: $body, parts: $parts, multipart: true);
+    final $request =
+        Request('POST', $url, client.baseUrl, parts: $parts, multipart: true);
     return client.send<dynamic, dynamic>($request);
   }
 }

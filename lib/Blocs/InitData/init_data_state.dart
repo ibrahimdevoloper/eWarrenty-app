@@ -37,11 +37,17 @@ class InitDataBillDate extends InitDataState {
   InitDataBillDate(this.billDate);
 }
 
-// when a battery is choosen
-class InitDataBatteryChosen extends InitDataState {
+// when a battery is choosen for image
+class InitDataBatteryChosenForImage extends InitDataState {
   final Battery battery;
 
-  InitDataBatteryChosen(this.battery);
+  InitDataBatteryChosenForImage(this.battery);
+}
+// when a battery is choosen for image has an Error like battery not choosen
+class InitDataBatteryChosenForImageError extends InitDataState {
+  final Battery battery;
+
+  InitDataBatteryChosenForImageError(this.battery);
 }
 
 // when a front date battery is choosen
@@ -66,13 +72,13 @@ class InitDataCarNumber extends InitDataState {
 }
 
 // to battery choosen field reset
-class InitDataBatteryChoosenReset extends InitDataState {
-  InitDataBatteryChoosenReset();
+class InitDataBatteryChoosenTextFieldReset extends InitDataState {
+  InitDataBatteryChoosenTextFieldReset();
 }
 
 // to battery choosen field error
-class InitDataBatteryChoosenError extends InitDataState {
-  InitDataBatteryChoosenError();
+class InitDataBatteryChoosenTextFieldError extends InitDataState {
+  InitDataBatteryChoosenTextFieldError();
 }
 
 // reset bill button
@@ -133,4 +139,69 @@ class InitDataPhoneNumberReset extends InitDataState {
 // to Phone Number field error
 class InitDataPhoneNumberError extends InitDataState {
   InitDataPhoneNumberError();
+}
+
+// to Car Number field reset
+class InitDataCarNumberReset extends InitDataState {
+  InitDataCarNumberReset();
+}
+
+// to Car Number field error
+class InitDataCarNumberError extends InitDataState {
+  InitDataCarNumberError();
+}
+
+// to Car Number field reset
+class InitDataCarTypeReset extends InitDataState {
+  InitDataCarTypeReset();
+}
+
+// to Car Number field error
+class InitDataCarTypeError extends InitDataState {
+  InitDataCarTypeError();
+}
+
+// to Car Number field reset
+class InitDataCarPropertyReset extends InitDataState {
+  InitDataCarPropertyReset();
+}
+
+// to Car Number field error
+class InitDataCarPropertyError extends InitDataState {
+  InitDataCarPropertyError();
+}
+
+// to Car Number field reset
+class InitDataMarketReset extends InitDataState {
+  InitDataMarketReset();
+}
+
+// to Car Number field error
+class InitDataMarketError extends InitDataState {
+  InitDataMarketError();
+}
+
+// to Car Number field reset
+class InitDataCountryReset extends InitDataState {
+  InitDataCountryReset();
+}
+
+// to Car Number field error
+class InitDataCountryError extends InitDataState {
+  InitDataCountryError();
+}
+
+//state when the submit is successful
+class InitDataSubmitSent extends InitDataState {
+  final Warranty warranty;
+
+  InitDataSubmitSent(this.warranty);
+}
+
+//state when the submit has an error
+class InitDataSubmitError extends InitDataState {
+  final String errorArabic;
+  final String errorEnglish;
+
+  InitDataSubmitError(this.errorArabic, this.errorEnglish);
 }

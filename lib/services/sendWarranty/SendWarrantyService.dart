@@ -7,25 +7,26 @@ part 'SendWarrantyService.chopper.dart';
 @ChopperApi(baseUrl: '/Warranty')
 abstract class SendWarrantyService extends ChopperService {
   @Post()
-  @Multipart()
-  Future<Response> SendWarrenty(
-    @Body() Map<String, dynamic> body,
-    // @Body() String battery_serial_number,
-    // @Body() String bought_date,
-    // @Body() String car_number,
-    // @Body() int battery_model_id,
-    // @Body() int car_property_id,
-    // @body int car_type_id,
-    // @body int market_id,
-    // @body String customer_name,
-    // @body String customer_email,
-    // @body String customer_country,
-    // @body String customer_phone_number,
-    // @body String notes,
-    @PartFile() String car_number_image,
-    @PartFile() String battery_front_image,
-    @PartFile() String fixed_battery_image,
-  );
+  @multipart
+  Future<Response> sendWarrenty({
+    // @Part() Map<String, dynamic> body,
+    @Part('battery_serial_number') String battery_serial_number,
+    @Part('bought_date') String bought_date,
+    @Part('car_number') String car_number,
+    @Part('battery_model_id') int battery_model_id,
+    @Part('car_property_id') int car_property_id,
+    @Part('car_type_id') int car_type_id,
+    @Part('market_id') int market_id,
+    @Part('customer_name') String customer_name,
+    @Part('customer_email') String customer_email,
+    @Part('customer_country') String customer_country,
+    @Part('customer_address') String customer_address,
+    @Part('customer_phone_number') String customer_phone_number,
+    @Part('notes') String notes,
+    @PartFile('car_number_image') String car_number_image,
+    @PartFile('battery_front_image') String battery_front_image,
+    @PartFile('fixed_battery_image') String fixed_battery_image,
+  });
 
   static SendWarrantyService create() {
     final client = ChopperClient(
