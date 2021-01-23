@@ -5,13 +5,18 @@ import 'package:ewarrenty/Models/Battery.dart';
 import 'package:ewarrenty/Models/car_property.dart';
 import 'package:ewarrenty/Models/car_type.dart';
 import 'package:ewarrenty/Models/market.dart';
+import 'package:ewarrenty/Models/warranty.dart';
 import 'package:ewarrenty/services/initData/InitDataService.dart';
+import 'package:ewarrenty/services/sendWarranty/SendWarrantyService.dart';
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'init_data_state.dart';
 
 class InitDataCubit extends Cubit<InitDataState> {
+
+
   List<Battery> _batteries;
   List<CarType> _carTypes;
   List<CarProperty> _carProperties;
@@ -150,8 +155,56 @@ class InitDataCubit extends Cubit<InitDataState> {
       emit(InitDataLoaded(_batteries, _carTypes, _carProperties, _markets));
     }).catchError((e) {
       print('InitDataCubit $e');
+      //TODO: taranslate "check your internet connection "
       emit(InitDataError("no network", "لا توجد شبكة"));
     });
+  }
+
+  submitWarrantyData() {
+    emit(InitDataLoading());
+    SendWarrantyService service = SendWarrantyService.create();
+    service
+        .sendWarrenty(
+            battery_front_image: frontBatteryPath,
+            battery_model_id: battery.id,
+            battery_serial_number: serialNumber,
+            bought_date: billDate,
+            car_number: carNumber,
+            car_number_image: carNumberPath,
+            car_property_id: carPropertyId,
+            car_type_id: carTypeId,
+            customer_country: country,
+            customer_email: eMail,
+            customer_name: fullName,
+            customer_phone_number: phoneNumber,
+            fixed_battery_image: fixedBatteryPath,
+            customer_address: address,
+            market_id: market.id,
+            notes: "")
+        .then((value) {
+      // print("AddWarrantybody:${value.body}");
+      // print("AddWarrantyisSuccessful:${value.isSuccessful}");
+      // print("AddWarrantyError:${value.error.toString()}");
+
+      if (value.statusCode == 200) {
+        var data = value.body['data'];
+        emit(InitDataSubmitSent(Warranty.fromJson(data)));
+      } else if (value.statusCode == 400) {
+        var errorArabic = value.body['messageAr'];
+        var errorEnglish = value.body['messageEn'];
+        emit(InitDataSubmitError(errorArabic, errorEnglish));
+      } else if (value.statusCode == 502) {
+        var errorArabic = value.body['messageAr'];
+        var errorEnglish = value.body['messageEn'];
+        emit(InitDataSubmitError(errorArabic, errorEnglish));
+      }
+    })
+          ..catchError((e) {
+            print(e);
+            //TODO: taranslate "check your internet connection "
+            emit(InitDataSubmitError("check your internet connection",
+                "check your internet connection "));
+          });
   }
 
   String get carNumberPath => _carNumberPath;
@@ -373,4 +426,5 @@ class InitDataCubit extends Cubit<InitDataState> {
   set carTypeIdIsError(bool value) {
     _carTypeIdIsError = value;
   }
+
 }
