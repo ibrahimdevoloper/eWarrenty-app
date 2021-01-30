@@ -11,6 +11,7 @@ import 'package:ewarrenty/services/sendWarranty/SendWarrantyService.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:ewarrenty/Function/getJSONMap.dart';
 
 part 'init_data_state.dart';
 
@@ -159,50 +160,57 @@ class InitDataCubit extends Cubit<InitDataState> {
   }
 
   submitWarrantyData() {
-    emit(InitDataLoading());
+    // emit(InitDataLoading());
+    emit(InitDataSubmitLoading());
     SendWarrantyService service = SendWarrantyService.create();
     service
         .sendWarrenty(
-            battery_front_image: frontBatteryPath,
-            battery_model_id: battery.id,
-            battery_serial_number: serialNumber,
-            bought_date: billDate,
-            car_number: carNumber,
-            car_number_image: carNumberPath,
-            car_property_id: carPropertyId,
-            car_type_id: carTypeId,
-            customer_country: country,
-            customer_email: eMail,
-            customer_name: fullName,
-            customer_phone_number: phoneNumber,
-            fixed_battery_image: fixedBatteryPath,
-            customer_address: address,
-            market_id: market.id,
-            notes: "")
+        battery_front_image: frontBatteryPath,
+        battery_model_id: battery.id,
+        battery_serial_number: serialNumber,
+        bought_date: billDate,
+        car_number: carNumber,
+        car_number_image: carNumberPath,
+        car_property_id: carPropertyId,
+        car_type_id: carTypeId,
+        customer_country: country,
+        customer_email: eMail,
+        customer_name: fullName,
+        customer_phone_number: phoneNumber,
+        fixed_battery_image: fixedBatteryPath,
+        customer_address: address,
+        market_id: market.id,
+        notes: "")
         .then((value) {
       // print("AddWarrantybody:${value.body}");
       // print("AddWarrantyisSuccessful:${value.isSuccessful}");
       // print("AddWarrantyError:${value.error.toString()}");
 
+
       if (value.statusCode == 200) {
         var data = value.body['data'];
+        print(data);
         emit(InitDataSubmitSent(Warranty.fromJson(data)));
       } else if (value.statusCode == 400) {
-        var errorArabic = value.body['messageAr'];
-        var errorEnglish = value.body['messageEn'];
+        print("error :400 ,${value.error} ");
+        var error = getJSONMap (value.error);
+        var errorArabic = error['messageAr'];
+        var errorEnglish = error['messageEn'];
+
         emit(InitDataSubmitError(errorArabic, errorEnglish));
       } else if (value.statusCode == 502) {
-        var errorArabic = value.body['messageAr'];
-        var errorEnglish = value.body['messageEn'];
+        var error = getJSONMap (value.error);
+        var errorArabic = error['messageAr'];
+        var errorEnglish = error['messageEn'];
         emit(InitDataSubmitError(errorArabic, errorEnglish));
       }
     })
-          ..catchError((e) {
-            print(e);
-            //TODO: taranslate "check your internet connection "
-            emit(InitDataSubmitError("check your internet connection",
-                "check your internet connection "));
-          });
+      ..catchError((e) {
+        print(e);
+        //TODO: taranslate "check your internet connection "
+        emit(InitDataSubmitError("check your internet connection",
+            "check your internet connection "));
+      });
   }
 
   String get carNumberPath => _carNumberPath;

@@ -10,18 +10,18 @@ abstract class InitDataService extends ChopperService {
   Future<Response> getData();
 
   static InitDataService create() {
-  final client = ChopperClient(
-  // The first part of the URL is now here
-  baseUrl: constant.baseUrl,
-  services: [
-  // The generated implementation
-  _$InitDataService(),
-  ],
-  // Converts data to & from JSON and adds the application/json header.
-  converter: JsonConverter(),
-  );
+    final client = ChopperClient(
+      // The first part of the URL is now here
+      baseUrl: constant.baseUrl,
+      services: [
+        // The generated implementation
+        _$InitDataService(),
+      ],
+      // Converts data to & from JSON and adds the application/json header.
+      converter: JsonConverter(),
+    );
 
-  // The generated class with the ChopperClient passed in
-  return _$InitDataService(client);
+    // The generated class with the ChopperClient passed in
+    return _$InitDataService(client);
   }
 }

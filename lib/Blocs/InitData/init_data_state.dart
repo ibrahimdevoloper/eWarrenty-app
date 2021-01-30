@@ -43,6 +43,7 @@ class InitDataBatteryChosenForImage extends InitDataState {
 
   InitDataBatteryChosenForImage(this.battery);
 }
+
 // when a battery is choosen for image has an Error like battery not choosen
 class InitDataBatteryChosenForImageError extends InitDataState {
   final Battery battery;
@@ -196,6 +197,12 @@ class InitDataSubmitSent extends InitDataState {
   final Warranty warranty;
 
   InitDataSubmitSent(this.warranty);
+}
+
+//state when the submit is loading
+class InitDataSubmitLoading extends InitDataState {
+
+  InitDataSubmitLoading();
 }
 
 //state when the submit has an error
