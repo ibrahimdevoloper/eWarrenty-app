@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:share/share.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 import '../app_localizations.dart';
 
@@ -13,7 +15,7 @@ class PdfViewerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PDFViewerScaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate("preview")),
+        title: Text(AppLocalizations.of(context).translate("preview"),style: GoogleFonts.cairo(),),
         actions: [
           IconButton(
             icon: Icon(
@@ -21,7 +23,6 @@ class PdfViewerPage extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              // TODO: share the file
               Share.shareFiles(
                 [path],
                 text: "hi see you soon",

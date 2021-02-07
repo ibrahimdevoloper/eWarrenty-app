@@ -50,7 +50,7 @@
   "mirrors": "مرايا",
 
   "packageSize": "حجم التعبئة",
-  "warranty": "الضمان",
+  "warranty": "الكفالة",
   "size1":"الحجم 1",
   "size2":"الحجم 2",
   "size3":"الحجم 3",
@@ -81,7 +81,7 @@
   "forEWarranty":"forEWarranty",
   "eWarranty": "الكفالة الالكترونية",
   "addWarranty": "أضف كفالة",
-  "requestWarranty": "أطلب ضمانتك",
+  "requestWarranty": "أطلب كفالتك",
 
   "enterBatteryAmperage": "أدخل أمبير البطارية",
   "ex40": "مثال: 40",
@@ -96,8 +96,9 @@
   "carModel": "موديل سيارتك",
   "carProperty": "ملكية السيارة",
   "country": "أضف بلدك",
-  "batteryFrontImage": "يرجى تصوير البطارية صورة البطارية الأمامية",
-  "fixedBatteryImage": "يرجى تصوير البطارية و هي مركبة",
+
+  "addBatteryFrontImage": "يرجى تصوير البطارية صورة البطارية الأمامية",
+  "addFixedBatteryImage": "يرجى تصوير البطارية و هي مركبة",
   "carNumberIncludingItsColorImage": "يرجى تصوير السيارة موضحاً لونها و رقمها",
 
   "tapAgainToChange": "اضغط مجدداً لتغيير الصورة",
@@ -106,7 +107,7 @@
   "warrantyCode": "كود الكفالة",
   "ex15FSD": "مثال: 15FSD",
 
-  "warrantyDetailFor": "تفاصيل ضمان ذا الكود",
+  "warrantyDetailFor": "تفاصيل كفالة ذا الكود",
   "batteryModel": "موديل البطارية",
   "batterySerialNumber": "رقم البطارية التسلسلي",
   "customerName": "اسم الزبون",
@@ -115,5 +116,25 @@
   "marketEMail": "إيميل الموزع",
   "marketPhone": "هاتف الموزع",
   "carNumber": "رقم السيارة",
-  "selectYourMarket": "رجاءً اختر موزعك"
+  "selectYourMarket": "رجاءً اختر موزعك",
+  "submit": "أرسل",
+  "pleaseChooseBatteryModel":"يرجى اختيار موديل البطارية",
+  "chooseBillDate": "يرجى اختيار تاريخ شراء البطارية",
+  "pleaseCheckYourInfomation": "رجاءً تحقق من معلوماتك",
+  "pleaseEnterSerialNumber": "يرجى إدخال الرقم التسلسلي",
+  "SelectBatteryToHelpYouWithInstructions": "يرجى اختيار بطاريتك من أجل مساعدتك بتعليماتها",
+  "addFullName": "يرجى إدخال اسمك كاملاً بالعربية",
+  "addAddress": "يرجى إدخال عنوانك بالعربية",
+  "addMarket": "يرجى إدخال بائعك أو موردك",
+  "errorLoadingImage": "خظأ بتحميل الصورة",
+  "forgotWarrantyCode" : "نسيت كود الكفالة ؟",
+  "warrantyInformation": "معلومات الكفالة",
+  "endDate": "تاريخ الانتهاء الكفالة",
+  "startDate": "تاريخ بداية الكفالة",
+  "yourBatteryFrontImage": "صورة بطاريتك الأمامية",
+  "yourBatteryFixedImage": "صورة بطاريتك و هي مركبة",
+  "yourCarsColorAndNumber": "صورة سيارتك موضحاً رقمها",
+  "congratulationsOnGettingYourWarrenty": "مبارك على حصولك على كفالتك",
+  "pleaseSaveTheFollowingCodeInASecurePlace": "رجاء أحفظ كود كفالتك بمكان آمن",
+  "goToDetails": "اذهب إلى التفاصيل"
 }

@@ -8,6 +8,7 @@ import 'package:ewarrenty/pages/RequestDetailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'AddWarrantyPage.dart';
 
@@ -112,7 +113,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 child: Center(
                                   child: Text(
                                     "EN",
-                                    style: TextStyle(
+                                    style: GoogleFonts.alfaSlabOne(
                                         color: Colors.white,
                                         fontSize: Theme.of(context)
                                             .textTheme
@@ -124,11 +125,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             : AspectRatio(
                                 aspectRatio: 4 / 3,
                                 child: Container(
-                                  color: Colors.green[800],
+                                  color: Colors.indigo[800],
                                   child: Center(
                                     child: Text(
-                                      "ع",
-                                      style: TextStyle(
+                                      "ض",
+                                      style: GoogleFonts.reemKufi(
                                           color: Colors.white,
                                           fontSize: Theme.of(context)
                                               .textTheme
@@ -171,151 +172,187 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             //           MaterialPageRoute(builder: (context) => LoginPage()));
             //     })
           ],
-          title: Text(AppLocalizations.of(context).translate("eWarranty")),
+          title: Text(AppLocalizations.of(context).translate("eWarranty"),
+              style: GoogleFonts.cairo()),
         ),
-        body: Center(
-            child: Column(
-          mainAxisSize: MainAxisSize.max,
+        body: Stack(
+          fit: StackFit.expand,
           children: [
-            Expanded(
-              flex: 5,
-              child: Container(
-                child: SlideTransition(
-                  position: _offsetAnimation,
-                  child: Stack(
-                    alignment: AlignmentDirectional.topCenter,
-                    fit: StackFit.expand,
-                    children: [
-                      Image.asset(
-                        "assets/images/carBackground1.png",
-                        fit: BoxFit.cover,
-                      ),
-                      Wrap(alignment: WrapAlignment.center, children: [
-                        Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(16),
-                                bottomRight: Radius.circular(16),
+            Image.asset('assets/images/whiteback.png',fit: BoxFit.cover,),
+            Center(
+                child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    child: SlideTransition(
+                      position: _offsetAnimation,
+                      child: Stack(
+                        alignment: AlignmentDirectional.topCenter,
+                        fit: StackFit.expand,
+                        children: [
+                          Material(
+                            clipBehavior: Clip.antiAlias,
+
+                            shape:RoundedRectangleBorder(
+
+                              side: BorderSide(
+
                               ),
-                              border: Border(
-                                bottom: BorderSide(
-                                    width: 4,
-                                    color: Theme.of(context).primaryColor),
-                                top: BorderSide(
-                                    width: 4,
-                                    color: Theme.of(context).primaryColor),
-                                left: BorderSide(
-                                    width: 4,
-                                    color: Theme.of(context).primaryColor),
-                                right: BorderSide(
-                                    width: 4,
-                                    color: Theme.of(context).primaryColor),
-                              ),
-                              color: Colors.white,
-                            ),
+                                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(24),bottomRight: Radius.circular(24))
+
+                            ) ,
                             child: Image.asset(
-                              "assets/images/logo.png",
-                              fit: BoxFit.scaleDown,
-                              height: 86,
-                            ))
-                      ]),
+                              "assets/images/carBackground1.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Wrap(
+                            alignment: WrapAlignment.center,
+                            children: [
+                             Image.asset(
+                                    "assets/images/logo.png",
+                                    fit: BoxFit.scaleDown,
+                                    height: 120,
+                                    width: 220,
+                                  ),
+                              // Image.asset(
+                              //   "assets/images/whitelogo.png",
+                              //   fit: BoxFit.scaleDown,
+                              //   height: 86,
+                              //   width: 140,
+                              // ),
+                              // Container(
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.only(
+                              //       bottomLeft: Radius.circular(16),
+                              //       bottomRight: Radius.circular(16),
+                              //     ),
+                              //     border: Border(
+                              //       bottom: BorderSide(
+                              //           width: 4,
+                              //           color: Theme.of(context).primaryColor),
+                              //       top: BorderSide(
+                              //           width: 4,
+                              //           color: Theme.of(context).primaryColor),
+                              //       left: BorderSide(
+                              //           width: 4,
+                              //           color: Theme.of(context).primaryColor),
+                              //       right: BorderSide(
+                              //           width: 4,
+                              //           color: Theme.of(context).primaryColor),
+                              //     ),
+                              //     color: Colors.white,
+                              //   ),
+                              //   child: Image.asset(
+                              //     "assets/images/whitelogo.png",
+                              //     fit: BoxFit.scaleDown,
+                              //     height: 86,
+                              //     width: 140,
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                // Divider(
+                //   height: 4,
+                //   color: Theme.of(context).primaryColor,
+                //   thickness: 4,
+                // ),
+                // Expanded(
+                //   flex: 5,
+                //   child: Container(
+                //     child: SlideTransition(
+                //       position: _offsetAnimation,
+                //       child: Card(
+                //         margin: EdgeInsets.zero,
+                //         shape: RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.only(
+                //                 bottomLeft: Radius.circular(16),
+                //                 bottomRight: Radius.circular(16))),
+                //         elevation: 0,
+                //         color: Theme.of(context).primaryColor,
+                //         child: Center(
+                //           child: Center(
+                //               child: CircleAvatar(
+                //                   backgroundColor: Theme.of(context).accentColor,
+                //                   radius: 72,
+                //                   child: Text("Golden Warranty"))),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                Expanded(
+                  flex: 4,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Consumer<LangProvider>(
+                        builder: (context, provider, _) => MyFlatButton(
+                            function: () {
+                              // var provider = Provider.of<LangProvider>(context);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RequestDetailPage()));
+                            },
+                            title: AppLocalizations.of(context)
+                                .translate("requestWarranty"),
+                            // child: SvgPicture.asset(
+                            //   "assets/images/english.svg",
+                            //   height: 50,
+                            //   width: 60,
+                            //   fit: BoxFit.cover,
+                            // ),
+                            child: Icon(
+                              WarrantyIcons.warrenty_correct,
+                              size: 56,
+                              color: Theme.of(context).accentColor,
+                            )
+                            // child: Icon(IconData(0xe911)),
+                            // child: Container(
+                            //   color: Colors.red,
+                            //   height: 50,
+                            //   width: 50,
+                            // ),
+                            ),
+                      ),
+                      Consumer<LangProvider>(
+                        builder: (context, provider, _) => MyFlatButton(
+                            function: () {
+                              // var provider = Provider.of<LangProvider>(context);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddWarrantyPage()));
+                            },
+                            title: AppLocalizations.of(context)
+                                .translate("addWarranty"),
+                            // child: SvgPicture.asset(
+                            //   "assets/images/arabic.svg",
+                            //   height: 50,
+                            //   width: 60,
+                            //   fit: BoxFit.cover,
+                            // ),
+                            child: Icon(
+                              WarrantyIcons.warrenty_add,
+                              size: 56,
+                              color: Theme.of(context).accentColor,
+                            )),
+                      ),
                     ],
                   ),
                 ),
-              ),
-            ),
-            Divider(
-              height: 4,
-              color: Theme.of(context).primaryColor,
-              thickness: 4,
-            ),
-            // Expanded(
-            //   flex: 5,
-            //   child: Container(
-            //     child: SlideTransition(
-            //       position: _offsetAnimation,
-            //       child: Card(
-            //         margin: EdgeInsets.zero,
-            //         shape: RoundedRectangleBorder(
-            //             borderRadius: BorderRadius.only(
-            //                 bottomLeft: Radius.circular(16),
-            //                 bottomRight: Radius.circular(16))),
-            //         elevation: 0,
-            //         color: Theme.of(context).primaryColor,
-            //         child: Center(
-            //           child: Center(
-            //               child: CircleAvatar(
-            //                   backgroundColor: Theme.of(context).accentColor,
-            //                   radius: 72,
-            //                   child: Text("Golden Warranty"))),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            Expanded(
-              flex: 4,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Consumer<LangProvider>(
-                    builder: (context, provider, _) => MyFlatButton(
-                        function: () {
-                          // var provider = Provider.of<LangProvider>(context);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RequestDetailPage()));
-                        },
-                        title: AppLocalizations.of(context)
-                            .translate("requestWarranty"),
-                        // child: SvgPicture.asset(
-                        //   "assets/images/english.svg",
-                        //   height: 50,
-                        //   width: 60,
-                        //   fit: BoxFit.cover,
-                        // ),
-                        child: Icon(
-                          WarrantyIcons.warrenty_correct,
-                          size: 56,
-                          color: Theme.of(context).accentColor,
-                        )
-                        // child: Icon(IconData(0xe911)),
-                        // child: Container(
-                        //   color: Colors.red,
-                        //   height: 50,
-                        //   width: 50,
-                        // ),
-                        ),
-                  ),
-                  Consumer<LangProvider>(
-                    builder: (context, provider, _) => MyFlatButton(
-                        function: () {
-                          // var provider = Provider.of<LangProvider>(context);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AddWarrantyPage()));
-                        },
-                        title: AppLocalizations.of(context)
-                            .translate("addWarranty"),
-                        // child: SvgPicture.asset(
-                        //   "assets/images/arabic.svg",
-                        //   height: 50,
-                        //   width: 60,
-                        //   fit: BoxFit.cover,
-                        // ),
-                        child: Icon(
-                          WarrantyIcons.warrenty_add,
-                          size: 56,
-                          color: Theme.of(context).accentColor,
-                        )),
-                  ),
-                ],
-              ),
-            ),
+              ],
+            )),
           ],
-        )),
+        ),
         // body: Center(
         //   child: Column(
         //     mainAxisSize: MainAxisSize.min,

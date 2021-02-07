@@ -172,5 +172,7 @@ class Warranty {
     }
     return map;
   }
+  
+  DateTime get boughtDateAsDateTime => DateTime.parse(_boughtDate);
 
 }

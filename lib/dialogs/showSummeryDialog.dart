@@ -13,7 +13,8 @@ AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
   var endDate = DateTime(bougthDate.year,
       bougthDate.month + warrenty.warrantyDuration, bougthDate.day);
   return AlertDialog(
-    title: Text("Congratulations on getting your warrenty"),
+    title: Text(AppLocalizations.of(context)
+        .translate("congratulationsOnGettingYourWarrenty")),
 
     // content: SingleChildScrollView(child: Text(AppLocalizations.of(context).translate("aboutCompanyContent"))),
     content: SingleChildScrollView(
@@ -21,19 +22,23 @@ AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Please save the following code in a secure place"),
+          Text(AppLocalizations.of(context)
+              .translate("pleaseSaveTheFollowingCodeInASecurePlace")),
           SizedBox(
             height: 8,
           ),
-          Text("code: ${warrenty.warrantyCode}"),
+          Text("${AppLocalizations.of(context)
+              .translate("warrantyCode")}: ${warrenty.warrantyCode}"),
           SizedBox(
             height: 8,
           ),
-          Text("Start Date: ${dateFormater(bougthDate)}"),
+          Text("${AppLocalizations.of(context)
+              .translate("startDate")}: ${dateFormater(bougthDate)}"),
           SizedBox(
             height: 8,
           ),
-          Text("End Date: ${dateFormater(endDate)}"),
+          Text("${AppLocalizations.of(context)
+              .translate("endDate")}: ${dateFormater(endDate)}"),
           SizedBox(
             height: 8,
           ),
@@ -43,6 +48,7 @@ AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
     actions: [
       FlatButton(
         onPressed: () {
+          Navigator.pop(context);
           Navigator.pop(context);
         },
         child: Text(AppLocalizations.of(context).translate("ok")),
@@ -65,7 +71,8 @@ AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
           //   ),
           // );
         },
-        child: Text("اذهب إلى التفاصيل"),
+        child: Text(AppLocalizations.of(context)
+            .translate("goToDetails")),
       ),
     ],
   );

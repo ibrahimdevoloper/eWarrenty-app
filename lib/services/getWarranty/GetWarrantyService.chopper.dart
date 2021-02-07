@@ -19,8 +19,8 @@ class _$GetWarrantyService extends GetWarrantyService {
   @override
   Future<Response<dynamic>> getWarrenty(Map<String, dynamic> body) {
     final $url = '/getWarrenty';
-    final $body = body;
-    final $request = Request('GET', $url, client.baseUrl, body: $body);
+    final $params = body;
+    final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client.send<dynamic, dynamic>($request);
   }
 }

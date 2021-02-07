@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ChooseLanguagePage extends StatefulWidget {
   @override
@@ -35,7 +36,6 @@ class _ChooseLanguagePageState extends State<ChooseLanguagePage>
   void dispose() {
     _animeController.dispose();
     super.dispose();
-
   }
 
   @override
@@ -79,162 +79,181 @@ class _ChooseLanguagePageState extends State<ChooseLanguagePage>
         //   // ],
         //   title: Text("Choose Your Language"),
         // ),
-        body: Center(
-            child: Column(
-          mainAxisSize: MainAxisSize.max,
+        body: Stack(
+          fit: StackFit.expand,
           children: [
-            Expanded(
-              flex: 5,
-              child: Container(
-                child: SlideTransition(
-                  position: _offsetAnimation,
-                  child: Stack(
-                    alignment: AlignmentDirectional.topCenter,
-                    fit: StackFit.expand,
-                    children: [
-                      Image.asset(
-                        "assets/images/carBackground1.png",
-                        fit: BoxFit.cover,
-
-                      ),
-                      Wrap(alignment: WrapAlignment.center, children: [
-                        Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(16),
-                                bottomRight: Radius.circular(16),
-                              ),
-                              border: Border(
-                                bottom: BorderSide(
-                                    width: 4,
-                                    color: Theme.of(context).primaryColor),
-                                top: BorderSide(
-                                    width: 4,
-                                    color: Theme.of(context).primaryColor),
-                                left: BorderSide(
-                                    width: 4,
-                                    color: Theme.of(context).primaryColor),
-                                right: BorderSide(
-                                    width: 4,
-                                    color: Theme.of(context).primaryColor),
-                              ),
-                              color: Colors.white,
-                            ),
+            Image.asset(
+              'assets/images/whiteback.png',
+              fit: BoxFit.cover,
+            ),
+            Center(
+                child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    child: SlideTransition(
+                      position: _offsetAnimation,
+                      child: Stack(
+                        alignment: AlignmentDirectional.topCenter,
+                        fit: StackFit.expand,
+                        children: [
+                          Material(
+                            clipBehavior: Clip.antiAlias,
+                            shape: RoundedRectangleBorder(
+                                side: BorderSide(),
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(24),
+                                    bottomRight: Radius.circular(24))),
                             child: Image.asset(
+                              "assets/images/carBackground1.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Wrap(alignment: WrapAlignment.center, children: [
+                            Image.asset(
                               "assets/images/logo.png",
                               fit: BoxFit.scaleDown,
                               height: 100,
-                            ))
-                      ]),
-                    ],
+                              width: 200,
+                            )
+                            // Container(
+                            //     decoration: BoxDecoration(
+                            //       borderRadius: BorderRadius.only(
+                            //         bottomLeft: Radius.circular(16),
+                            //         bottomRight: Radius.circular(16),
+                            //       ),
+                            //       border: Border(
+                            //         bottom: BorderSide(
+                            //             width: 4,
+                            //             color: Theme.of(context).primaryColor),
+                            //         top: BorderSide(
+                            //             width: 4,
+                            //             color: Theme.of(context).primaryColor),
+                            //         left: BorderSide(
+                            //             width: 4,
+                            //             color: Theme.of(context).primaryColor),
+                            //         right: BorderSide(
+                            //             width: 4,
+                            //             color: Theme.of(context).primaryColor),
+                            //       ),
+                            //       color: Colors.white,
+                            //     ),
+                            //     child: Image.asset(
+                            //       "assets/images/logo.png",
+                            //       fit: BoxFit.scaleDown,
+                            //       height: 100,
+                            //       width: 200,
+                            //     ))
+                          ]),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Divider(
-              height: 4,
-              color: Theme.of(context).primaryColor,
-              thickness: 4,
-            ),
-            Expanded(
-              flex: 4,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  // Text(AppLocalizations.of(context).translate(key)),
-                  Text(
-                    "Choose Your Language",
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize:
-                            Theme.of(context).textTheme.headline6.fontSize),
-                  ),
-                  Row(
+                // Divider(
+                //   height: 4,
+                //   color: Theme.of(context).primaryColor,
+                //   thickness: 4,
+                // ),
+                Expanded(
+                  flex: 4,
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Consumer<LangProvider>(
-                        builder: (context, provider, _) => MyFlatButton(
-                            function: () {
-                              // var provider = Provider.of<LangProvider>(context);
-                              provider.languageCode = "en";
-                              provider.prefs.setString(PrefKeys.lang, "en");
-                              provider.notifyListeners();
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HomePage(),
-                                ),
-                              );
-                            },
-                            title: "English",
-                            // child: SvgPicture.asset(
-                            //   "assets/images/english.svg",
-                            //   height: 50,
-                            //   width: 60,
-                            //   fit: BoxFit.cover,
-                            // ),
-                            child: AspectRatio(
-                              aspectRatio: 4/3,
-                              child: Container(
-                                color: Colors.indigo[800],
-                                child: Center(
-                                  child: Text("EN",style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: Theme.of(context).textTheme.headline5.fontSize
-                                  ),),
-                                ),
-                              ),
-                            ),
-                            // child: Icon(IconData(0xe911)),
-                            // child: Container(
-                            //   color: Colors.red,
-                            //   height: 50,
-                            //   width: 50,
-                            // ),
-                            ),
+                      // Text(AppLocalizations.of(context).translate(key)),
+                      Text(
+                        "Choose Your Language",
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize:
+                                Theme.of(context).textTheme.headline6.fontSize),
                       ),
-                      Consumer<LangProvider>(
-                        builder: (context, provider, _) => MyFlatButton(
-                          function: () {
-                            // var provider = Provider.of<LangProvider>(context);
-                            provider.languageCode = "ar";
-                            provider.prefs.setString(PrefKeys.lang, "ar");
-                            provider.notifyListeners();
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomePage(),
-                              ),
-                            );
-                          },
-                          title: "العربية",
-                          // child: SvgPicture.asset(
-                          //   "assets/images/arabic.svg",
-                          //   height: 50,
-                          //   width: 60,
-                          //   fit: BoxFit.cover,
-                          // ),
-                          child: AspectRatio(
-                            aspectRatio: 4/3,
-                            child: Container(
-                              color: Colors.green[800],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Consumer<LangProvider>(
+                            builder: (context, provider, _) => MyFlatButton(
+                              function: () {
+                                // var provider = Provider.of<LangProvider>(context);
+                                provider.languageCode = "en";
+                                provider.prefs.setString(PrefKeys.lang, "en");
+                                provider.notifyListeners();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomePage(),
+                                  ),
+                                );
+                              },
+                              title: "English",
+                              // child: SvgPicture.asset(
+                              //   "assets/images/english.svg",
+                              //   height: 50,
+                              //   width: 60,
+                              //   fit: BoxFit.cover,
+                              // ),
                               child: Center(
-                                child: Text("ع",style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: Theme.of(context).textTheme.headline5.fontSize
-                                ),),
+                                child: Text("EN",
+                                    style: GoogleFonts.alfaSlabOne(
+                                        fontSize: Theme.of(context)
+                                            .textTheme
+                                            .headline4
+                                            .fontSize,
+                                        color: Colors.indigoAccent)),
+                              ),
+                              // child: Icon(IconData(0xe911)),
+                              // child: Container(
+                              //   color: Colors.red,
+                              //   height: 50,
+                              //   width: 50,
+                              // ),
+                            ),
+                          ),
+                          Consumer<LangProvider>(
+                            builder: (context, provider, _) => MyFlatButton(
+                              function: () {
+                                // var provider = Provider.of<LangProvider>(context);
+                                provider.languageCode = "ar";
+                                provider.prefs.setString(PrefKeys.lang, "ar");
+                                provider.notifyListeners();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomePage(),
+                                  ),
+                                );
+                              },
+                              title: "العربية",
+                              // child: SvgPicture.asset(
+                              //   "assets/images/arabic.svg",
+                              //   height: 50,
+                              //   width: 60,
+                              //   fit: BoxFit.cover,
+                              // ),
+                              child: Center(
+                                child: Text(
+                                  "ض",
+                                  style: GoogleFonts.reemKufi(
+                                      color: Colors.green[800],
+                                      fontSize: Theme.of(context)
+                                          .textTheme
+                                          .headline4
+                                          .fontSize),
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              ],
+            )),
           ],
-        )),
+        ),
       ),
     );
   }

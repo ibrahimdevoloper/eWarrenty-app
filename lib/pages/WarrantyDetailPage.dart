@@ -1,15 +1,17 @@
 import 'dart:io';
 
-import 'package:ewarrenty/Blocs/GetWarranty/get_warranty_cubit.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ewarrenty/Constants/Constants.dart';
+import 'package:ewarrenty/CustomWidget/ImageBanner.dart';
 import 'package:ewarrenty/Function/PDFGenerator.dart';
+import 'package:ewarrenty/Function/dateFormatter.dart';
 import 'package:ewarrenty/Icons/warranty_icons_icons.dart';
 import 'package:ewarrenty/Models/warranty.dart';
 import 'package:ewarrenty/pages/PdfViewerPage.dart';
 import 'package:flutter/material.dart';
 import 'package:ewarrenty/app_localizations.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-// import 'package:pdf/widgets/decoration.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class WarrantyDetailPage extends StatelessWidget {
   final Warranty _warranty;
@@ -18,34 +20,56 @@ class WarrantyDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final insideBoxStyle = TextStyle(
+        color: Color.fromRGBO(0x00, 0x4A, 0x80, 1.00),
+        fontSize: Theme.of(context).textTheme.subtitle1.fontSize);
+    final bannerStyle = TextStyle(
+        color: Colors.white,
+        fontSize: Theme.of(context).textTheme.headline5.fontSize);
     return Stack(
       fit: StackFit.expand,
       children: [
-        Image.asset('assets/images/whiteback.png',fit: BoxFit.cover,),
+        Image.asset(
+          'assets/images/whiteback.png',
+          fit: BoxFit.cover,
+        ),
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Text(
-                "${AppLocalizations.of(context).translate("warrantyCode")} 1596"),
+                AppLocalizations.of(context).translate("warrantyInformation"),
+                style: GoogleFonts.cairo()),
             actions: [
-              IconButton(
-                  icon: Icon(
-                    WarrantyIcons.warrenty_pdf,
-                    size: 36,
-                  ),
-                  onPressed: () async {
-                    Directory tempDir = await getTemporaryDirectory();
-                    String tempPath = tempDir.path;
-                    var path = "$tempPath/SAC64${DateTime.now()}.pdf";
-                    await PDFGenerator(path, "ksdbg", "batteryModel", "ownerNAme",
-                        DateTime.now(), DateTime.now());
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PdfViewerPage(
-                                  path: path,
-                                )));
-                  })
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: IconButton(
+                    padding: const EdgeInsets.all(0),
+                    icon: Icon(
+                      WarrantyIcons.warrenty_pdf,
+                      size: 36,
+                    ),
+                    onPressed: () async {
+                      Directory tempDir = await getTemporaryDirectory();
+                      String tempPath = tempDir.path;
+                      var path = "$tempPath/SAC64${DateTime.now()}.pdf";
+                      await PDFGenerator(
+                          path,
+                          _warranty,
+                          dateFormater(_warranty.boughtDateAsDateTime),
+                          dateFormater(DateTime(
+                              _warranty.boughtDateAsDateTime.year,
+                              _warranty.boughtDateAsDateTime.month +
+                                  _warranty.warrantyDuration,
+                              _warranty.boughtDateAsDateTime.day)),
+                          AppLocalizations.of(context).locale.languageCode);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PdfViewerPage(
+                                    path: path,
+                                  )));
+                    }),
+              )
             ],
           ),
           body: ListView(
@@ -57,7 +81,7 @@ class WarrantyDetailPage extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  gradient:LinearGradient(
+                  gradient: LinearGradient(
                     // stops: [0.1, 0.85],
                     colors: [
                       Colors.blue[700],
@@ -73,116 +97,10 @@ class WarrantyDetailPage extends StatelessWidget {
                 height: 60,
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: Image.asset('assets/images/whitelogo.png',fit: BoxFit.fitHeight,),
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Card(
-                // color: Theme.of(context).primaryColor.withOpacity(0.3),
-                color: Color.fromRGBO(0x00, 0x4A, 0x80, 0.21),
-                // color: Colors.transparent,
-                elevation: 0,
-                child: Text("${AppLocalizations.of(context).translate("warrantyCode")} 1596"
-                ),
-              ),
-              
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "${AppLocalizations.of(context).translate("batteryModel")}: MPU-15",
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "${AppLocalizations.of(context).translate("batterySerialNumber")}: LSKVLK518SSDV5",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "${AppLocalizations.of(context).translate("customerName")}: Name Surname",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "${AppLocalizations.of(context).translate("marketName")}: Al-Awael",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "${AppLocalizations.of(context).translate("marketAddress")}: Dams-Beruit",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "${AppLocalizations.of(context).translate("marketEMail")}: email@email.com",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "${AppLocalizations.of(context).translate("marketPhone")}: +39654921684",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "${AppLocalizations.of(context).translate("boughtDate")}: 2020-12-20",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "${AppLocalizations.of(context).translate("carProperty")}: Private",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "${AppLocalizations.of(context).translate("carModel")}: Lamborghini",
-                  style: Theme.of(context).textTheme.headline6,
+                  child: Image.asset(
+                    'assets/images/whitelogo.png',
+                    fit: BoxFit.fitHeight,
+                  ),
                 ),
               ),
               SizedBox(
@@ -190,22 +108,39 @@ class WarrantyDetailPage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context).translate("batteryFrontImage"),
-                      style: Theme.of(context).textTheme.headline6,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  // color: Theme.of(context).primaryColor.withOpacity(0.3),
+                  color: Color.fromRGBO(0x00, 0x4A, 0x80, 0.21),
+                  // color: Colors.transparent,
+                  elevation: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text(
+                            "${AppLocalizations.of(context).translate("warrantyCode")}: ${_warranty.warrantyCode}",
+                            style: insideBoxStyle),
+                        Text(
+                            "${AppLocalizations.of(context).translate("batteryModel")}: ${_warranty.battery.number}",
+                            style: insideBoxStyle),
+                        Text(
+                          "${AppLocalizations.of(context).translate("batterySerialNumber")}: ${_warranty.batterySerialNumber}",
+                          style: insideBoxStyle,
+                        ),
+                        Text(
+                          "${AppLocalizations.of(context).translate("boughtDate")}: ${dateFormater(_warranty.boughtDateAsDateTime)}",
+                          style: insideBoxStyle,
+                        ),
+                        Text(
+                          "${AppLocalizations.of(context).translate("endDate")}: ${dateFormater(DateTime(_warranty.boughtDateAsDateTime.year, _warranty.boughtDateAsDateTime.month + _warranty.warrantyDuration, _warranty.boughtDateAsDateTime.day))}",
+                          style: insideBoxStyle,
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    AspectRatio(
-                      aspectRatio: 4 / 3,
-                      child: Image.asset("assets/images/home/1.png",
-                          fit: BoxFit.cover),
-                    )
-                  ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -213,22 +148,30 @@ class WarrantyDetailPage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context).translate("fixedBatteryImage"),
-                      style: Theme.of(context).textTheme.headline6,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
+                  // color: Theme.of(context).primaryColor.withOpacity(0.3),
+                  color: Color.fromRGBO(0x00, 0x4A, 0x80, 0.21),
+                  // color: Colors.transparent,
+                  elevation: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text(
+                            "${AppLocalizations.of(context).translate("customerName")}:${_warranty.customerName}",
+                            style: insideBoxStyle),
+                        Text(
+                            "${AppLocalizations.of(context).translate("carModel")}: ${AppLocalizations.of(context).locale.languageCode.contains("ar") ? _warranty.carType.nameAr : _warranty.carType.nameEn}",
+                            style: insideBoxStyle),
+                        Text(
+                          "${AppLocalizations.of(context).translate("carProperty")}: ${AppLocalizations.of(context).locale.languageCode.contains("ar") ? _warranty.carProperty.nameAr : _warranty.carProperty.nameEn}",
+                          style: insideBoxStyle,
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    AspectRatio(
-                      aspectRatio: 4 / 3,
-                      child:
-                          Image.asset("assets/images/bill.jpg", fit: BoxFit.cover),
-                    )
-                  ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -236,25 +179,121 @@ class WarrantyDetailPage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)
-                          .translate("carNumberIncludingItsColorImage"),
-                      style: Theme.of(context).textTheme.headline6,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
+                  // color: Theme.of(context).primaryColor.withOpacity(0.3),
+                  color: Color.fromRGBO(0x00, 0x4A, 0x80, 0.21),
+
+                  // color: Colors.transparent,
+                  elevation: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text(
+                            "${AppLocalizations.of(context).translate("marketName")}: ${AppLocalizations.of(context).locale.languageCode.contains("ar") ? _warranty.market.nameAr : _warranty.market.nameEn}",
+                            style: insideBoxStyle),
+                        Text(
+                            "${AppLocalizations.of(context).translate("marketAddress")}: ${AppLocalizations.of(context).locale.languageCode.contains("ar") ? _warranty.market.addressAr : _warranty.market.addressEn}",
+                            style: insideBoxStyle),
+                        Text(
+                          "${AppLocalizations.of(context).translate("marketEMail")}: ${_warranty.market.email}",
+                          style: insideBoxStyle,
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "${AppLocalizations.of(context).translate("marketPhone")}: ",
+                              style: insideBoxStyle,
+                            ),
+                            Text(
+                              _warranty.market.phoneNumber,
+                              style: insideBoxStyle,
+                              textDirection: TextDirection.ltr,
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 8,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              ImageBanner(
+                title: AppLocalizations.of(context)
+                    .translate("yourBatteryFrontImage"),
+                child: Material(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      side: BorderSide(color: Colors.blue, width: 4)),
+                  clipBehavior: Clip.antiAlias,
+                  // child: Image.asset("assets/images/home/1.png",
+                  //     fit: BoxFit.cover),
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: "$baseUrl${_warranty.batteryFrontImage}",
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => Center(
+                      child: CircularProgressIndicator(
+                          value: downloadProgress.progress),
                     ),
-                    AspectRatio(
-                      aspectRatio: 4 / 3,
-                      child: Image.asset(
-                        "assets/images/number.jpg",
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  ],
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              ImageBanner(
+                title: AppLocalizations.of(context)
+                    .translate("yourBatteryFixedImage"),
+                child: Material(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      side: BorderSide(color: Colors.blue, width: 4)),
+                  clipBehavior: Clip.antiAlias,
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: "$baseUrl${_warranty.fixedBatteryImage}",
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => Center(
+                      child: CircularProgressIndicator(
+                          value: downloadProgress.progress),
+                    ),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                  // child: Image.asset("assets/images/FixedBatteryImage.png",
+                  //     fit: BoxFit.cover),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              ImageBanner(
+                title: AppLocalizations.of(context)
+                    .translate("yourCarsColorAndNumber"),
+                child: Material(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      side: BorderSide(color: Colors.blue, width: 4)),
+                  clipBehavior: Clip.antiAlias,
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: "$baseUrl${_warranty.carNumberImage}",
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) =>
+                        Center(
+                          child: CircularProgressIndicator(
+                              value: downloadProgress.progress),
+                        ),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                  // child: Image.asset("assets/images/carFront.png",
+                  //     fit: BoxFit.cover),
                 ),
               ),
             ],

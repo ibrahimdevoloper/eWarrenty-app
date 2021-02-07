@@ -20,5 +20,8 @@ class GetWarrantyLoaded extends GetWarrantyState {
 }
 
 class GetWarrantyError extends GetWarrantyState {
-  GetWarrantyError();
+  final String errorArabic;
+  final String errorEnglish;
+
+  GetWarrantyError(this.errorArabic, this.errorEnglish);
 }

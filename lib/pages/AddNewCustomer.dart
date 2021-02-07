@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class AddNewCustomer extends StatefulWidget {
   @override
@@ -20,7 +22,7 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add New Customer"),
+        title: Text("Add New Customer",style: GoogleFonts.cairo(),),
       ),
       body: ListView(
         shrinkWrap: true,

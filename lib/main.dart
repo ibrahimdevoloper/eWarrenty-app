@@ -15,7 +15,7 @@ import 'app_localizations.dart';
 void main() async {
   // SharedPreferences preferences = await SharedPreferences.getInstance();
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context) => LoginProvider()),
+    // ChangeNotifierProvider(create: (context) => LoginProvider()),
     ChangeNotifierProvider(create: (context) => LangProvider()),
     // ChangeNotifierProvider(create: (context) => ShoppingCartProvider()),
   ], child: MyApp()));

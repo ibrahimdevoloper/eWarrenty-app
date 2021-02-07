@@ -8,7 +8,7 @@ part 'GetWarrantyService.chopper.dart';
 abstract class GetWarrantyService extends ChopperService {
   @Get()
   Future<Response> getWarrenty(
-      @body Map<String,dynamic> body
+      @QueryMap() Map<String,dynamic> body
       );
 
   static GetWarrantyService create() {
