@@ -11,6 +11,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ewarrenty/main.dart';
 
 void main() {
+  // MyClass sut;
+  // MockBuildContext _mockContext;
+  // setUp(() {
+  //   sut = MyClass();
+  //   _mockContext = MockBuildContext();
+  // });
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
