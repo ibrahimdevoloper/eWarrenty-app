@@ -3,7 +3,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:ewarrenty/Blocs/InitData/init_data_cubit.dart';
 import 'package:ewarrenty/Constants/Constants.dart';
-import 'package:ewarrenty/Function/compressImage.dart';
 import 'package:ewarrenty/Function/myImagePicker.dart';
 import 'package:ewarrenty/Icons/warranty_icons_icons.dart';
 import 'package:ewarrenty/Models/Battery.dart';
@@ -18,13 +17,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 // import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:ewarrenty/dialogs/whereIsSerialNumberDialog.dart';
 import 'package:ewarrenty/Wrappers/DropdownBoxWrapper.dart';
 import 'package:ewarrenty/dialogs/showSummeryDialog.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:ewarrenty/CustomWidget/ImagePreviewButton.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 
 class AddWarrantyPage extends StatefulWidget {
@@ -646,8 +643,10 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                 },
                                 controller: _fullNameTextEditingController,
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp('[a-z A-Z]')),
+
+                                  AppLocalizations.of(context).locale.languageCode.contains("ar")? FilteringTextInputFormatter.allow(
+                                      RegExp('[\p{Arabic}\s\p{N}]')):FilteringTextInputFormatter.allow(
+                                      RegExp('[a-z\sA-Z]')),
                                 ],
                                 decoration: InputDecoration(
                                   errorText: ((state is InitDataFullNameError) ||
@@ -757,8 +756,9 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                 },
                                 controller: _addressTextEditingController,
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp('[a-z A-Z]')),
+                                  AppLocalizations.of(context).locale.languageCode.contains("ar")? FilteringTextInputFormatter.allow(
+                                      RegExp('[\p{Arabic}\s\p{N}]')):FilteringTextInputFormatter.allow(
+                                      RegExp('[a-z\sA-Z]')),
                                 ],
                                 decoration: InputDecoration(
                                   errorText: ((state is InitDataAddressError) ||
