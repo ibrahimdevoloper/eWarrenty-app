@@ -19,7 +19,8 @@ class _$InitDataService extends InitDataService {
   @override
   Future<Response<dynamic>> getData() {
     final $url = '/initData';
-    final $request = Request('GET', $url, client.baseUrl);
+    final $headers = {'Authorization': 'Basic YWRtaW46YWRtaW4='};
+    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
 }

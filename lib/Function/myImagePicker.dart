@@ -1,8 +1,8 @@
-import 'package:ewarrenty/Function/compressImage.dart';
-import 'package:image_picker/image_picker.dart';
-
 import 'dart:io';
 
+import 'package:ewarrenty/Function/compressImage.dart';
+import 'package:ewarrenty/Function/randomString.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<String> myImagePicker() async {
@@ -15,6 +15,6 @@ Future<String> myImagePicker() async {
   var dir = await getTemporaryDirectory();
   var tempPath = dir.path;
   File compressedFile = await testCompressAndGetFile(
-      await File(pickedFile.path), "$tempPath/${DateTime.now()}.jpeg");
+      await File(pickedFile.path), "$tempPath/${getRandomString(10)}.jpeg");
   return compressedFile.path;
 }

@@ -1,17 +1,14 @@
-import 'package:ewarrenty/Blocs/GetWarranty/get_warranty_cubit.dart';
-import 'package:ewarrenty/Blocs/InitData/init_data_cubit.dart';
+import "package:ewarrenty/Function/dateFormatter.dart";
+import "package:ewarrenty/Models/warranty.dart";
 import 'package:ewarrenty/pages/WarrantyDetailPage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../app_localizations.dart';
-import "package:ewarrenty/Models/warranty.dart";
-import "package:ewarrenty/Function/dateFormatter.dart";
 
 AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
   var bougthDate = DateTime.parse(warrenty.boughtDate);
   var endDate = DateTime(bougthDate.year,
-      bougthDate.month + warrenty.warrantyDuration, bougthDate.day);
+      bougthDate.month + warrenty.warrantyDurationInt, bougthDate.day);
   return AlertDialog(
     title: Text(AppLocalizations.of(context)
         .translate("congratulationsOnGettingYourWarrenty")),
@@ -27,18 +24,18 @@ AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
           SizedBox(
             height: 8,
           ),
-          Text("${AppLocalizations.of(context)
-              .translate("warrantyCode")}: ${warrenty.warrantyCode}"),
+          Text(
+              "${AppLocalizations.of(context).translate("warrantyCode")}: ${warrenty.warrantyCode}"),
           SizedBox(
             height: 8,
           ),
-          Text("${AppLocalizations.of(context)
-              .translate("startDate")}: ${dateFormater(bougthDate)}"),
+          Text(
+              "${AppLocalizations.of(context).translate("startDate")}: ${dateFormater(bougthDate)}"),
           SizedBox(
             height: 8,
           ),
-          Text("${AppLocalizations.of(context)
-              .translate("endDate")}: ${dateFormater(endDate)}"),
+          Text(
+              "${AppLocalizations.of(context).translate("endDate")}: ${dateFormater(endDate)}"),
           SizedBox(
             height: 8,
           ),
@@ -71,8 +68,7 @@ AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
           //   ),
           // );
         },
-        child: Text(AppLocalizations.of(context)
-            .translate("goToDetails")),
+        child: Text(AppLocalizations.of(context).translate("goToDetails")),
       ),
     ],
   );

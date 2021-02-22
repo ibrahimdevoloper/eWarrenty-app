@@ -6,7 +6,11 @@ part 'SendWarrantyService.chopper.dart';
 // This baseUrl is now changed to specify only the endpoint '/posts'
 @ChopperApi(baseUrl: '/Warranty')
 abstract class SendWarrantyService extends ChopperService {
-  @Post()
+  @Post(
+    headers: {
+      "Authorization": "Basic YWRtaW46YWRtaW4=",
+    },
+  )
   @multipart
   Future<Response> sendWarrenty({
     // @Part() Map<String, dynamic> body,

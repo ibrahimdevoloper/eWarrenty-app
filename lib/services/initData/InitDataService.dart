@@ -1,12 +1,16 @@
 import 'package:chopper/chopper.dart';
-import 'package:ewarrenty/Constants/Constants.dart'as constant;
+import 'package:ewarrenty/Constants/Constants.dart' as constant;
 
 part 'InitDataService.chopper.dart';
 
 // This baseUrl is now changed to specify only the endpoint '/posts'
 @ChopperApi(baseUrl: '/initData')
 abstract class InitDataService extends ChopperService {
-  @Get()
+  @Get(
+    headers: {
+      "Authorization": "Basic YWRtaW46YWRtaW4=",
+    },
+  )
   Future<Response> getData();
 
   static InitDataService create() {

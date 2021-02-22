@@ -7,11 +7,11 @@ import 'package:ewarrenty/Function/PDFGenerator.dart';
 import 'package:ewarrenty/Function/dateFormatter.dart';
 import 'package:ewarrenty/Icons/warranty_icons_icons.dart';
 import 'package:ewarrenty/Models/warranty.dart';
+import 'package:ewarrenty/app_localizations.dart';
 import 'package:ewarrenty/pages/PdfViewerPage.dart';
 import 'package:flutter/material.dart';
-import 'package:ewarrenty/app_localizations.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
 
 class WarrantyDetailPage extends StatelessWidget {
   final Warranty _warranty;
@@ -53,15 +53,16 @@ class WarrantyDetailPage extends StatelessWidget {
                       String tempPath = tempDir.path;
                       var path = "$tempPath/SAC64${DateTime.now()}.pdf";
                       await PDFGenerator(
-                          path,
-                          _warranty,
-                          dateFormater(_warranty.boughtDateAsDateTime),
-                          dateFormater(DateTime(
-                              _warranty.boughtDateAsDateTime.year,
-                              _warranty.boughtDateAsDateTime.month +
-                                  _warranty.warrantyDuration,
-                              _warranty.boughtDateAsDateTime.day)),
-                          AppLocalizations.of(context).locale.languageCode);
+                        path: path,
+                        warranty: _warranty,
+                        startDate: dateFormater(_warranty.boughtDateAsDateTime),
+                        endDate: dateFormater(DateTime(
+                            _warranty.boughtDateAsDateTime.year,
+                            _warranty.boughtDateAsDateTime.month +
+                                _warranty.warrantyDurationInt,
+                            _warranty.boughtDateAsDateTime.day)),
+                        lang: AppLocalizations.of(context).locale.languageCode,
+                      );
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -135,7 +136,7 @@ class WarrantyDetailPage extends StatelessWidget {
                           style: insideBoxStyle,
                         ),
                         Text(
-                          "${AppLocalizations.of(context).translate("endDate")}: ${dateFormater(DateTime(_warranty.boughtDateAsDateTime.year, _warranty.boughtDateAsDateTime.month + _warranty.warrantyDuration, _warranty.boughtDateAsDateTime.day))}",
+                          "${AppLocalizations.of(context).translate("endDate")}: ${dateFormater(DateTime(_warranty.boughtDateAsDateTime.year, _warranty.boughtDateAsDateTime.month + _warranty.warrantyDurationInt, _warranty.boughtDateAsDateTime.day))}",
                           style: insideBoxStyle,
                         ),
                       ],
@@ -235,7 +236,7 @@ class WarrantyDetailPage extends StatelessWidget {
                   //     fit: BoxFit.cover),
                   child: CachedNetworkImage(
                     fit: BoxFit.cover,
-                    imageUrl: "$baseUrl${_warranty.batteryFrontImage}",
+                    imageUrl: "$imageBaseUrl${_warranty.batteryFrontImage}",
                     progressIndicatorBuilder:
                         (context, url, downloadProgress) => Center(
                       child: CircularProgressIndicator(
@@ -258,7 +259,7 @@ class WarrantyDetailPage extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   child: CachedNetworkImage(
                     fit: BoxFit.cover,
-                    imageUrl: "$baseUrl${_warranty.fixedBatteryImage}",
+                    imageUrl: "$imageBaseUrl${_warranty.fixedBatteryImage}",
                     progressIndicatorBuilder:
                         (context, url, downloadProgress) => Center(
                       child: CircularProgressIndicator(
@@ -283,13 +284,12 @@ class WarrantyDetailPage extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   child: CachedNetworkImage(
                     fit: BoxFit.cover,
-                    imageUrl: "$baseUrl${_warranty.carNumberImage}",
+                    imageUrl: "$imageBaseUrl${_warranty.carNumberImage}",
                     progressIndicatorBuilder:
-                        (context, url, downloadProgress) =>
-                        Center(
-                          child: CircularProgressIndicator(
-                              value: downloadProgress.progress),
-                        ),
+                        (context, url, downloadProgress) => Center(
+                      child: CircularProgressIndicator(
+                          value: downloadProgress.progress),
+                    ),
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                   // child: Image.asset("assets/images/carFront.png",

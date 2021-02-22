@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:ewarrenty/Models/Battery.dart';
 import 'package:ewarrenty/Models/car_property.dart';
 import 'package:ewarrenty/Models/car_type.dart';
@@ -11,7 +12,6 @@ import 'package:ewarrenty/services/sendWarranty/SendWarrantyService.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:ewarrenty/Function/getJSONMap.dart';
 
 part 'init_data_state.dart';
 
@@ -34,7 +34,15 @@ class InitDataCubit extends Cubit<InitDataState> {
   bool _marketIsError = false;
 
   Battery _battery;
-  String _country;
+  CountryCode _countryCode;
+
+  CountryCode get countryCode => _countryCode;
+
+  set countryCode(CountryCode value) {
+    _countryCode = value;
+  }
+
+  String _countryName;
   String _billDate;
   String _serialNumber;
 
@@ -143,6 +151,7 @@ class InitDataCubit extends Cubit<InitDataState> {
       for (var JSONItem in data['carProperties']) {
         _carProperties.add(CarProperty.fromJson(JSONItem));
       }
+
       for (var JSONItem in data['carTypes']) {
         _carTypes.add(CarType.fromJson(JSONItem));
       }
@@ -165,52 +174,78 @@ class InitDataCubit extends Cubit<InitDataState> {
     SendWarrantyService service = SendWarrantyService.create();
     service
         .sendWarrenty(
-        battery_front_image: frontBatteryPath,
-        battery_model_id: battery.id,
-        battery_serial_number: serialNumber,
-        bought_date: billDate,
-        car_number: carNumber,
-        car_number_image: carNumberPath,
-        car_property_id: carPropertyId,
-        car_type_id: carTypeId,
-        customer_country: country,
-        customer_email: eMail,
-        customer_name: fullName,
-        customer_phone_number: phoneNumber,
-        fixed_battery_image: fixedBatteryPath,
-        customer_address: address,
-        market_id: market.id,
-        notes: "")
+            battery_front_image: frontBatteryPath,
+            battery_model_id: battery.id,
+            battery_serial_number: serialNumber,
+            bought_date: billDate,
+            car_number: carNumber,
+            car_number_image: carNumberPath,
+            car_property_id: carPropertyId,
+            car_type_id: carTypeId,
+            customer_country: countryName,
+            customer_email: eMail,
+            customer_name: fullName,
+            customer_phone_number: phoneNumber,
+            fixed_battery_image: fixedBatteryPath,
+            customer_address: address,
+            market_id: market.id,
+            notes: "empty")
         .then((value) {
-      // print("AddWarrantybody:${value.body}");
-      // print("AddWarrantyisSuccessful:${value.isSuccessful}");
+      print("AddWarrantybody:${value.body}");
+      print("AddWarrantyisSuccessful:${value.isSuccessful}");
       // print("AddWarrantyError:${value.error.toString()}");
+      // print("AddWarrantyError:${getJSONMap(
+      //     value.body
+      // )}");
 
-
-      if (value.statusCode == 200) {
-        var data = value.body['data'];
-        print(data);
-        emit(InitDataSubmitSent(Warranty.fromJson(data)));
-      } else if (value.statusCode == 400) {
-        print("error :400 ,${value.error} ");
-        var error = getJSONMap (value.error);
-        var errorArabic = error['messageAr'];
-        var errorEnglish = error['messageEn'];
-
-        emit(InitDataSubmitError(errorArabic, errorEnglish));
-      } else if (value.statusCode == 502) {
-        var error = getJSONMap (value.error);
-        var errorArabic = error['messageAr'];
-        var errorEnglish = error['messageEn'];
-        emit(InitDataSubmitError(errorArabic, errorEnglish));
+      if (value.statusCode >= 200 && value.statusCode <= 299) {
+        if (value.body.containsKey("error")) {
+          Map<String, dynamic> errorMap = value.body;
+          print("AddWarrantyErrorMap:value.body");
+          if (errorMap['error'].contains('this serial number')) {
+            var errorArabic = "إن هذا الرقم التسلسلي غير موجود";
+            var errorEnglish = "This Serial Number Do NOT Exist";
+            emit(InitDataSubmitError(errorArabic, errorEnglish));
+          } else {
+            Map<String, dynamic> errorMap = value.body;
+            print("AddWarrantyErrorMap:${value.body}");
+            emit(InitDataSubmitError(errorMap['error'], errorMap['error']));
+            // if (errorMap['error'].contains('this serial number')) {
+            //   var errorArabic = "إن هذا الرقم التسلسلي غير موجود" ;
+            //   var errorEnglish = "This Serial Number Do NOT Exist" ;
+            //   emit(InitDataSubmitError(errorArabic, errorEnglish));
+            // }
+          }
+        } else if (value.body.containsKey("data")) {
+          var data = value.body['data'];
+          print(data);
+          emit(InitDataSubmitSent(Warranty.fromJson(data)));
+        }
+      }
+      // else if (value.statusCode == 400) {
+      //   print("error :400 ,${value.error} ");
+      //   var error = getJSONMap(value.error);
+      //   var errorArabic = error['messageAr'];
+      //   var errorEnglish = error['messageEn'];
+      //
+      //   emit(InitDataSubmitError(errorArabic, errorEnglish));
+      // } else if (value.statusCode == 502) {
+      //   var error = getJSONMap(value.error);
+      //   var errorArabic = error['messageAr'];
+      //   var errorEnglish = error['messageEn'];
+      //   emit(InitDataSubmitError(errorArabic, errorEnglish));
+      // }
+      else {
+        //TODO: taranslate "Connection Error "
+        emit(InitDataSubmitError("Connection Error", "Connection Error"));
       }
     })
-      ..catchError((e) {
-        print(e);
-        //TODO: taranslate "check your internet connection "
-        emit(InitDataSubmitError("check your internet connection",
-            "check your internet connection "));
-      });
+          ..catchError((e) {
+            print(e);
+            //TODO: taranslate "check your internet connection "
+            emit(InitDataSubmitError("check your internet connection",
+                "check your internet connection "));
+          });
   }
 
   String get carNumberPath => _carNumberPath;
@@ -268,10 +303,10 @@ class InitDataCubit extends Cubit<InitDataState> {
     _billDate = value;
   }
 
-  String get country => _country;
+  String get countryName => _countryName;
 
-  set country(String value) {
-    _country = value;
+  set countryName(String value) {
+    _countryName = value;
   }
 
   Battery get battery => _battery;

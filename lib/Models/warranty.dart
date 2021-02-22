@@ -1,7 +1,7 @@
 import 'battery.dart';
+import 'car_property.dart';
 import 'car_type.dart';
 import 'market.dart';
-import 'car_property.dart';
 
 /// id : 112
 /// bought_date : "2020-01-05 00:00:00"
@@ -42,7 +42,7 @@ class Warranty {
   String _notes;
   String _createdAt;
   String _updatedAt;
-  int _warrantyDuration;
+  String _warrantyDuration;
   Battery _battery;
   CarType _carType;
   Market _market;
@@ -64,34 +64,34 @@ class Warranty {
   String get notes => _notes;
   String get createdAt => _createdAt;
   String get updatedAt => _updatedAt;
-  int get warrantyDuration => _warrantyDuration;
+  String get warrantyDuration => _warrantyDuration;
   Battery get battery => _battery;
   CarType get carType => _carType;
   Market get market => _market;
   CarProperty get carProperty => _carProperty;
 
-  Warranty({
-      int id, 
-      String boughtDate, 
-      String batterySerialNumber, 
-      String warrantyCode, 
-      String carNumber, 
-      String customerPhoneNumber, 
-      String customerAddress, 
-      String customerCountry, 
-      String customerEmail, 
-      String customerName, 
-      String carNumberImage, 
-      String batteryFrontImage, 
-      String fixedBatteryImage, 
-      String notes, 
-      String createdAt, 
-      String updatedAt, 
-      int warrantyDuration, 
-      Battery battery, 
+  Warranty(
+      {int id,
+      String boughtDate,
+      String batterySerialNumber,
+      String warrantyCode,
+      String carNumber,
+      String customerPhoneNumber,
+      String customerAddress,
+      String customerCountry,
+      String customerEmail,
+      String customerName,
+      String carNumberImage,
+      String batteryFrontImage,
+      String fixedBatteryImage,
+      String notes,
+      String createdAt,
+      String updatedAt,
+      String warrantyDuration,
+      Battery battery,
       CarType carType,
-      Market market, 
-      CarProperty carProperty}){
+      Market market,
+      CarProperty carProperty}) {
     _id = id;
     _boughtDate = boughtDate;
     _batterySerialNumber = batterySerialNumber;
@@ -113,7 +113,7 @@ class Warranty {
     _carType = carType;
     _market = market;
     _carProperty = carProperty;
-}
+  }
 
   Warranty.fromJson(dynamic json) {
     _id = json["id"];
@@ -133,10 +133,14 @@ class Warranty {
     _createdAt = json["created_at"];
     _updatedAt = json["updated_at"];
     _warrantyDuration = json["warranty_duration"];
-    _battery = json["battery"] != null ? Battery.fromJson(json["battery"]) : null;
-    _carType = json["car_type"] != null ? CarType.fromJson(json["car_type"]) : null;
+    _battery =
+        json["battery"] != null ? Battery.fromJson(json["battery"]) : null;
+    _carType =
+        json["car_type"] != null ? CarType.fromJson(json["car_type"]) : null;
     _market = json["market"] != null ? Market.fromJson(json["market"]) : null;
-    _carProperty = json["car_property"] != null ? CarProperty.fromJson(json["car_property"]) : null;
+    _carProperty = json["car_property"] != null
+        ? CarProperty.fromJson(json["car_property"])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -172,7 +176,7 @@ class Warranty {
     }
     return map;
   }
-  
-  DateTime get boughtDateAsDateTime => DateTime.parse(_boughtDate);
 
+  DateTime get boughtDateAsDateTime => DateTime.parse(_boughtDate);
+  int get warrantyDurationInt => int.parse(_warrantyDuration);
 }

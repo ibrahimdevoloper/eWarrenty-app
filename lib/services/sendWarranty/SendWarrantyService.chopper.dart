@@ -35,6 +35,7 @@ class _$SendWarrantyService extends SendWarrantyService {
       String battery_front_image,
       String fixed_battery_image}) {
     final $url = '/Warranty';
+    final $headers = {'Authorization': 'Basic YWRtaW46YWRtaW4='};
     final $parts = <PartValue>[
       PartValue<String>('battery_serial_number', battery_serial_number),
       PartValue<String>('bought_date', bought_date),
@@ -53,8 +54,8 @@ class _$SendWarrantyService extends SendWarrantyService {
       PartValueFile<String>('battery_front_image', battery_front_image),
       PartValueFile<String>('fixed_battery_image', fixed_battery_image)
     ];
-    final $request =
-        Request('POST', $url, client.baseUrl, parts: $parts, multipart: true);
+    final $request = Request('POST', $url, client.baseUrl,
+        parts: $parts, multipart: true, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
 }

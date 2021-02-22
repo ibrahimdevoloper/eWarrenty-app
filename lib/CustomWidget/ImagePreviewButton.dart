@@ -85,7 +85,7 @@ class ImagePreview extends StatelessWidget {
           Text(
             _subtitle,
             style: TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 color: Colors.white),
           ),
           SizedBox(

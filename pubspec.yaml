@@ -48,6 +48,16 @@ dependencies:
   flutter_image_compress: ^0.7.0
 #  flutter_progress_hud: ^1.0.3
   flutter_launcher_icons: "^0.8.0"
+  email_validator: '^1.0.5'
+  flutter_native_splash: ^0.3.0
+  # Check that you have this dependency (added in the previous step)
+  firebase_core: ^0.7.0
+  # Add the dependency for the FlutterFire plugin for Google Analytics
+  firebase_analytics: ^7.0.1
+  firebase_crashlytics: ^0.4.0+1
+  flutter_html: ^1.2.0
+
+
   flutter_localizations:
     sdk: flutter
   flutter:
@@ -95,6 +105,7 @@ flutter:
    - assets/lang/
    - fonts/
    - fonts/alja/
+   - fonts/Almarai/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "397517637204",
+    "project_id": "marvel-s-e-warranty",
+    "storage_bucket": "marvel-s-e-warranty.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397517637204:android:652f9f45a93c3717f00fc1",
+        "android_client_info": {
+          "package_name": "com.awael.ewarrenty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397517637204-cqb9r9n5ho5r99g0olbpef4br5m85hch.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.awael.ewarrenty",
+            "certificate_hash": "b7862cc38bc5571996b09e3d9ea7b696cf526992"
+          }
+        },
+        {
+          "client_id": "397517637204-v14d7vsuke3mofjs084vqanfbgmoe296.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxfmhF32f20YSZfc-DZnLIwOCRQ3MBd0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397517637204-v14d7vsuke3mofjs084vqanfbgmoe296.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,13 +2,14 @@ import 'package:ewarrenty/CustomWidget/MyFlatButton.dart';
 import 'package:ewarrenty/Icons/warranty_icons_icons.dart';
 import 'package:ewarrenty/Providers/LangProvider.dart';
 import 'package:ewarrenty/app_localizations.dart';
-import 'package:ewarrenty/customPainters/CurvePainter.dart';
+import 'package:ewarrenty/dialogs/PrivacyPolicyDialog.dart';
+import 'package:ewarrenty/dialogs/aboutCompanyDialog.dart';
+import 'package:ewarrenty/dialogs/termsOfServiceDialog.dart';
 import 'package:ewarrenty/helpers/PrefKeys.dart';
 import 'package:ewarrenty/pages/RequestDetailPage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import 'AddWarrantyPage.dart';
 
@@ -92,6 +93,99 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       // ),
       child: Scaffold(
         // backgroundColor: Theme.of(context).primaryColor,
+        drawer: Drawer(
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Center(
+                    child: Padding(
+                  padding: const EdgeInsets.all(42),
+                  child: Image.asset("assets/images/whitelogo.png"),
+                )),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  //   gradient: LinearGradient(
+                  // begin: AlignmentDirectional.topCenter,
+                  // end: AlignmentDirectional.bottomCenter,
+                  // colors: [
+                  //   Theme.of(context).primaryColor,
+                  //   Colors.white30
+                  // ]
+                  // ),
+                ),
+              ),
+              ListTile(
+                title:
+                    Text(AppLocalizations.of(context).translate("addWarranty")),
+                leading: Icon(WarrantyIcons.warrenty_add),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddWarrantyPage()));
+                },
+              ),
+              ListTile(
+                title: Text(
+                    AppLocalizations.of(context).translate("requestWarranty")),
+                leading: Icon(WarrantyIcons.warrenty_correct),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RequestDetailPage()));
+                },
+              ),
+              ListTile(
+                title: Text(
+                    AppLocalizations.of(context).translate("aboutCompany")),
+                leading: Icon(WarrantyIcons.warrenty_web),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => aboutCompanyDialog(context));
+                },
+              ),
+              ListTile(
+                title: Text(
+                    AppLocalizations.of(context).translate("privacyPolicy")),
+                leading: Icon(WarrantyIcons.warrenty_comment),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => privacyPolicyDialog(context));
+                },
+              ),
+              ListTile(
+                title: Text(
+                    AppLocalizations.of(context).translate("termsOfService")),
+                leading: Icon(WarrantyIcons.warrenty_like),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => termsOfServiceDialog(context));
+                },
+              ),
+              // ListTile(
+              //   title: Text(AppLocalizations.of(context).translate("requestWarranty")),
+              //   leading: Icon(WarrantyIcons.warrenty_correct),
+              //   onTap: () {
+              //     // Update the state of the app.
+              //     // ...
+              //   },
+              // ),
+              // ListTile(
+              //   title: Text('Item 2'),
+              //   onTap: () {
+              //     // Update the state of the app.
+              //     // ...
+              //   },
+              // ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           shadowColor: Colors.transparent,
           // backgroundColor: Colors.transparent,
@@ -150,6 +244,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ),
                   // Icon(Icons.language),
                   onPressed: () {
+                    // TODO: remove this line
+                    // FirebaseCrashlytics.instance.crash();
                     _fadeController.repeat();
                     if (AppLocalizations.of(context)
                         .locale
@@ -178,7 +274,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         body: Stack(
           fit: StackFit.expand,
           children: [
-            Image.asset('assets/images/whiteback.png',fit: BoxFit.cover,),
+            Image.asset(
+              'assets/images/whiteback.png',
+              fit: BoxFit.cover,
+            ),
             Center(
                 child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -194,15 +293,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         children: [
                           Material(
                             clipBehavior: Clip.antiAlias,
-
-                            shape:RoundedRectangleBorder(
-
-                              side: BorderSide(
-
-                              ),
-                                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(24),bottomRight: Radius.circular(24))
-
-                            ) ,
+                            shape: RoundedRectangleBorder(
+                                side: BorderSide(),
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(24),
+                                    bottomRight: Radius.circular(24))),
                             child: Image.asset(
                               "assets/images/carBackground1.png",
                               fit: BoxFit.cover,
@@ -211,12 +306,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           Wrap(
                             alignment: WrapAlignment.center,
                             children: [
-                             Image.asset(
-                                    "assets/images/logo.png",
-                                    fit: BoxFit.scaleDown,
-                                    height: 120,
-                                    width: 220,
-                                  ),
+                              Image.asset(
+                                "assets/images/logo.png",
+                                fit: BoxFit.scaleDown,
+                                height: 120,
+                                width: 220,
+                              ),
                               // Image.asset(
                               //   "assets/images/whitelogo.png",
                               //   fit: BoxFit.scaleDown,
@@ -300,7 +395,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => RequestDetailPage()));
+                                      builder: (context) =>
+                                          RequestDetailPage()));
                             },
                             title: AppLocalizations.of(context)
                                 .translate("requestWarranty"),

@@ -1,18 +1,11 @@
 import 'package:ewarrenty/Blocs/GetWarranty/get_warranty_cubit.dart';
-import 'package:ewarrenty/CustomWidget/MyFlatButton.dart';
-import 'package:ewarrenty/Icons/warranty_icons_icons.dart';
-import 'package:ewarrenty/Providers/LangProvider.dart';
 import 'package:ewarrenty/app_localizations.dart';
-import 'package:ewarrenty/customPainters/CurvePainter.dart';
-import 'package:ewarrenty/pages/AddWarrantyPage.dart';
+import 'package:ewarrenty/pages/ForgottenWarrantyList.dart';
 import 'package:ewarrenty/pages/WarrantyDetailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class RequestDetailPage extends StatefulWidget {
   @override
@@ -81,26 +74,28 @@ class _RequestDetailPageState extends State<RequestDetailPage>
             //             MaterialPageRoute(builder: (context) => LoginPage()));
             //       })
             // ],
-            title:
-                Text(AppLocalizations.of(context).translate("requestWarranty"),style: GoogleFonts.cairo()),
+            title: Text(
+                AppLocalizations.of(context).translate("requestWarranty"),
+                style: GoogleFonts.cairo()),
           ),
           body: Stack(
+            fit: StackFit.expand,
             children: [
               Image.asset(
                 'assets/images/whiteback.png',
                 fit: BoxFit.cover,
               ),
-              BlocConsumer<GetWarrantyCubit,GetWarrantyState>(
-                listenWhen: (previous,current){
+              BlocConsumer<GetWarrantyCubit, GetWarrantyState>(
+                listenWhen: (previous, current) {
                   return current is GetWarrantyError;
                 },
-                listener: (context,state){
-                  if(state is GetWarrantyError){
+                listener: (context, state) {
+                  if (state is GetWarrantyError) {
                     var snackbar = SnackBar(
                       content: Text(AppLocalizations.of(context)
-                          .locale
-                          .languageCode
-                          .contains("ar")
+                              .locale
+                              .languageCode
+                              .contains("ar")
                           ? state.errorArabic
                           : state.errorEnglish),
                       duration: Duration(seconds: 3),
@@ -108,8 +103,7 @@ class _RequestDetailPageState extends State<RequestDetailPage>
                     Scaffold.of(context).showSnackBar(snackbar);
                   }
                 },
-                builder:(context,state)
-                {
+                builder: (context, state) {
                   return ModalProgressHUD(
                     inAsyncCall: state is GetWarrantyLoading,
                     child: Center(
@@ -135,48 +129,50 @@ class _RequestDetailPageState extends State<RequestDetailPage>
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                                Wrap(alignment: WrapAlignment.center, children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(
-                                      "assets/images/whitelogo.png",
-                                      fit: BoxFit.contain,
-                                      height: 80,
-                                      width: 160,
-                                    ),
-                                  )
-                                  // Container(
-                                  //     decoration: BoxDecoration(
-                                  //       borderRadius: BorderRadius.only(
-                                  //         bottomLeft: Radius.circular(16),
-                                  //         bottomRight: Radius.circular(16),
-                                  //       ),
-                                  //       border: Border(
-                                  //         bottom: BorderSide(
-                                  //             width: 4,
-                                  //             color:
-                                  //                 Theme.of(context).primaryColor),
-                                  //         top: BorderSide(
-                                  //             width: 4,
-                                  //             color:
-                                  //                 Theme.of(context).primaryColor),
-                                  //         left: BorderSide(
-                                  //             width: 4,
-                                  //             color:
-                                  //                 Theme.of(context).primaryColor),
-                                  //         right: BorderSide(
-                                  //             width: 4,
-                                  //             color:
-                                  //                 Theme.of(context).primaryColor),
-                                  //       ),
-                                  //       color: Colors.white,
-                                  //     ),
-                                  //     child: Image.asset(
-                                  //       "assets/images/logo.png",
-                                  //       fit: BoxFit.scaleDown,
-                                  //       height: 86,
-                                  //     ))
-                                ]),
+                                Wrap(
+                                    alignment: WrapAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Image.asset(
+                                          "assets/images/whitelogo.png",
+                                          fit: BoxFit.contain,
+                                          height: 80,
+                                          width: 160,
+                                        ),
+                                      )
+                                      // Container(
+                                      //     decoration: BoxDecoration(
+                                      //       borderRadius: BorderRadius.only(
+                                      //         bottomLeft: Radius.circular(16),
+                                      //         bottomRight: Radius.circular(16),
+                                      //       ),
+                                      //       border: Border(
+                                      //         bottom: BorderSide(
+                                      //             width: 4,
+                                      //             color:
+                                      //                 Theme.of(context).primaryColor),
+                                      //         top: BorderSide(
+                                      //             width: 4,
+                                      //             color:
+                                      //                 Theme.of(context).primaryColor),
+                                      //         left: BorderSide(
+                                      //             width: 4,
+                                      //             color:
+                                      //                 Theme.of(context).primaryColor),
+                                      //         right: BorderSide(
+                                      //             width: 4,
+                                      //             color:
+                                      //                 Theme.of(context).primaryColor),
+                                      //       ),
+                                      //       color: Colors.white,
+                                      //     ),
+                                      //     child: Image.asset(
+                                      //       "assets/images/logo.png",
+                                      //       fit: BoxFit.scaleDown,
+                                      //       height: 86,
+                                      //     ))
+                                    ]),
                               ],
                             ),
                           ),
@@ -230,22 +226,23 @@ class _RequestDetailPageState extends State<RequestDetailPage>
                                         autocorrect: false,
                                         autofocus: false,
                                         decoration: InputDecoration(
-                                          labelText: AppLocalizations.of(context)
-                                              .translate("warrantyCode"),
+                                          labelText:
+                                              AppLocalizations.of(context)
+                                                  .translate("warrantyCode"),
                                           hintText: AppLocalizations.of(context)
                                               .translate("ex15FSD"),
                                           enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(4.0)),
-                                            borderSide:
-                                                BorderSide(color: Colors.black45),
+                                            borderSide: BorderSide(
+                                                color: Colors.black45),
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(4.0)),
                                             borderSide: BorderSide(
-                                                color:
-                                                    Theme.of(context).primaryColor),
+                                                color: Theme.of(context)
+                                                    .primaryColor),
                                           ),
                                         ),
                                         onChanged: (value) {},
@@ -255,12 +252,17 @@ class _RequestDetailPageState extends State<RequestDetailPage>
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 16, vertical: 8),
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(16)),
+                                          borderRadius:
+                                              BorderRadius.circular(16)),
                                       splashColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       textColor: Colors.red,
                                       onPressed: () {
                                         // TODO: request forgotten warranty
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ForgottenWarrantyListPage()));
                                       },
                                       child: Text(
                                         AppLocalizations.of(context)
@@ -276,8 +278,8 @@ class _RequestDetailPageState extends State<RequestDetailPage>
                                 ),
 
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 16),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
                                   child: FlatButton(
                                     textColor: Colors.white,
                                     color: Theme.of(context).primaryColor,
@@ -290,18 +292,21 @@ class _RequestDetailPageState extends State<RequestDetailPage>
                                           .getWarrantyDetail(
                                               code: _textController.text,
                                               onDone: () {
-                                                var warranty =BlocProvider.of<
-                                                    GetWarrantyCubit>(context)
+                                                var warranty = BlocProvider.of<
+                                                            GetWarrantyCubit>(
+                                                        context)
                                                     .warranty;
                                                 print(BlocProvider.of<
-                                                        GetWarrantyCubit>(context)
+                                                            GetWarrantyCubit>(
+                                                        context)
                                                     .warranty);
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
                                                             WarrantyDetailPage(
-                                                                warranty: warranty)));
+                                                                warranty:
+                                                                    warranty)));
                                               });
                                     },
                                     child: Text(AppLocalizations.of(context)

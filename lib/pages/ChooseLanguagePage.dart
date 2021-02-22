@@ -1,13 +1,13 @@
 import 'package:ewarrenty/CustomWidget/MyFlatButton.dart';
 import 'package:ewarrenty/Providers/LangProvider.dart';
-import 'package:ewarrenty/app_localizations.dart';
+import 'package:ewarrenty/dialogs/PrivacyPolicyDialog.dart';
+import 'package:ewarrenty/dialogs/termsOfServiceDialog.dart';
 import 'package:ewarrenty/helpers/PrefKeys.dart';
 import 'package:ewarrenty/pages/HomePage.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ChooseLanguagePage extends StatefulWidget {
   @override
@@ -248,6 +248,50 @@ class _ChooseLanguagePageState extends State<ChooseLanguagePage>
                         ],
                       ),
                     ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: "By Choosing a Language You Agreeing to Our\n",
+                      style: GoogleFonts.cairo(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: "Terms of Service",
+                          style: GoogleFonts.cairo(
+                            color: Colors.redAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      termsOfServiceDialog(context));
+                            },
+                        ),
+                        TextSpan(text: " and "),
+                        TextSpan(
+                          text: "Privacy Policy",
+                          style: GoogleFonts.cairo(
+                            color: Colors.redAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      privacyPolicyDialog(context));
+                            },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

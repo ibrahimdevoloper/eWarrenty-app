@@ -1,15 +1,20 @@
+import 'dart:io';
+
+import 'package:ewarrenty/Function/checkIfArabic.dart';
 import 'package:ewarrenty/Models/warranty.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
-import 'dart:io';
 import 'package:pdf/widgets.dart';
 
-import 'dateFormatter.dart';
-
-Future PDFGenerator(String path, Warranty warranty, String startDate,
-    String endDate, String lang) async {
+Future PDFGenerator({
+  @material.required String path,
+  @material.required Warranty warranty,
+  @material.required String startDate,
+  @material.required String endDate,
+  @material.required String lang,
+}) async {
   final Document pdf = Document();
   // var myTheme = ThemeData.withFont(
   //   base: Font.ttf(
@@ -17,10 +22,12 @@ Future PDFGenerator(String path, Warranty warranty, String startDate,
   //   bold: Font.ttf(
   //       await rootBundle.load("assets/fonts/alja/Al-Jazeera-Bold.ttf")),
   // );
-  var data = await rootBundle.load("fonts/alja/Al-Jazeera-Regular.ttf");
-  var myFont = Font.ttf(data);
-  var arabicStyle = TextStyle(font: myFont, fontSize: 24);
-  var englishStyle = TextStyle(fontSize: 24);
+  var dataAR = await rootBundle.load("fonts/alja/Al-Jazeera-Regular.ttf");
+  var myFontAR = Font.ttf(dataAR);
+  var dataEn = await rootBundle.load("fonts/Almarai/Almarai-Regular.ttf");
+  var myFontEn = Font.ttf(dataEn);
+  var arabicStyle = TextStyle(font: myFontAR, fontSize: 24);
+  var englishStyle = TextStyle(font: myFontEn, fontSize: 24);
 
   // var bytes = await rootBundle.load("assets/images/logo.png");
   // var filename = 'header.png';
@@ -58,66 +65,69 @@ Future PDFGenerator(String path, Warranty warranty, String startDate,
             child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Padding(padding:EdgeInsets.symmetric(vertical: 24),child:Row(
-              // mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      lang.contains("ar")
-                          ? arabicTextWidget(
-                              text: "كود الكفالة:", style: arabicStyle)
-                          : englishTextWidget(
-                              text: "Warranty Code:", style: englishStyle),
-                      englishTextWidget(
-                          text: warranty.warrantyCode, style: englishStyle)
-                      // Directionality(
-                      //   textDirection: TextDirection.ltr,
-                      //   child: Text("Warranty Code: ", style: englishStyle),
-                      // ),
-                      // Directionality(
-                      //   textDirection: TextDirection.ltr,
-                      //   child: Text(warrantyCode, style: englishStyle),
-                      // ),
-                    ],
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 24),
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        lang.contains("ar")
+                            ? arabicTextWidget(
+                                text: "كود الكفالة:", style: arabicStyle)
+                            : englishTextWidget(
+                                text: "Warranty Code:", style: englishStyle),
+                        englishTextWidget(
+                            text: warranty.warrantyCode, style: englishStyle)
+                        // Directionality(
+                        //   textDirection: TextDirection.ltr,
+                        //   child: Text("Warranty Code: ", style: englishStyle),
+                        // ),
+                        // Directionality(
+                        //   textDirection: TextDirection.ltr,
+                        //   child: Text(warrantyCode, style: englishStyle),
+                        // ),
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      lang.contains("ar")
-                          ? arabicTextWidget(
-                              text: "موديل البطارية:", style: arabicStyle)
-                          : englishTextWidget(
-                              text: "Battery Model:", style: englishStyle),
-                      englishTextWidget(
-                          text: warranty.battery.number, style: englishStyle)
-                      // Directionality(
-                      //   textDirection: TextDirection.ltr,
-                      //   child: Text("Warranty Code: ", style: englishStyle),
-                      // ),
-                      // Directionality(
-                      //   textDirection: TextDirection.ltr,
-                      //   child: Text(warrantyCode, style: englishStyle),
-                      // ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      children: [
+                        lang.contains("ar")
+                            ? arabicTextWidget(
+                                text: "موديل البطارية:", style: arabicStyle)
+                            : englishTextWidget(
+                                text: "Battery Model:", style: englishStyle),
+                        englishTextWidget(
+                            text: warranty.battery.number, style: englishStyle)
+                        // Directionality(
+                        //   textDirection: TextDirection.ltr,
+                        //   child: Text("Warranty Code: ", style: englishStyle),
+                        // ),
+                        // Directionality(
+                        //   textDirection: TextDirection.ltr,
+                        //   child: Text(warrantyCode, style: englishStyle),
+                        // ),
+                      ],
+                    ),
                   ),
-                ),
-                // Directionality(
-                //   textDirection: TextDirection.ltr,
-                //   child: Text("Warranty Code: ", style: englishStyle),
-                // ),
-                // Directionality(
-                //   textDirection: TextDirection.ltr,
-                //   child: Text(warrantyCode, style: englishStyle),
-                // ),
-                // Directionality(
-                //   textDirection: TextDirection.rtl,
-                //   child: Text("كود الكفالة",
-                //       style: arabicStyle,
-                // ),
-              ],
-            ),),
+                  // Directionality(
+                  //   textDirection: TextDirection.ltr,
+                  //   child: Text("Warranty Code: ", style: englishStyle),
+                  // ),
+                  // Directionality(
+                  //   textDirection: TextDirection.ltr,
+                  //   child: Text(warrantyCode, style: englishStyle),
+                  // ),
+                  // Directionality(
+                  //   textDirection: TextDirection.rtl,
+                  //   child: Text("كود الكفالة",
+                  //       style: arabicStyle,
+                  // ),
+                ],
+              ),
+            ),
             Container(height: 4, color: PdfColors.grey),
             // Padding(
             //     padding: EdgeInsets.symmetric(vertical: 8),
@@ -140,104 +150,115 @@ Future PDFGenerator(String path, Warranty warranty, String startDate,
             //       ],
             //     )),
             // Container(height: 4, color: PdfColors.grey),
-            Padding(padding:EdgeInsets.symmetric(vertical: 24),child:Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      lang.contains("ar")
-                          ? arabicTextWidget(
-                              text: "تاريخ بداية الكفالة:",
-                              style: arabicStyle)
-                          : englishTextWidget(
-                              text: "Warranty's Start Date:",
-                              style: englishStyle),
-                      englishTextWidget(text: startDate, style: englishStyle)
-                      // Directionality(
-                      //   textDirection: TextDirection.ltr,
-                      //   child: Text("Warranty Code: ", style: englishStyle),
-                      // ),
-                      // Directionality(
-                      //   textDirection: TextDirection.ltr,
-                      //   child: Text(warrantyCode, style: englishStyle),
-                      // ),
-                    ],
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 24),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        lang.contains("ar")
+                            ? arabicTextWidget(
+                                text: "تاريخ بداية الكفالة:",
+                                style: arabicStyle)
+                            : englishTextWidget(
+                                text: "Warranty's Start Date:",
+                                style: englishStyle),
+                        englishTextWidget(text: startDate, style: englishStyle)
+                        // Directionality(
+                        //   textDirection: TextDirection.ltr,
+                        //   child: Text("Warranty Code: ", style: englishStyle),
+                        // ),
+                        // Directionality(
+                        //   textDirection: TextDirection.ltr,
+                        //   child: Text(warrantyCode, style: englishStyle),
+                        // ),
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      lang.contains("ar")
-                          ? arabicTextWidget(
-                              text: "تاريخ نهاية الكفالة:",
-                              style: arabicStyle)
-                          : englishTextWidget(
-                              text: "Warranty's End Date:",
-                              style: englishStyle),
-                      englishTextWidget(text: endDate, style: englishStyle)
-                      // Directionality(
-                      //   textDirection: TextDirection.ltr,
-                      //   child: Text("Warranty Code: ", style: englishStyle),
-                      // ),
-                      // Directionality(
-                      //   textDirection: TextDirection.ltr,
-                      //   child: Text(warrantyCode, style: englishStyle),
-                      // ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      children: [
+                        lang.contains("ar")
+                            ? arabicTextWidget(
+                                text: "تاريخ نهاية الكفالة:",
+                                style: arabicStyle)
+                            : englishTextWidget(
+                                text: "Warranty's End Date:",
+                                style: englishStyle),
+                        englishTextWidget(text: endDate, style: englishStyle)
+                        // Directionality(
+                        //   textDirection: TextDirection.ltr,
+                        //   child: Text("Warranty Code: ", style: englishStyle),
+                        // ),
+                        // Directionality(
+                        //   textDirection: TextDirection.ltr,
+                        //   child: Text(warrantyCode, style: englishStyle),
+                        // ),
+                      ],
+                    ),
                   ),
-                ),
-                // Directionality(
-                //   textDirection: TextDirection.ltr,
-                //   child: Text("Warranty Code: ", style: englishStyle),
-                // ),
-                // Directionality(
-                //   textDirection: TextDirection.ltr,
-                //   child: Text(warrantyCode, style: englishStyle),
-                // ),
-                // Directionality(
-                //   textDirection: TextDirection.rtl,
-                //   child: Text("كود الكفالة",
-                //       style: arabicStyle,
-                // ),
-              ],
-              // mainAxisAlignment: MainAxisAlignment.end,
-              // children: [
-              //   Directionality(
-              //     textDirection: TextDirection.ltr,
-              //     child: Text("Owner Name: ", style: englishStyle),
-              //   ),
-              //   Directionality(
-              //     textDirection: TextDirection.ltr,
-              //     child: Text(ownerNAme, style: englishStyle),
-              //   ),
-              //   // Directionality(
-              //   //   textDirection: TextDirection.rtl,
-              //   //   child: Text("اسم المالك",
-              //   //       style: TextStyle(font: myFont, fontSize: 18)),
-              //   // ),
-              // ],
-            ),),
+                  // Directionality(
+                  //   textDirection: TextDirection.ltr,
+                  //   child: Text("Warranty Code: ", style: englishStyle),
+                  // ),
+                  // Directionality(
+                  //   textDirection: TextDirection.ltr,
+                  //   child: Text(warrantyCode, style: englishStyle),
+                  // ),
+                  // Directionality(
+                  //   textDirection: TextDirection.rtl,
+                  //   child: Text("كود الكفالة",
+                  //       style: arabicStyle,
+                  // ),
+                ],
+                // mainAxisAlignment: MainAxisAlignment.end,
+                // children: [
+                //   Directionality(
+                //     textDirection: TextDirection.ltr,
+                //     child: Text("Owner Name: ", style: englishStyle),
+                //   ),
+                //   Directionality(
+                //     textDirection: TextDirection.ltr,
+                //     child: Text(ownerNAme, style: englishStyle),
+                //   ),
+                //   // Directionality(
+                //   //   textDirection: TextDirection.rtl,
+                //   //   child: Text("اسم المالك",
+                //   //       style: TextStyle(font: myFont, fontSize: 18)),
+                //   // ),
+                // ],
+              ),
+            ),
             Container(height: 4, color: PdfColors.grey),
-            Padding(padding:EdgeInsets.symmetric(vertical: 24),child:Column(
-              children: [
-                lang.contains("ar")
-                    ? arabicTextWidget(
-                    text: "اسم مالك الكفالة:",
-                    style: arabicStyle)
-                    : englishTextWidget(
-                    text: "Warranty's Owner Name:",
-                    style: englishStyle),
-                englishTextWidget(text: warranty.customerName, style: englishStyle)
-                // Directionality(
-                //   textDirection: TextDirection.ltr,
-                //   child: Text("Warranty Code: ", style: englishStyle),
-                // ),
-                // Directionality(
-                //   textDirection: TextDirection.ltr,
-                //   child: Text(warrantyCode, style: englishStyle),
-                // ),
-              ],
-            ),)
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 24),
+              child: Column(
+                children: [
+                  lang.contains("ar")
+                      ? arabicTextWidget(
+                          text: "اسم مالك الكفالة:", style: arabicStyle)
+                      : englishTextWidget(
+                          text: "Warranty's Owner Name:", style: englishStyle),
+                  checkIfTextInArabic(warranty.customerName)
+                      ? arabicTextWidget(
+                          text: warranty.customerName, style: arabicStyle)
+                      : lang.contains("ar")
+                          ? arabicTextWidget(
+                              text: warranty.customerName, style: englishStyle)
+                          : englishTextWidget(
+                              text: warranty.customerName, style: englishStyle)
+                  // Directionality(
+                  //   textDirection: TextDirection.ltr,
+                  //   child: Text("Warranty Code: ", style: englishStyle),
+                  // ),
+                  // Directionality(
+                  //   textDirection: TextDirection.ltr,
+                  //   child: Text(warrantyCode, style: englishStyle),
+                  // ),
+                ],
+              ),
+            )
 
             // Padding(
             //   padding: EdgeInsets.symmetric(vertical: 8),
@@ -315,6 +336,7 @@ Widget englishTextWidget({text, style}) {
     textDirection: TextDirection.ltr,
     child: Text(text, style: style),
   );
+  // return Text(text, style: style);
 }
 
 Widget returnTAble(List<List<String>> e, context) {

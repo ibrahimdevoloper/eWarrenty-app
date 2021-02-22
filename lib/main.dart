@@ -2,6 +2,7 @@ import 'package:ewarrenty/Providers/LangProvider.dart';
 import 'package:ewarrenty/helpers/PrefKeys.dart';
 import 'package:ewarrenty/pages/ChooseLanguagePage.dart';
 import 'package:ewarrenty/pages/HomePage.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -11,9 +12,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Providers/LoginProvider.dart';
 import 'app_localizations.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 void main() async {
   // SharedPreferences preferences = await SharedPreferences.getInstance();
+  // // Set `enableInDevMode` to true to see reports while in debug mode
+  // // This is only to be used for confirming that reports are being
+  // // submitted as expected. It is not intended to be used for everyday
+  // // development.
+  // Crashlytics.instance.enableInDevMode = true;
+  // // Pass all uncaught errors from the framework to Crashlytics.
+  // FlutterError.onError = Crashlytics.instance.recordFlutterError;
+
+
   runApp(MultiProvider(providers: [
     // ChangeNotifierProvider(create: (context) => LoginProvider()),
     ChangeNotifierProvider(create: (context) => LangProvider()),
@@ -21,17 +32,21 @@ void main() async {
   ], child: MyApp()));
 }
 
+// splash screen image : splash-srceen.png
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<SharedPreferences>(
-      future: SharedPreferences.getInstance(),
+    return FutureBuilder(
+      future: Future.wait([SharedPreferences.getInstance(),Firebase.initializeApp()]),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          SharedPreferences _pref = snapshot.data[0];
+          FirebaseApp _firebaseApp = snapshot.data[1];
           return Consumer<LangProvider>(builder: (context, provider, _) {
-            provider.prefs = snapshot.data;
+            provider.prefs = _pref;
             if (provider.prefs.containsKey(PrefKeys.lang)) {
               if (provider.languageCode.isEmpty) {
                 provider.languageCode = provider.prefs.getString(PrefKeys.lang);

@@ -56,20 +56,37 @@ class InitDataFrontBatteryImage extends InitDataState {
   final String imagePath;
 
   InitDataFrontBatteryImage(this.imagePath);
+} // when a front date battery is choosen but the user didn't capture the image
+
+class InitDataFrontBatteryImageErrorWhileBatteyIsNotChoosen
+    extends InitDataState {
+  InitDataFrontBatteryImageErrorWhileBatteyIsNotChoosen();
 }
 
-// when a fixed battery image is choosen
+class InitDataFrontBatteryImageErrorWhileBatteyIsChoosen extends InitDataState {
+  InitDataFrontBatteryImageErrorWhileBatteyIsChoosen();
+}
+
+// user didn't capture the fixed battery image is choosen
 class InitDataFixedBatteryImage extends InitDataState {
   final String imagePath;
 
   InitDataFixedBatteryImage(this.imagePath);
 }
 
-// when a car number Image  is choosen
-class InitDataCarNumber extends InitDataState {
+class InitDataFixedBatteryImageError extends InitDataState {
+  InitDataFixedBatteryImageError();
+}
+
+// user didn't capture the car number Image  is choosen
+class InitDataCarNumberImage extends InitDataState {
   final String imagePath;
 
-  InitDataCarNumber(this.imagePath);
+  InitDataCarNumberImage(this.imagePath);
+}
+
+class InitDataCarNumberImageError extends InitDataState {
+  InitDataCarNumberImageError();
 }
 
 // to battery choosen field reset
@@ -201,7 +218,6 @@ class InitDataSubmitSent extends InitDataState {
 
 //state when the submit is loading
 class InitDataSubmitLoading extends InitDataState {
-
   InitDataSubmitLoading();
 }
 

@@ -1,15 +1,19 @@
 import 'package:chopper/chopper.dart';
-import 'package:ewarrenty/Constants/Constants.dart'as constant;
+import 'package:ewarrenty/Constants/Constants.dart' as constant;
 
 part 'GetWarrantyService.chopper.dart';
 
 // This baseUrl is now changed to specify only the endpoint '/posts'
 @ChopperApi(baseUrl: '/getWarrenty')
 abstract class GetWarrantyService extends ChopperService {
-  @Get()
-  Future<Response> getWarrenty(
-      @QueryMap() Map<String,dynamic> body
-      );
+  @Get(
+    headers: {
+      "Authorization": "Basic YWRtaW46YWRtaW4=",
+    },
+    path: "/{code}",
+  )
+  // Future<Response> getWarrenty(@QueryMap() Map<String, dynamic> body);
+  Future<Response> getWarrenty(@Path('code') String code);
 
   static GetWarrantyService create() {
     final client = ChopperClient(

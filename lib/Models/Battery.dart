@@ -2,7 +2,7 @@ class Battery {
   int _id;
   int _capacity;
   int _ccaAmpere;
-  String _weight;
+  dynamic _weight;
   String _number;
   String _infoAr;
   String _infoEn;
@@ -20,7 +20,7 @@ class Battery {
   int get id => _id;
   int get capacity => _capacity;
   int get ccaAmpere => _ccaAmpere;
-  String get weight => _weight;
+  dynamic get weight => _weight;
   String get number => _number;
   String get infoEn => _infoEn;
   String get infoAr => _infoAr;
@@ -35,24 +35,24 @@ class Battery {
   String get manufacturingCountryAr => _manufacturingCountryAr;
   String get manufacturingCountryEn => _manufacturingCountryEn;
 
-  Battery({
-      int id, 
-      int capacity, 
-      int ccaAmpere, 
-      String weight, 
-      String number, 
+  Battery(
+      {int id,
+      int capacity,
+      int ccaAmpere,
+      dynamic weight,
+      String number,
       String infoEn,
       String infoAr,
       String dimensions,
-      String description, 
-      String image, 
-      String frontImage, 
-      String serialNumberImage, 
-      String createdAt, 
-      String updatedAt, 
-      String terminal, 
-      String manufacturingCountryAr, 
-      String manufacturingCountryEn}){
+      String description,
+      String image,
+      String frontImage,
+      String serialNumberImage,
+      String createdAt,
+      String updatedAt,
+      String terminal,
+      String manufacturingCountryAr,
+      String manufacturingCountryEn}) {
     _id = id;
     _capacity = capacity;
     _ccaAmpere = ccaAmpere;
@@ -70,7 +70,7 @@ class Battery {
     _terminal = terminal;
     _manufacturingCountryAr = manufacturingCountryAr;
     _manufacturingCountryEn = manufacturingCountryEn;
-}
+  }
 
   Battery.fromJson(dynamic json) {
     _id = json["id"];
@@ -113,5 +113,4 @@ class Battery {
     map["manufacturing_country_en"] = _manufacturingCountryEn;
     return map;
   }
-
 }
