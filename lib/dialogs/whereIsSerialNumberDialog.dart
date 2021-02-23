@@ -6,9 +6,9 @@ import '../app_localizations.dart';
 
 AlertDialog whereIsSerialNumberDialog(BuildContext context,
     {@required String text, @required String imageUrl}) {
-  //TODO: may the about company change
   return AlertDialog(
-    title: Text("Where Is My Batterys Serial Number ?"),
+    title: Text(AppLocalizations.of(context)
+        .translate("WhereIsMyBatterysSerialNumber")),
     content: SingleChildScrollView(
       child: Column(
         // shrinkWrap: true,
@@ -17,16 +17,23 @@ AlertDialog whereIsSerialNumberDialog(BuildContext context,
           SizedBox(
             height: 8,
           ),
-          AspectRatio(
-            aspectRatio: 16 / 9,
-            child: CachedNetworkImage(
-              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  Center(
-                child:
-                    CircularProgressIndicator(value: downloadProgress.progress),
+          Material(
+            clipBehavior: Clip.antiAlias,
+            borderRadius: BorderRadius.all(
+              Radius.circular(16),
+            ),
+            child: AspectRatio(
+              aspectRatio: 4 / 3,
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    Center(
+                  child: CircularProgressIndicator(
+                      value: downloadProgress.progress),
+                ),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+                imageUrl: "$imageBaseUrl/$imageUrl",
               ),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-              imageUrl: "$imageBaseUrl/$imageUrl",
             ),
           )
         ],

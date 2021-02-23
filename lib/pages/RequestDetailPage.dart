@@ -2,7 +2,9 @@ import 'package:ewarrenty/Blocs/GetWarranty/get_warranty_cubit.dart';
 import 'package:ewarrenty/app_localizations.dart';
 import 'package:ewarrenty/pages/ForgottenWarrantyList.dart';
 import 'package:ewarrenty/pages/WarrantyDetailPage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -102,6 +104,11 @@ class _RequestDetailPageState extends State<RequestDetailPage>
                     );
                     Scaffold.of(context).showSnackBar(snackbar);
                   }
+                },
+                buildWhen: (previous, current) {
+                  return current is GetWarrantyInitial ||
+                      current is GetWarrantyLoading ||
+                      current is GetWarrantyLoaded;
                 },
                 builder: (context, state) {
                   return ModalProgressHUD(
@@ -221,31 +228,73 @@ class _RequestDetailPageState extends State<RequestDetailPage>
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 16),
-                                      child: TextFormField(
-                                        controller: _textController,
-                                        autocorrect: false,
-                                        autofocus: false,
-                                        decoration: InputDecoration(
-                                          labelText:
-                                              AppLocalizations.of(context)
-                                                  .translate("warrantyCode"),
-                                          hintText: AppLocalizations.of(context)
-                                              .translate("ex15FSD"),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4.0)),
-                                            borderSide: BorderSide(
-                                                color: Colors.black45),
+                                      child: BlocBuilder<GetWarrantyCubit,
+                                          GetWarrantyState>(
+                                        buildWhen: (previous, current) {
+                                          current is GetWarrantyCodeTextEditorReset ||
+                                              current
+                                                  is GetWarrantyCodeTextEditorError;
+                                        },
+                                        builder: (context, state) =>
+                                            TextFormField(
+                                          controller: _textController,
+                                          autocorrect: false,
+                                          autofocus: false,
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r'[0-9A-Z]')),
+                                          ],
+                                          decoration: InputDecoration(
+                                            labelText:
+                                                AppLocalizations.of(context)
+                                                    .translate("warrantyCode"),
+                                            hintText:
+                                                AppLocalizations.of(context)
+                                                    .translate("ex15FSD"),
+                                            //todo : translate "make sure you are entering 7 capital case characters and/or numbers"
+                                            errorText: state
+                                                    is GetWarrantyCodeTextEditorError
+                                                ? AppLocalizations.of(context)
+                                                    .translate(
+                                                        "makeSureYouAreEntering7CapitalCaseCharactersAndOrNumbers")
+                                                : null,
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(4.0)),
+                                              borderSide: BorderSide(
+                                                  color: Colors.black45),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(4.0)),
+                                              borderSide: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                            ),
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4.0)),
-                                            borderSide: BorderSide(
-                                                color: Theme.of(context)
-                                                    .primaryColor),
-                                          ),
+                                          onTap: () {
+                                            BlocProvider.of<GetWarrantyCubit>(
+                                                    context)
+                                                .emit(
+                                                    GetWarrantyCodeTextEditorReset());
+                                          },
+                                          onFieldSubmitted: (value) {
+                                            goToWarrantyDetailPage(context);
+                                          },
+                                          onChanged: (value) {
+                                            if (value.length > 7 ||
+                                                value.length < 7)
+                                              BlocProvider.of<GetWarrantyCubit>(
+                                                      context)
+                                                  .emit(
+                                                      GetWarrantyCodeTextEditorError());
+                                            else
+                                              BlocProvider.of<GetWarrantyCubit>(
+                                                      context)
+                                                  .emit(
+                                                      GetWarrantyCodeTextEditorReset());
+                                          },
                                         ),
-                                        onChanged: (value) {},
                                       ),
                                     ),
                                     FlatButton(
@@ -288,26 +337,7 @@ class _RequestDetailPageState extends State<RequestDetailPage>
                                       //     context,
                                       //     MaterialPageRoute(
                                       //         builder: (context) => WarrantyDetailPage()));
-                                      BlocProvider.of<GetWarrantyCubit>(context)
-                                          .getWarrantyDetail(
-                                              code: _textController.text,
-                                              onDone: () {
-                                                var warranty = BlocProvider.of<
-                                                            GetWarrantyCubit>(
-                                                        context)
-                                                    .warranty;
-                                                print(BlocProvider.of<
-                                                            GetWarrantyCubit>(
-                                                        context)
-                                                    .warranty);
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            WarrantyDetailPage(
-                                                                warranty:
-                                                                    warranty)));
-                                              });
+                                      goToWarrantyDetailPage(context);
                                     },
                                     child: Text(AppLocalizations.of(context)
                                         .translate("requestWarranty")),
@@ -469,5 +499,19 @@ class _RequestDetailPageState extends State<RequestDetailPage>
         ),
       ),
     );
+  }
+
+  void goToWarrantyDetailPage(BuildContext context) {
+    BlocProvider.of<GetWarrantyCubit>(context).getWarrantyDetail(
+        code: _textController.text,
+        onDone: () {
+          var warranty = BlocProvider.of<GetWarrantyCubit>(context).warranty;
+          print(BlocProvider.of<GetWarrantyCubit>(context).warranty);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      WarrantyDetailPage(warranty: warranty)));
+        });
   }
 }

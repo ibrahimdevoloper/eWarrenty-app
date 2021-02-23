@@ -25,3 +25,11 @@ class GetWarrantyError extends GetWarrantyState {
 
   GetWarrantyError(this.errorArabic, this.errorEnglish);
 }
+
+class GetWarrantyCodeTextEditorReset extends GetWarrantyState {
+  GetWarrantyCodeTextEditorReset();
+}
+
+class GetWarrantyCodeTextEditorError extends GetWarrantyState {
+  GetWarrantyCodeTextEditorError();
+}

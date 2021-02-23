@@ -105,7 +105,7 @@
   "example": "مثال",
 
   "warrantyCode": "كود الكفالة",
-  "ex15FSD": "مثال: 15FSD",
+  "ex15FSD": "مثال: GH15FSD",
 
   "warrantyDetailFor": "تفاصيل كفالة ذا الكود",
   "batteryModel": "موديل البطارية",
@@ -147,5 +147,8 @@
   "pleaseAddYourCarNumber": "رجاءً أدخل رقم سيارتك",
   "youCanUse" : "بإمكانك استخدام",
   "or": "أو",
-  "toRestoreYourWarranties": "لاستعادة كفالتك"
+  "toRestoreYourWarranties": "لاستعادة كفالتك",
+  "makeSureYouAreEntering7CapitalCaseCharactersAndOrNumbers": "رجاءً أدخل 7 أحرف أنجليزية كبيرة مع أرقام إن وجد",
+  "WhereIsMyBatterysSerialNumber": "أبن الرقم التسلسلي لبطاريتي ؟",
+  "warrantyExpired": "هذه البطارية خارج الكفالة بسبب طول فترة التخزين"
 }
