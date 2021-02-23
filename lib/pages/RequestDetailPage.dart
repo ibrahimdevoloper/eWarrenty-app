@@ -251,7 +251,6 @@ class _RequestDetailPageState extends State<RequestDetailPage>
                                             hintText:
                                                 AppLocalizations.of(context)
                                                     .translate("ex15FSD"),
-                                            //todo : translate "make sure you are entering 7 capital case characters and/or numbers"
                                             errorText: state
                                                     is GetWarrantyCodeTextEditorError
                                                 ? AppLocalizations.of(context)
@@ -307,7 +306,6 @@ class _RequestDetailPageState extends State<RequestDetailPage>
                                       highlightColor: Colors.transparent,
                                       textColor: Colors.red,
                                       onPressed: () {
-                                        // TODO: request forgotten warranty
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>

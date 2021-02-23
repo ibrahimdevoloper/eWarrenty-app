@@ -30,7 +30,6 @@ class _ForgottenWarrantyListPageState extends State<ForgottenWarrantyListPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // _emailController = TextEditingController();
     // _phoneNumberController = TextEditingController();
@@ -41,74 +40,83 @@ class _ForgottenWarrantyListPageState extends State<ForgottenWarrantyListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ForgottenWarrantyCubit>(
-      create: (context) => ForgottenWarrantyCubit(),
-      child: BlocConsumer<ForgottenWarrantyCubit, ForgottenWarrantyState>(
-          listenWhen: (previous, current) {
-            return current is ForgottenWarrantyError;
-          },
-          listener: (context, state) {},
-          buildWhen: (previous, current) {
-            return current is ForgottenWarrantyInitial ||
-                current is ForgottenWarrantyLoaded ||
-                current is ForgottenWarrantyLoading ||
-                current is ForgottenWarrantyError;
-          },
-          builder: (context, state) {
-            if (state is ForgottenWarrantyInitial) {
-              return ForgottenWarrantyInitailWidget(
-                emailController: _emailController,
-                phoneNumberController: _phoneNumberController,
-              );
-            } else if (state is ForgottenWarrantyLoading) {
-              return ForgottenWarrantyLoadingWidget();
-            } else if (state is ForgottenWarrantyLoaded) {
-              return ForgottenWarrantyLoadedWidget(
-                emailController: _emailController,
-                phoneNumberController: _phoneNumberController,
-                warranties: state.warranties,
-              );
-            } else {
-              return ForgottenWarrantyInitailWidget(
-                emailController: _emailController,
-                phoneNumberController: _phoneNumberController,
-              );
-            }
+    return Scaffold(
+      body: BlocProvider<ForgottenWarrantyCubit>(
+        create: (context) => ForgottenWarrantyCubit(),
+        child: BlocConsumer<ForgottenWarrantyCubit, ForgottenWarrantyState>(
+            listenWhen: (previous, current) {
+          return current is ForgottenWarrantyError;
+        }, listener: (context, state) {
+          if (state is ForgottenWarrantyError) {
+            var snackbar = SnackBar(
+                content: Text(AppLocalizations.of(context)
+                        .locale
+                        .languageCode
+                        .contains("ar")
+                    ? state.errorArabic
+                    : state.errorEnglish));
+            Scaffold.of(context).showSnackBar(snackbar);
+          }
+        }, buildWhen: (previous, current) {
+          return current is ForgottenWarrantyInitial ||
+              current is ForgottenWarrantyLoaded ||
+              current is ForgottenWarrantyLoading ||
+              current is ForgottenWarrantyError;
+        }, builder: (context, state) {
+          if (state is ForgottenWarrantyInitial) {
+            return ForgottenWarrantyInitailWidget(
+              emailController: _emailController,
+              phoneNumberController: _phoneNumberController,
+            );
+          } else if (state is ForgottenWarrantyLoading) {
+            return ForgottenWarrantyLoadingWidget();
+          } else if (state is ForgottenWarrantyLoaded) {
+            return ForgottenWarrantyLoadedWidget(
+              emailController: _emailController,
+              phoneNumberController: _phoneNumberController,
+              warranties: state.warranties,
+            );
+          } else {
+            return ForgottenWarrantyInitailWidget(
+              emailController: _emailController,
+              phoneNumberController: _phoneNumberController,
+            );
+          }
 
-            // return Stack(
-            //   fit: StackFit.expand,
-            //   children: [
-            //     Image.asset(
-            //       'assets/images/whiteback.png',
-            //       fit: BoxFit.cover,
-            //     ),
-            //     Scaffold(
-            //       backgroundColor: Colors.transparent,
-            //       appBar: AppBar(
-            //         title: Text(
-            //             // TODO: Add title for this page
-            //             AppLocalizations.of(context)
-            //                 .translate("warrantyInformation"),
-            //             style: GoogleFonts.cairo()),
-            //       ),
-            //       body: ListView.builder(
-            //         itemCount: 3,
-            //         itemBuilder: (context, i) {
-            //           return Card(
-            //             elevation: 8,
-            //             child: ListTile(
-            //               title: Text("kjsdv"),
-            //               subtitle: Container(
-            //                 height: 125,
-            //               ),
-            //             ),
-            //           );
-            //         },
-            //       ),
-            //     ),
-            //   ],
-            // );
-          }),
+          // return Stack(
+          //   fit: StackFit.expand,
+          //   children: [
+          //     Image.asset(
+          //       'assets/images/whiteback.png',
+          //       fit: BoxFit.cover,
+          //     ),
+          //     Scaffold(
+          //       backgroundColor: Colors.transparent,
+          //       appBar: AppBar(
+          //         title: Text(
+          //             AppLocalizations.of(context)
+          //                 .translate("warrantyInformation"),
+          //             style: GoogleFonts.cairo()),
+          //       ),
+          //       body: ListView.builder(
+          //         itemCount: 3,
+          //         itemBuilder: (context, i) {
+          //           return Card(
+          //             elevation: 8,
+          //             child: ListTile(
+          //               title: Text("kjsdv"),
+          //               subtitle: Container(
+          //                 height: 125,
+          //               ),
+          //             ),
+          //           );
+          //         },
+          //       ),
+          //     ),
+          //   ],
+          // );
+        }),
+      ),
     );
   }
 }
@@ -127,8 +135,7 @@ class ForgottenWarrantyLoadingWidget extends StatelessWidget {
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Text(
-                // TODO: Add title for this page
-                AppLocalizations.of(context).translate("warrantyInformation"),
+                AppLocalizations.of(context).translate("forgotWarrantyCode"),
                 style: GoogleFonts.cairo()),
           ),
           body: Center(
@@ -166,7 +173,6 @@ class ForgottenWarrantyInitailWidget extends StatelessWidget {
             backgroundColor: Colors.transparent,
             appBar: AppBar(
               title: Text(
-                  // TODO: Add title for this page
                   AppLocalizations.of(context).translate("forgotWarrantyCode"),
                   style: GoogleFonts.cairo()),
             ),
@@ -258,8 +264,8 @@ class ForgottenWarrantyByPhoneNumberTextField extends StatelessWidget {
                   errorText: ((state is ForgottenWarrantyPhoneNumberError) ||
                           (BlocProvider.of<ForgottenWarrantyCubit>(context)
                               .phoneNumberIsError))
-                      //todo: translate "please enter phone number"
-                      ? "please enter phone number"
+                      ? AppLocalizations.of(context)
+                          .translate("pleaseEnterPhoneNumber")
                       : null,
                   labelText:
                       AppLocalizations.of(context).translate("yourPhoneNumber"),
@@ -518,8 +524,7 @@ class ForgottenWarrantyLoadedWidget extends StatelessWidget {
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Text(
-                // TODO: Add title for this page
-                AppLocalizations.of(context).translate("warrantyInformation"),
+                AppLocalizations.of(context).translate("forgotWarrantyCode"),
                 style: GoogleFonts.cairo()),
           ),
           body: Column(

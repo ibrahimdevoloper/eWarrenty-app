@@ -15,6 +15,7 @@ import 'package:ewarrenty/Wrappers/SuggestionsBoxWrapper.dart';
 import 'package:ewarrenty/app_localizations.dart';
 import 'package:ewarrenty/dialogs/showSummeryDialog.dart';
 import 'package:ewarrenty/dialogs/whereIsSerialNumberDialog.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -79,8 +80,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                       fontSize: Theme.of(context).textTheme.headline6.fontSize),
                 ),
                 onPressed: () {
-                  print("submit");
-                  //TODO: submit button
+                  // print("submit");
                   InitDataCubit mCubit =
                       BlocProvider.of<InitDataCubit>(context);
                   if (mCubit.battery == null) {
@@ -296,12 +296,10 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     // final progress = ProgressHUD.of(context);
                     if (state is InitDataSubmitLoading) {
                       // var warranty = state.warranty;
-                      //TODO: show the warrenty detail.
                       // progress.show();
                     }
                     if (state is InitDataSubmitSent) {
                       // var warranty = state.warranty;
-                      //TODO: show the warrenty detail.
                       // progress.dismiss();
                       showDialog<void>(
                           context: context,
@@ -415,7 +413,6 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                   keyboardType: TextInputType.number,
                                   controller: _batteryTextEditingController,
                                   decoration: InputDecoration(
-                                    // TODO : fix amprage word
                                     errorText:
                                         ((state is InitDataBatteryChoosenTextFieldError) ||
                                                 (BlocProvider.of<InitDataCubit>(
@@ -427,7 +424,6 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                             : null,
                                     labelText: AppLocalizations.of(context)
                                         .translate("enterBatteryAmperage"),
-
                                     labelStyle: TextStyle(
                                       color: _batteryFieldNode.hasFocus
                                           ? Theme.of(context).accentColor
@@ -457,8 +453,9 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                     searchedCapacity = int.parse(pattern);
                                     print(searchedCapacity);
                                   } catch (e) {
-                                    //TODO: handle Error
                                     print(e);
+                                    FirebaseCrashlytics.instance
+                                        .log(e.toString());
                                   }
 
                                   batteries.forEach((battreyModel) {
@@ -791,7 +788,6 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                   // ),
                                 ),
                                 onChanged: (value) {
-                                  //TODO: make the user enter his name in english
                                   BlocProvider.of<InitDataCubit>(context)
                                       .fullNameIsError = false;
                                   BlocProvider.of<InitDataCubit>(context)
@@ -961,7 +957,6 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                   // ),
                                 ),
                                 onChanged: (value) {
-                                  //TODO: make the user enter his name in english
                                   BlocProvider.of<InitDataCubit>(context)
                                       .address = value;
                                 },
@@ -1156,7 +1151,6 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                                         InitDataCarTypeReset());
                                               },
                                               onChanged: (e) {
-                                                //TODO: save CarType "id" in fo rm state managment
                                                 BlocProvider.of<InitDataCubit>(
                                                         context)
                                                     .carTypeIdSelectedValue(e);
@@ -1298,7 +1292,6 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                             ? AppLocalizations.of(context)
                                                 .translate("addMarket")
                                             : null,
-                                    // todo : fix amperage word
                                     labelText: AppLocalizations.of(context)
                                         .translate("marketName"),
                                     // hintText: AppLocalizations.of(context).translate("ex40"),
@@ -1337,14 +1330,6 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                 ),
                                 suggestionsCallback: (pattern) {
                                   List<Market> results = [];
-                                  // int searchedCapacity = 0;
-                                  // try {
-                                  //   searchedCapacity = int.parse(pattern);
-                                  //   print(searchedCapacity);
-                                  // } catch (e) {
-                                  //   //TODO: handle Error
-                                  //   print(e);
-                                  // }
                                   markets.forEach((market) {
                                     // if (battreyModel.capacity == searchedCapacity)
                                     //   results.add(battreyModel);
@@ -1394,7 +1379,6 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                       suggestionsBox);
                                 },
                                 onSuggestionSelected: (suggestion) {
-                                  //TODO:save Battery "id" in the form provider
                                   FocusScope.of(context).unfocus();
                                   Market suggestedMarket = suggestion;
                                   _marketTextEditingController.text =

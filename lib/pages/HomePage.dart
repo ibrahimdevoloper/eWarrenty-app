@@ -244,8 +244,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ),
                   // Icon(Icons.language),
                   onPressed: () {
-                    // TODO: remove this line
-                    // FirebaseCrashlytics.instance.crash();
                     _fadeController.repeat();
                     if (AppLocalizations.of(context)
                         .locale
