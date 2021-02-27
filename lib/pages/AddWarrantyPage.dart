@@ -79,7 +79,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                   style: GoogleFonts.cairo(
                       fontSize: Theme.of(context).textTheme.headline6.fontSize),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   // print("submit");
                   InitDataCubit mCubit =
                       BlocProvider.of<InitDataCubit>(context);
@@ -268,7 +268,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     //   duration: Duration(milliseconds: 600),
                     // );
                     // Scaffold.of(context).showSnackBar(snackBar);
-                    mCubit.submitWarrantyData();
+                    await mCubit.submitWarrantyData();
                   }
                 },
               ),

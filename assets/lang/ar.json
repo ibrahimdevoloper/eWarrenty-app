@@ -150,5 +150,7 @@
   "toRestoreYourWarranties": "لاستعادة كفالتك",
   "makeSureYouAreEntering7CapitalCaseCharactersAndOrNumbers": "رجاءً أدخل 7 أحرف أنجليزية كبيرة مع أرقام إن وجد",
   "WhereIsMyBatterysSerialNumber": "أبن الرقم التسلسلي لبطاريتي ؟",
-  "warrantyExpired": "هذه البطارية خارج الكفالة بسبب طول فترة التخزين"
+  "warrantyExpired": "هذه البطارية خارج الكفالة بسبب طول فترة التخزين",
+  "Connection Error": "خطأ بالاتصال"
+
 }

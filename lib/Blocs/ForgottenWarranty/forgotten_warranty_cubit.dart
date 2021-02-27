@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:ewarrenty/Function/FirebaseCrashlyticsLog.dart';
 import 'package:ewarrenty/Models/warranty.dart';
 import 'package:ewarrenty/services/getForgottenWarrantyByEmail/GetForgottenWarrantyByEmailService.dart';
 import 'package:ewarrenty/services/getForgottenWarrantyByPhoneNumber/GetForgottenWarrantyByPhoneNumberService.dart';
@@ -40,23 +41,32 @@ class ForgottenWarrantyCubit extends Cubit<ForgottenWarrantyState> {
         // print(_warranties );
         if (_warranties.isEmpty)
           emit(
-            ForgottenWarrantyError("no warranties are linked with this email",
+            ForgottenWarrantyError("لا يوجد كفالات مرتبطة بهذا الايميل",
                 "no warranties are linked with this email"),
           );
         emit(ForgottenWarrantyLoaded(_warranties));
       } else {
+        firebaseCrashLog(
+          code: value.statusCode.toString(),
+          tag: "ForgottenWarrantyCubit.getWarrantyByEmail",
+          message: value.error.toString(),
+        );
         emit(
-          ForgottenWarrantyError(
-              "Error${value.statusCode}: please check with customer service",
-              "Error${value.statusCode}: please check with customer service"),
+          ForgottenWarrantyError("خطأ بالاتصال: ${value.statusCode}",
+              "Connection Error: ${value.statusCode}"),
         );
       }
     })
       ..catchError((e) {
-        print(e);
-        //TODO: taranslate "check your internet connection "
-        emit(ForgottenWarrantyError("check your internet connection",
-            "check your internet connection "));
+        // print(e);.
+        firebaseCrashLog(
+          tag: "ForgottenWarrantyCubit.getWarrantyByEmail",
+          message: e.error.toString(),
+        );
+        emit(ForgottenWarrantyError(
+          "تأكد من اتصالك بالانترنيت",
+          "check your internet connection",
+        ));
       });
   }
 
@@ -79,24 +89,32 @@ class ForgottenWarrantyCubit extends Cubit<ForgottenWarrantyState> {
         // print(_warranties );
         if (_warranties.isEmpty)
           emit(
-            ForgottenWarrantyError(
-                "no warranties are linked with this phone number",
+            ForgottenWarrantyError("لايوجد كفالات مرتبطة بهذا الرقم",
                 "no warranties are linked with this phone number"),
           );
         emit(ForgottenWarrantyLoaded(_warranties));
       } else {
+        firebaseCrashLog(
+          code: value.statusCode.toString(),
+          tag: "ForgottenWarrantyCubit.getWarrantyByPhoneNumber",
+          message: value.error.toString(),
+        );
         emit(
-          ForgottenWarrantyError(
-              "Error${value.statusCode}: please check with customer service",
-              "Error${value.statusCode}: please check with customer service"),
+          ForgottenWarrantyError("خطأ بالاتصال: ${value.statusCode}",
+              "Connection Error: ${value.statusCode}"),
         );
       }
     })
       ..catchError((e) {
-        print(e);
-        //TODO: taranslate "check your internet connection "
-        emit(ForgottenWarrantyError("check your internet connection",
-            "check your internet connection "));
+        // print(e);
+        firebaseCrashLog(
+          tag: "ForgottenWarrantyCubit.getWarrantyByPhoneNumber",
+          message: e.error.toString(),
+        );
+        emit(ForgottenWarrantyError(
+          "تأكد من اتصالك بالانترنيت",
+          "check your internet connection",
+        ));
       });
   }
 

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:ewarrenty/Function/FirebaseCrashlyticsLog.dart';
 import 'package:ewarrenty/Models/Battery.dart';
 import 'package:ewarrenty/Models/car_property.dart';
 import 'package:ewarrenty/Models/car_type.dart';
@@ -71,7 +72,11 @@ class InitDataCubit extends Cubit<InitDataState> {
   bool _fixedBatteryPathIsError = false;
   bool _carNumberPathIsError = false;
 
+  SendWarrantyService service;
+
   InitDataCubit() : super(InitDataInitial()) {
+    service = SendWarrantyService.create();
+
     // todo: replace with BehaviorSubject from rxdart package
     // it destroy the lisener  when the widget rebuilds
 
@@ -171,29 +176,34 @@ class InitDataCubit extends Cubit<InitDataState> {
   submitWarrantyData() {
     // emit(InitDataLoading());
     emit(InitDataSubmitLoading());
-    SendWarrantyService service = SendWarrantyService.create();
     service
         .sendWarrenty(
-            battery_front_image: frontBatteryPath,
-            battery_model_id: battery.id,
-            battery_serial_number: serialNumber,
-            bought_date: billDate,
-            car_number: carNumber,
-            car_number_image: carNumberPath,
-            car_property_id: carPropertyId,
-            car_type_id: carTypeId,
-            customer_country: countryName,
-            customer_email: eMail,
-            customer_name: fullName,
-            customer_phone_number: phoneNumber,
-            fixed_battery_image: fixedBatteryPath,
-            customer_address: address,
-            market_id: market.id,
-            notes: "empty")
+      battery_front_image: frontBatteryPath,
+      battery_model_id: battery.id,
+      battery_serial_number: serialNumber,
+      bought_date: billDate,
+      car_number: carNumber,
+      car_number_image: carNumberPath,
+      car_property_id: carPropertyId,
+      car_type_id: carTypeId,
+      customer_country: countryName,
+      customer_email: eMail,
+      customer_name: fullName,
+      customer_phone_number: phoneNumber,
+      fixed_battery_image: fixedBatteryPath,
+      customer_address: address,
+      market_id: market.id,
+      notes: "empty",
+    )
         .then((value) {
-      print("AddWarrantybody:${value.body}");
-      print("AddWarrantyisSuccessful:${value.isSuccessful}");
+      // print("AddWarrantybody:${value.body}");
+      // print("AddWarrantyisSuccessful:${value.isSuccessful}");
       // print("AddWarrantyError:${value.error.toString()}");
+      // if (value.error.toString() != null) {
+      //   var errorString = value.error.toString();
+      //   print("AddWarrantyError:${value.error.toString()}");
+      // }
+
       // print("AddWarrantyError:${getJSONMap(
       //     value.body
       // )}");
@@ -201,7 +211,7 @@ class InitDataCubit extends Cubit<InitDataState> {
       if (value.statusCode >= 200 && value.statusCode <= 299) {
         if (value.body.containsKey("error")) {
           Map<String, dynamic> errorMap = value.body;
-          print("AddWarrantyErrorMap:value.body");
+          print("AddWarrantyErrorMap:${value.body}");
           if (errorMap['error'].contains('this serial number')) {
             var errorArabic = "إن هذا الرقم التسلسلي غير موجود";
             var errorEnglish = "This Serial Number Do NOT Exist";
@@ -236,15 +246,29 @@ class InitDataCubit extends Cubit<InitDataState> {
       //   emit(InitDataSubmitError(errorArabic, errorEnglish));
       // }
       else {
-        //TODO: taranslate "Connection Error "
-        emit(InitDataSubmitError("Connection Error", "Connection Error"));
+        firebaseCrashLog(
+          code: value.statusCode.toString(),
+          tag: "InitDataCubit.submitWarrantyData",
+          message: value.error.toString(),
+        );
+        emit(
+          InitDataSubmitError("خطأ بالاتصال: ${value.statusCode}",
+              "Connection Error: ${value.statusCode}"),
+        );
       }
     })
           ..catchError((e) {
-            print(e);
-            //TODO: taranslate "check your internet connection "
-            emit(InitDataSubmitError("check your internet connection",
-                "check your internet connection "));
+            // print(e);
+            firebaseCrashLog(
+              tag: "InitDataCubit.submitWarrantyData",
+              message: e.toString(),
+            );
+            emit(
+              InitDataSubmitError(
+                "تأكد من اتصالك بالانترنيت",
+                "check your internet connection",
+              ),
+            );
           });
   }
 

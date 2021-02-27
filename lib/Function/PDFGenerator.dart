@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ewarrenty/Function/FirebaseCrashlyticsLog.dart';
 import 'package:ewarrenty/Function/checkIfArabic.dart';
 import 'package:ewarrenty/Models/warranty.dart';
 import 'package:flutter/material.dart' as material;
@@ -16,31 +17,12 @@ Future PDFGenerator({
   @material.required String lang,
 }) async {
   final Document pdf = Document();
-  // var myTheme = ThemeData.withFont(
-  //   base: Font.ttf(
-  //       await rootBundle.load("assets/fonts/alja/Al-Jazeera-Regular.ttf")),
-  //   bold: Font.ttf(
-  //       await rootBundle.load("assets/fonts/alja/Al-Jazeera-Bold.ttf")),
-  // );
   var dataAR = await rootBundle.load("fonts/alja/Al-Jazeera-Regular.ttf");
   var myFontAR = Font.ttf(dataAR);
   var dataEn = await rootBundle.load("fonts/Almarai/Almarai-Regular.ttf");
   var myFontEn = Font.ttf(dataEn);
   var arabicStyle = TextStyle(font: myFontAR, fontSize: 24);
   var englishStyle = TextStyle(font: myFontEn, fontSize: 24);
-
-  // var bytes = await rootBundle.load("assets/images/logo.png");
-  // var filename = 'header.png';
-  // String dir = (await getApplicationDocumentsDirectory()).path;
-  // final buffer = bytes.buffer;
-  // File headerFile = await File('$dir/$filename').writeAsBytes(
-  //     buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
-  // var headerImage = MemoryImage(
-  //   File('$dir/$filename').readAsBytesSync(),
-  // );
-  // final image = MemoryImage(
-  //   File().readAsBytesSync(),
-  // );
 
   var footer = await imageFromAsset(
       assetsPath: "assets/images/PDF/footer.png", filename: "footer.png");
@@ -51,14 +33,11 @@ Future PDFGenerator({
       filename: "background.png");
 
   pdf.addPage(MultiPage(
-    // pageFormat: PdfPageFormat.a5,
     pageFormat: PdfPageFormat.a4,
-
     margin: EdgeInsets.zero,
     header: (context) => Image.provider(header, fit: BoxFit.contain),
     footer: (context) => Image.provider(footer, fit: BoxFit.contain),
     maxPages: 1,
-
     build: (context) {
       return [
         Center(
@@ -80,14 +59,6 @@ Future PDFGenerator({
                                 text: "Warranty Code:", style: englishStyle),
                         englishTextWidget(
                             text: warranty.warrantyCode, style: englishStyle)
-                        // Directionality(
-                        //   textDirection: TextDirection.ltr,
-                        //   child: Text("Warranty Code: ", style: englishStyle),
-                        // ),
-                        // Directionality(
-                        //   textDirection: TextDirection.ltr,
-                        //   child: Text(warrantyCode, style: englishStyle),
-                        // ),
                       ],
                     ),
                   ),
@@ -101,55 +72,13 @@ Future PDFGenerator({
                                 text: "Battery Model:", style: englishStyle),
                         englishTextWidget(
                             text: warranty.battery.number, style: englishStyle)
-                        // Directionality(
-                        //   textDirection: TextDirection.ltr,
-                        //   child: Text("Warranty Code: ", style: englishStyle),
-                        // ),
-                        // Directionality(
-                        //   textDirection: TextDirection.ltr,
-                        //   child: Text(warrantyCode, style: englishStyle),
-                        // ),
                       ],
                     ),
                   ),
-                  // Directionality(
-                  //   textDirection: TextDirection.ltr,
-                  //   child: Text("Warranty Code: ", style: englishStyle),
-                  // ),
-                  // Directionality(
-                  //   textDirection: TextDirection.ltr,
-                  //   child: Text(warrantyCode, style: englishStyle),
-                  // ),
-                  // Directionality(
-                  //   textDirection: TextDirection.rtl,
-                  //   child: Text("كود الكفالة",
-                  //       style: arabicStyle,
-                  // ),
                 ],
               ),
             ),
             Container(height: 4, color: PdfColors.grey),
-            // Padding(
-            //     padding: EdgeInsets.symmetric(vertical: 8),
-            //     child: Row(
-            //       // mainAxisAlignment: MainAxisAlignment.end,
-            //       children: [
-            //         Directionality(
-            //           textDirection: TextDirection.ltr,
-            //           child: Text("Battery Model: ", style: englishStyle),
-            //         ),
-            //         Directionality(
-            //           textDirection: TextDirection.ltr,
-            //           child: Text(batteryModel, style: englishStyle),
-            //         ),
-            //         // Directionality(
-            //         //   textDirection: TextDirection.rtl,
-            //         //   child: Text("موديل البطارية: ",
-            //         //       style: TextStyle(font: myFont, fontSize: 18)),
-            //         // ),
-            //       ],
-            //     )),
-            // Container(height: 4, color: PdfColors.grey),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 24),
               child: Row(
@@ -165,14 +94,6 @@ Future PDFGenerator({
                                 text: "Warranty's Start Date:",
                                 style: englishStyle),
                         englishTextWidget(text: startDate, style: englishStyle)
-                        // Directionality(
-                        //   textDirection: TextDirection.ltr,
-                        //   child: Text("Warranty Code: ", style: englishStyle),
-                        // ),
-                        // Directionality(
-                        //   textDirection: TextDirection.ltr,
-                        //   child: Text(warrantyCode, style: englishStyle),
-                        // ),
                       ],
                     ),
                   ),
@@ -187,47 +108,10 @@ Future PDFGenerator({
                                 text: "Warranty's End Date:",
                                 style: englishStyle),
                         englishTextWidget(text: endDate, style: englishStyle)
-                        // Directionality(
-                        //   textDirection: TextDirection.ltr,
-                        //   child: Text("Warranty Code: ", style: englishStyle),
-                        // ),
-                        // Directionality(
-                        //   textDirection: TextDirection.ltr,
-                        //   child: Text(warrantyCode, style: englishStyle),
-                        // ),
                       ],
                     ),
                   ),
-                  // Directionality(
-                  //   textDirection: TextDirection.ltr,
-                  //   child: Text("Warranty Code: ", style: englishStyle),
-                  // ),
-                  // Directionality(
-                  //   textDirection: TextDirection.ltr,
-                  //   child: Text(warrantyCode, style: englishStyle),
-                  // ),
-                  // Directionality(
-                  //   textDirection: TextDirection.rtl,
-                  //   child: Text("كود الكفالة",
-                  //       style: arabicStyle,
-                  // ),
                 ],
-                // mainAxisAlignment: MainAxisAlignment.end,
-                // children: [
-                //   Directionality(
-                //     textDirection: TextDirection.ltr,
-                //     child: Text("Owner Name: ", style: englishStyle),
-                //   ),
-                //   Directionality(
-                //     textDirection: TextDirection.ltr,
-                //     child: Text(ownerNAme, style: englishStyle),
-                //   ),
-                //   // Directionality(
-                //   //   textDirection: TextDirection.rtl,
-                //   //   child: Text("اسم المالك",
-                //   //       style: TextStyle(font: myFont, fontSize: 18)),
-                //   // ),
-                // ],
               ),
             ),
             Container(height: 4, color: PdfColors.grey),
@@ -248,62 +132,9 @@ Future PDFGenerator({
                               text: warranty.customerName, style: englishStyle)
                           : englishTextWidget(
                               text: warranty.customerName, style: englishStyle)
-                  // Directionality(
-                  //   textDirection: TextDirection.ltr,
-                  //   child: Text("Warranty Code: ", style: englishStyle),
-                  // ),
-                  // Directionality(
-                  //   textDirection: TextDirection.ltr,
-                  //   child: Text(warrantyCode, style: englishStyle),
-                  // ),
                 ],
               ),
             )
-
-            // Padding(
-            //   padding: EdgeInsets.symmetric(vertical: 8),
-            //   child: Row(
-            //     // mainAxisAlignment: MainAxisAlignment.end,
-            //     children: [
-            //       Directionality(
-            //         textDirection: TextDirection.ltr,
-            //         child: Text("Warranty Start Date: ", style: englishStyle),
-            //       ),
-            //       Directionality(
-            //         textDirection: TextDirection.ltr,
-            //         child: Text(dateFormater(startDate), style: englishStyle),
-            //       ),
-            //       // Directionality(
-            //       //   textDirection: TextDirection.rtl,
-            //       //   child: Text("اسم المالك",
-            //       //       style: TextStyle(font: myFont, fontSize: 18)),
-            //       // ),
-            //     ],
-            //   ),
-            // ),
-            // Container(height: 4, color: PdfColors.grey),
-            // // Padding(
-            // //     padding: EdgeInsets.symmetric(vertical: 8),
-            // //     child: Row(
-            // //       // mainAxisAlignment: MainAxisAlignment.end,
-            // //       children: [
-            // //         Directionality(
-            // //           textDirection: TextDirection.ltr,
-            // //           child: Text("Warranty End Date: ", style: englishStyle),
-            // //         ),
-            // //         Directionality(
-            // //           textDirection: TextDirection.ltr,
-            // //           child: Text(dateFormater(endDate), style: englishStyle),
-            // //         ),
-            // //         // Directionality(
-            // //         //   textDirection: TextDirection.rtl,
-            // //         //   child: Text("اسم المالك",
-            // //         //       style: TextStyle(font: myFont, fontSize: 18)),
-            // //         // ),
-            // //       ],
-            // //     )),
-            // Container(height: 4, color: PdfColors.grey),
-            //TODO: add image for the battery
           ],
         ))
       ];
@@ -320,7 +151,11 @@ Future PDFGenerator({
     await file.writeAsBytes(pdf.save());
     // print('after save');
   } catch (e) {
-    print(e);
+    // print(e);
+    firebaseCrashLog(
+      tag: "PDFGenerator",
+      message: e.toString(),
+    );
   }
 }
 

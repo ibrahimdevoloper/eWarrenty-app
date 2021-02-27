@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:chopper/chopper.dart';
 import 'package:ewarrenty/Constants/Constants.dart' as constant;
+import 'package:http/io_client.dart' as http;
 
 part 'SendWarrantyService.chopper.dart';
 
@@ -36,6 +39,9 @@ abstract class SendWarrantyService extends ChopperService {
     final client = ChopperClient(
       // The first part of the URL is now here
       baseUrl: constant.baseUrl,
+      client: http.IOClient(
+        HttpClient()..connectionTimeout = const Duration(seconds: 60),
+      ),
       services: [
         // The generated implementation
         _$SendWarrantyService(),
