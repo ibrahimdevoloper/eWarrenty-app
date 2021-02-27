@@ -1,6 +1,6 @@
 import 'package:ewarrenty/Blocs/GetWarranty/get_warranty_cubit.dart';
 import 'package:ewarrenty/app_localizations.dart';
-import 'package:ewarrenty/pages/ForgottenWarrantyList.dart';
+import 'package:ewarrenty/pages/ForgottenWarrantyListPage.dart';
 import 'package:ewarrenty/pages/WarrantyDetailPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -10,9 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Providers/LoginProvider.dart';
 import 'app_localizations.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 void main() async {
   // SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -23,7 +21,6 @@ void main() async {
   // Crashlytics.instance.enableInDevMode = true;
   // // Pass all uncaught errors from the framework to Crashlytics.
   // FlutterError.onError = Crashlytics.instance.recordFlutterError;
-
 
   runApp(MultiProvider(providers: [
     // ChangeNotifierProvider(create: (context) => LoginProvider()),
@@ -40,7 +37,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.wait([SharedPreferences.getInstance(),Firebase.initializeApp()]),
+      future: Future.wait(
+          [SharedPreferences.getInstance(), Firebase.initializeApp()]),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           SharedPreferences _pref = snapshot.data[0];
@@ -54,7 +52,7 @@ class MyApp extends StatelessWidget {
               }
             }
             return MaterialApp(
-              debugShowCheckedModeBanner: false,
+                debugShowCheckedModeBanner: false,
                 locale: provider.languageCode.isEmpty
                     ? null
                     : Locale(provider.languageCode),
@@ -184,291 +182,10 @@ class _MySplashScreenState extends State<MySplashScreen> {
       ),
       child: Center(
         child: Image.asset(
-          'assets/images/background.jpg',
+          'assets/images/splash-srceen.png',
           fit: BoxFit.cover,
         ),
       ),
     );
-    // return Consumer<LangProvider>(
-    //   builder: (context, provider, _) =>
-    //       SplashScreen(
-    //
-    //         // seconds: 8,
-    //         // navigateAfterSeconds: provider.prefs.containsKey(PrefKeys.lang)
-    //         //     ? HomePage()
-    //         //     : ChooseLanguagePage(),
-    //         // title: new Text('Welcome In SplashScreen',
-    //         //   style: new TextStyle(
-    //         //       fontWeight: FontWeight.bold,
-    //         //       fontSize: 20.0
-    //         //   ),),
-    //           gradientBackground: LinearGradient(
-    //               begin: Alignment.topLeft,
-    //               end: Alignment.bottomRight,
-    //               colors: [
-    //                 Theme
-    //                     .of(context)
-    //                     .primaryColor,
-    //                 Theme
-    //                     .of(context)
-    //                     .accentColor
-    //               ]),
-    //           image: Image.asset(
-    //             'assets/images/background.jpg',
-    //             fit: BoxFit.cover,
-    //           ),
-    //           // backgroundColor: Colors.white,
-    //           // styleTextUnderTheLoader: new TextStyle(),
-    //           photoSize: 100.0,
-    //           // onClick: ()=>print("Flutter Egypt"),
-    //           useLoader: false,
-    //           loaderColor: Colors.red),
-    // );
   }
 }
-
-// class MyHomePage extends StatefulWidget {
-//   // MyHomePage({Key key, this.title}) : super(key: key);
-//   // final String title;
-//
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   int _counter = 0;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: BoxDecoration(
-//         gradient: LinearGradient(
-//           begin: Alignment.topLeft,
-//           end: Alignment.bottomRight,
-//           // stops: [0,0.35],
-//           colors: [
-//             Theme.of(context).primaryColor,
-//             Theme.of(context).accentColor
-//           ],
-//         ),
-//       ),
-//       child: Scaffold(
-//         backgroundColor: Colors.transparent,
-//         appBar: AppBar(
-//           shadowColor: Colors.transparent,
-//           backgroundColor: Colors.transparent,
-//           elevation: 0,
-//           actions: [
-//             IconButton(
-//                 icon: Icon(FontAwesomeIcons.userCircle),
-//                 onPressed: () {
-//                   Navigator.of(context).push(
-//                       MaterialPageRoute(builder: (context) => LoginPage()));
-//                 })
-//           ],
-//           title: Text("EWarranty"),
-//         ),
-//         body: Padding(
-//           padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-//           child: Swiper(
-//             itemCount: 4,
-//             itemWidth:
-//                 MediaQuery.of(context).orientation == Orientation.portrait
-//                     ? 300.0
-//                     : 600,
-//             layout: SwiperLayout.STACK,
-//             pagination: new SwiperCustomPagination(
-//                 builder: (BuildContext context, SwiperPluginConfig config) {
-//               // config.pageController
-//               return Align(
-//                 alignment: FractionalOffset.bottomCenter,
-//                 child: Padding(
-//                   padding: const EdgeInsets.only(bottom: 16.0),
-//                   child: AnimatedSmoothIndicator(
-//                     duration: Duration(milliseconds: 500),
-//                     activeIndex: config.activeIndex,
-//                     count: config.itemCount,
-//                     effect: ExpandingDotsEffect(
-//                         dotHeight: 12,
-//                         dotWidth: 12,
-//                         activeDotColor: Theme.of(context).primaryColor,
-//                         dotColor: Theme.of(context).accentColor),
-//                   ),
-//                 ),
-//               );
-//
-//               //   SmoothPageIndicator(
-//               //
-//               //   effect: WormEffect(),
-//               //     controller: config.pageController, count: config.itemCount
-//               // );
-//             }),
-//             // pagination: SwiperPagination(
-//             //   builder: DotSwiperPaginationBuilder(
-//             //       activeColor: Theme.of(context).primaryColor,
-//             //       color: Theme.of(context).accentColor),
-//             // ),
-//             itemBuilder: (context, index) {
-//               return MediaQuery.of(context).orientation == Orientation.portrait
-//                   ? VerticalWarranty(
-//                       "assets/images/home/${(index % 4) + 1}.png", () {
-//                       Navigator.push(
-//                           context,
-//                           MaterialPageRoute(
-//                               builder: (context) => WarrantyDetailPage()));
-//                     })
-//                   : HorizontalWarranty(
-//                       "assets/images/home/${(index % 4) + 1}.png", () {
-//                       Navigator.push(
-//                           context,
-//                           MaterialPageRoute(
-//                               builder: (context) => WarrantyDetailPage()));
-//                     });
-//             },
-//           ),
-//         ),
-//         floatingActionButton: FloatingActionButton(
-//           backgroundColor: Colors.white,
-//           onPressed: () {
-//             Navigator.of(context).push(
-//                 MaterialPageRoute(builder: (context) => AddWarrantyPage()));
-//           },
-//           tooltip: 'Add Warranty',
-//           child: Icon(
-//             Icons.add,
-//             color: Colors.blueAccent,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class VerticalWarranty extends StatelessWidget {
-//   final String _image;
-//   final Function _onPressed;
-//
-//   VerticalWarranty(this._image, this._onPressed);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       shape: RoundedRectangleBorder(
-//         borderRadius: BorderRadius.circular(4.0),
-//       ),
-//       child: Padding(
-//         padding: const EdgeInsets.all(8.0),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           crossAxisAlignment: CrossAxisAlignment.stretch,
-//           children: [
-//             AspectRatio(
-//               aspectRatio: 16 / 12,
-//               child: Image.asset(
-//                 _image,
-//                 fit: BoxFit.cover,
-//               ),
-//               // child: Container(
-//               //   color: Colors.blue,
-//               //   child: Center(child: Text("imge")),
-//               // ),
-//             ),
-//             // SizedBox(
-//             //   height: 8,
-//             // ),
-//             Text("Battary Model: MPU 15"),
-//             // SizedBox(
-//             //   height: 8,
-//             // ),
-//             Text("Serial Number: SDKBFS5482"),
-//             // SizedBox(
-//             //   height: 8,
-//             // ),
-//             Text("Start Date: 2020/12/16"),
-//             // SizedBox(
-//             //   height: 8,
-//             // ),
-//             Text("End Date: 2020/12/26"),
-//             // SizedBox(
-//             //   height: 8,
-//             // ),
-//             Text("Warranty State: Ended"),
-//             // SizedBox(
-//             //   height: 8,
-//             // ),
-//             FlatButton(
-//                 color: Colors.blue,
-//                 textColor: Colors.white,
-//                 onPressed: _onPressed,
-//                 child: Text("details")),
-//             SizedBox(
-//               height: 8,
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// class HorizontalWarranty extends StatelessWidget {
-//   final String _image;
-//   final Function _onPressed;
-//
-//   HorizontalWarranty(this._image, this._onPressed);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       shape: RoundedRectangleBorder(
-//         borderRadius: BorderRadius.circular(4.0),
-//       ),
-//       child: Padding(
-//         padding: const EdgeInsets.all(8.0),
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             AspectRatio(
-//               aspectRatio: 4 / 3,
-//               child: Image.asset(
-//                 _image,
-//                 fit: BoxFit.cover,
-//               ),
-//             ),
-//             Column(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Text("Battary Model: MPU 15"),
-//                 // SizedBox(
-//                 //   height: 8,
-//                 // ),
-//                 Text("Serial Number: SDKBFS5482"),
-//                 // SizedBox(
-//                 //   height: 8,
-//                 // ),
-//                 Text("Start Date: 2020/12/16"),
-//                 // SizedBox(
-//                 //   height: 8,
-//                 // ),
-//                 Text("End Date: 2020/12/26"),
-//                 // SizedBox(
-//                 //   height: 8,
-//                 // ),
-//                 Text("Warranty State: Ended"),
-//                 // SizedBox(
-//                 //   height: 8,
-//                 // ),
-//                 FlatButton(
-//                     color: Colors.blue,
-//                     textColor: Colors.white,
-//                     onPressed: _onPressed,
-//                     child: Text("details")),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
