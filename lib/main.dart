@@ -3,6 +3,7 @@ import 'package:ewarrenty/helpers/PrefKeys.dart';
 import 'package:ewarrenty/pages/ChooseLanguagePage.dart';
 import 'package:ewarrenty/pages/HomePage.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -19,9 +20,7 @@ void main() async {
   // // submitted as expected. It is not intended to be used for everyday
   // // development.
   // Crashlytics.instance.enableInDevMode = true;
-  // // Pass all uncaught errors from the framework to Crashlytics.
-  // FlutterError.onError = Crashlytics.instance.recordFlutterError;
-
+  // Pass all uncaught errors from the framework to Crashlytics.
   runApp(MultiProvider(providers: [
     // ChangeNotifierProvider(create: (context) => LoginProvider()),
     ChangeNotifierProvider(create: (context) => LangProvider()),
@@ -43,6 +42,8 @@ class MyApp extends StatelessWidget {
         if (snapshot.hasData) {
           SharedPreferences _pref = snapshot.data[0];
           FirebaseApp _firebaseApp = snapshot.data[1];
+          FlutterError.onError =
+              FirebaseCrashlytics.instance.recordFlutterError;
           return Consumer<LangProvider>(builder: (context, provider, _) {
             provider.prefs = _pref;
             if (provider.prefs.containsKey(PrefKeys.lang)) {

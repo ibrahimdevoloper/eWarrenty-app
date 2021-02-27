@@ -29,14 +29,14 @@ dependencies:
   bloc: ^6.0.3
   flutter_bloc: ^6.0.3
   #add ios functions
-  camera: ^0.5.8+17
+#  camera: ^0.5.8+17
   modal_progress_hud: ^0.1.3
   shared_preferences: ^0.5.12+4
   #add ios functions
   image_picker: ^0.6.7+15
-  smooth_page_indicator: ^0.2.0
-  flutter_svg: ^0.19.1
-  splashscreen: ^1.3.5
+#  smooth_page_indicator: ^0.2.0
+#  flutter_svg: ^0.19.1
+#  splashscreen: ^1.3.5
   pdf: ^1.13.0
   path_provider: ^1.6.24
   flutter_full_pdf_viewer: ^1.0.6
@@ -57,7 +57,7 @@ dependencies:
   firebase_crashlytics: ^0.4.0+1
   flutter_html: ^1.2.0
 #  flutter_keyboard_visibility: ^4.0.4
-  http: ^0.12.2
+#  http: ^0.12.2
 
 
   flutter_localizations:
