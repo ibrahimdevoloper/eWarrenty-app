@@ -102,8 +102,6 @@ flutter:
   assets:
    - assets/images/
    - assets/images/PDF/
-   - assets/images/home/
-   - assets/document/
    - assets/lang/
    - fonts/
    - fonts/alja/
