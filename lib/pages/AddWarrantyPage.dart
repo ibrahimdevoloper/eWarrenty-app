@@ -6,6 +6,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:ewarrenty/Blocs/InitData/init_data_cubit.dart';
 import 'package:ewarrenty/Constants/Constants.dart';
 import 'package:ewarrenty/CustomWidget/ImagePreviewButton.dart';
+import 'package:ewarrenty/Function/dateFormatter.dart';
 import 'package:ewarrenty/Function/myImagePicker.dart';
 import 'package:ewarrenty/Icons/warranty_icons_icons.dart';
 import 'package:ewarrenty/Models/Battery.dart';
@@ -579,14 +580,21 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                                         DateTime.now().add(Duration(days: 1)),
                                     // helpText: "Select Bill Date",
                                   ).then((value) {
+                                    var dateString = dateFormater(
+                                      value,
+                                    );
                                     BlocProvider.of<InitDataCubit>(context)
                                         .billDateIsError = false;
+                                    // BlocProvider.of<InitDataCubit>(context)
+                                    //         .billDate =
+                                    //     "${value.year}-${value.month}-${value.day}";
+                                    // BlocProvider.of<InitDataCubit>(context)
+                                    //     .emit(InitDataBillDate(
+                                    //         "${value.year}-${value.month}-${value.day}"));
                                     BlocProvider.of<InitDataCubit>(context)
-                                            .billDate =
-                                        "${value.year}-${value.month}-${value.day}";
+                                        .billDate = dateString;
                                     BlocProvider.of<InitDataCubit>(context)
-                                        .emit(InitDataBillDate(
-                                            "${value.year}-${value.month}-${value.day}"));
+                                        .emit(InitDataBillDate(dateString));
                                     // setState(() {
                                     //   // billDate = "${value.year}-${value.month}-${value.day}";
                                     //

@@ -55,7 +55,7 @@ class GetWarrantyCubit extends Cubit<GetWarrantyState> {
         // print(e);
         firebaseCrashLog(
           tag: "GetWarrantyCubit.getWarrantyDetail",
-          message: e.error.toString(),
+          message: e.toString(),
         );
         emit(GetWarrantyError(
           "تأكد من اتصالك بالانترنيت",

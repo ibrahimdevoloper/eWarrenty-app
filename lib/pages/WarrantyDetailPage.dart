@@ -56,11 +56,13 @@ class WarrantyDetailPage extends StatelessWidget {
                         path: path,
                         warranty: _warranty,
                         startDate: dateFormater(_warranty.boughtDateAsDateTime),
-                        endDate: dateFormater(DateTime(
-                            _warranty.boughtDateAsDateTime.year,
-                            _warranty.boughtDateAsDateTime.month +
-                                _warranty.warrantyDurationInt,
-                            _warranty.boughtDateAsDateTime.day)),
+                        endDate: dateFormater(
+                          DateTime(
+                              DateTime.now().year,
+                              DateTime.now().month +
+                                  _warranty.warrantyDurationInt,
+                              DateTime.now().day),
+                        ),
                         lang: AppLocalizations.of(context).locale.languageCode,
                       );
                       Navigator.push(

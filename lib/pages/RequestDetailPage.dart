@@ -108,7 +108,8 @@ class _RequestDetailPageState extends State<RequestDetailPage>
                 buildWhen: (previous, current) {
                   return current is GetWarrantyInitial ||
                       current is GetWarrantyLoading ||
-                      current is GetWarrantyLoaded;
+                      current is GetWarrantyLoaded ||
+                      current is GetWarrantyError;
                 },
                 builder: (context, state) {
                   return ModalProgressHUD(

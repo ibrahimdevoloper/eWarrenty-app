@@ -196,13 +196,13 @@ class InitDataCubit extends Cubit<InitDataState> {
       notes: "empty",
     )
         .then((value) {
-      // print("AddWarrantybody:${value.body}");
-      // print("AddWarrantyisSuccessful:${value.isSuccessful}");
-      // print("AddWarrantyError:${value.error.toString()}");
-      // if (value.error.toString() != null) {
-      //   var errorString = value.error.toString();
-      //   print("AddWarrantyError:${value.error.toString()}");
-      // }
+      print("AddWarrantybody:${value.body}");
+      print("AddWarrantyisSuccessful:${value.isSuccessful}");
+      print("AddWarrantyError:${value.error.toString()}");
+      if (value.error.toString() != null) {
+        var errorString = value.error.toString();
+        print("AddWarrantyError:${value.error.toString()}");
+      }
 
       // print("AddWarrantyError:${getJSONMap(
       //     value.body
@@ -258,7 +258,7 @@ class InitDataCubit extends Cubit<InitDataState> {
       }
     })
           ..catchError((e) {
-            // print(e);
+            print(e);
             firebaseCrashLog(
               tag: "InitDataCubit.submitWarrantyData",
               message: e.toString(),

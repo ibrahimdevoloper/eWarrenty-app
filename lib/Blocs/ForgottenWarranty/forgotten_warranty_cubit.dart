@@ -29,22 +29,40 @@ class ForgottenWarrantyCubit extends Cubit<ForgottenWarrantyState> {
     print("getWarrantyByEmail");
     _emailService.getWarrenties(email).then((value) {
       if (value.statusCode >= 200 && value.statusCode <= 299) {
-        var data = value.body['data'];
-        print(data);
-        if (_warranties.isNotEmpty) _warranties.clear();
-        data.forEach(
-          (element) {
-            _warranties.add(Warranty.fromJson(element));
-          },
-        );
-        // _warranty = Warranty.fromJson(data);
-        // print(_warranties );
-        if (_warranties.isEmpty)
-          emit(
-            ForgottenWarrantyError("لا يوجد كفالات مرتبطة بهذا الايميل",
-                "no warranties are linked with this email"),
+        if (value.body['error'] != null) {
+          var error = value.body['error'];
+          firebaseCrashLog(
+            code: value.statusCode.toString(),
+            tag: "ForgottenWarrantyCubit.getWarrantyByEmail",
+            message: error,
           );
-        emit(ForgottenWarrantyLoaded(_warranties));
+          if (error.toString().contains("this email not found"))
+            emit(
+              ForgottenWarrantyError("لا يوجد كفالات مرتبطة بهذا الايميل",
+                  "no warranties are linked with this email"),
+            );
+          else
+            emit(
+              ForgottenWarrantyError(error, error),
+            );
+        } else {
+          var data = value.body['data'];
+          print(data);
+          if (_warranties.isNotEmpty) _warranties.clear();
+          data.forEach(
+            (element) {
+              _warranties.add(Warranty.fromJson(element));
+            },
+          );
+          // _warranty = Warranty.fromJson(data);
+          // print(_warranties );
+          if (_warranties.isEmpty)
+            emit(
+              ForgottenWarrantyError("لا يوجد كفالات مرتبطة بهذا الايميل",
+                  "no warranties are linked with this email"),
+            );
+          emit(ForgottenWarrantyLoaded(_warranties));
+        }
       } else {
         firebaseCrashLog(
           code: value.statusCode.toString(),
@@ -61,7 +79,7 @@ class ForgottenWarrantyCubit extends Cubit<ForgottenWarrantyState> {
         // print(e);.
         firebaseCrashLog(
           tag: "ForgottenWarrantyCubit.getWarrantyByEmail",
-          message: e.error.toString(),
+          message: e.toString(),
         );
         emit(ForgottenWarrantyError(
           "تأكد من اتصالك بالانترنيت",
@@ -77,22 +95,40 @@ class ForgottenWarrantyCubit extends Cubit<ForgottenWarrantyState> {
     print("getWarrantyByEmail");
     _phoneNumberService.getWarrenties(phoneNumber).then((value) {
       if (value.statusCode >= 200 && value.statusCode <= 299) {
-        var data = value.body['data'];
-        print(data);
-        if (_warranties.isNotEmpty) _warranties.clear();
-        data.forEach(
-          (element) {
-            _warranties.add(Warranty.fromJson(element));
-          },
-        );
-        // _warranty = Warranty.fromJson(data);
-        // print(_warranties );
-        if (_warranties.isEmpty)
-          emit(
-            ForgottenWarrantyError("لايوجد كفالات مرتبطة بهذا الرقم",
-                "no warranties are linked with this phone number"),
+        if (value.body['error'] != null) {
+          var error = value.body['error'];
+          firebaseCrashLog(
+            code: value.statusCode.toString(),
+            tag: "ForgottenWarrantyCubit.getWarrantyByPhoneNumber",
+            message: error,
           );
-        emit(ForgottenWarrantyLoaded(_warranties));
+          if (error.toString().contains("this phone not found"))
+            emit(
+              ForgottenWarrantyError("لايوجد كفالات مرتبطة بهذا الرقم",
+                  "no warranties are linked with this phone number"),
+            );
+          else
+            emit(
+              ForgottenWarrantyError(error, error),
+            );
+        } else {
+          var data = value.body['data'];
+          print(data);
+          if (_warranties.isNotEmpty) _warranties.clear();
+          data.forEach(
+            (element) {
+              _warranties.add(Warranty.fromJson(element));
+            },
+          );
+          // _warranty = Warranty.fromJson(data);
+          // print(_warranties );
+          if (_warranties.isEmpty)
+            emit(
+              ForgottenWarrantyError("لايوجد كفالات مرتبطة بهذا الرقم",
+                  "no warranties are linked with this phone number"),
+            );
+          emit(ForgottenWarrantyLoaded(_warranties));
+        }
       } else {
         firebaseCrashLog(
           code: value.statusCode.toString(),
@@ -109,7 +145,7 @@ class ForgottenWarrantyCubit extends Cubit<ForgottenWarrantyState> {
         // print(e);
         firebaseCrashLog(
           tag: "ForgottenWarrantyCubit.getWarrantyByPhoneNumber",
-          message: e.error.toString(),
+          message: e.toString(),
         );
         emit(ForgottenWarrantyError(
           "تأكد من اتصالك بالانترنيت",

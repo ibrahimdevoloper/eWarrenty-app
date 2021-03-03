@@ -132,7 +132,7 @@ class Warranty {
     _notes = json["notes"];
     _createdAt = json["created_at"];
     _updatedAt = json["updated_at"];
-    _warrantyDuration = json["warranty_duration"];
+    _warrantyDuration = json["warranty_duration"].toString();
     _battery =
         json["battery"] != null ? Battery.fromJson(json["battery"]) : null;
     _carType =

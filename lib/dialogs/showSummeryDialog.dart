@@ -9,8 +9,8 @@ import '../app_localizations.dart';
 
 AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
   var bougthDate = DateTime.parse(warrenty.boughtDate);
-  var endDate = DateTime(bougthDate.year,
-      bougthDate.month + warrenty.warrantyDurationInt, bougthDate.day);
+  var endDate = DateTime(DateTime.now().year,
+      DateTime.now().month + warrenty.warrantyDurationInt, DateTime.now().day);
   return AlertDialog(
     title: Text(AppLocalizations.of(context)
         .translate("congratulationsOnGettingYourWarrenty")),
