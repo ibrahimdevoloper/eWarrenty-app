@@ -89,6 +89,17 @@ class InitDataCarNumberImageError extends InitDataState {
   InitDataCarNumberImageError();
 }
 
+// user didn't capture the Bill Image  is choosen
+class InitDataBillImageImage extends InitDataState {
+  final String imagePath;
+
+  InitDataBillImageImage(this.imagePath);
+}
+
+class InitDataBillImageImageError extends InitDataState {
+  InitDataBillImageImageError();
+}
+
 // to battery choosen field reset
 class InitDataBatteryChoosenTextFieldReset extends InitDataState {
   InitDataBatteryChoosenTextFieldReset();

@@ -1,14 +1,12 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ewarrenty/Constants/Constants.dart';
-import 'package:ewarrenty/CustomWidget/ImageBanner.dart';
 import 'package:ewarrenty/Function/PDFGenerator.dart';
 import 'package:ewarrenty/Function/dateFormatter.dart';
 import 'package:ewarrenty/Icons/warranty_icons_icons.dart';
 import 'package:ewarrenty/Models/warranty.dart';
 import 'package:ewarrenty/app_localizations.dart';
 import 'package:ewarrenty/pages/PdfViewerPage.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,6 +18,7 @@ class WarrantyDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAnalytics().setCurrentScreen(screenName: "WarrantyDetailPage");
     final insideBoxStyle = TextStyle(
         color: Color.fromRGBO(0x00, 0x4A, 0x80, 1.00),
         fontSize: Theme.of(context).textTheme.subtitle1.fontSize);
@@ -223,81 +222,81 @@ class WarrantyDetailPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 16,
-              ),
-              ImageBanner(
-                title: AppLocalizations.of(context)
-                    .translate("yourBatteryFrontImage"),
-                child: Material(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      side: BorderSide(color: Colors.blue, width: 4)),
-                  clipBehavior: Clip.antiAlias,
-                  // child: Image.asset("assets/images/home/1.png",
-                  //     fit: BoxFit.cover),
-                  child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: "$imageBaseUrl${_warranty.batteryFrontImage}",
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) => Center(
-                      child: CircularProgressIndicator(
-                          value: downloadProgress.progress),
-                    ),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              ImageBanner(
-                title: AppLocalizations.of(context)
-                    .translate("yourBatteryFixedImage"),
-                child: Material(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      side: BorderSide(color: Colors.blue, width: 4)),
-                  clipBehavior: Clip.antiAlias,
-                  child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: "$imageBaseUrl${_warranty.fixedBatteryImage}",
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) => Center(
-                      child: CircularProgressIndicator(
-                          value: downloadProgress.progress),
-                    ),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                  ),
-                  // child: Image.asset("assets/images/FixedBatteryImage.png",
-                  //     fit: BoxFit.cover),
-                ),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              ImageBanner(
-                title: AppLocalizations.of(context)
-                    .translate("yourCarsColorAndNumber"),
-                child: Material(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      side: BorderSide(color: Colors.blue, width: 4)),
-                  clipBehavior: Clip.antiAlias,
-                  child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: "$imageBaseUrl${_warranty.carNumberImage}",
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) => Center(
-                      child: CircularProgressIndicator(
-                          value: downloadProgress.progress),
-                    ),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                  ),
-                  // child: Image.asset("assets/images/carFront.png",
-                  //     fit: BoxFit.cover),
-                ),
-              ),
+              // SizedBox(
+              //   height: 16,
+              // ),
+              // ImageBanner(
+              //   title: AppLocalizations.of(context)
+              //       .translate("yourBatteryFrontImage"),
+              //   child: Material(
+              //     shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(16),
+              //         side: BorderSide(color: Colors.blue, width: 4)),
+              //     clipBehavior: Clip.antiAlias,
+              //     // child: Image.asset("assets/images/home/1.png",
+              //     //     fit: BoxFit.cover),
+              //     child: CachedNetworkImage(
+              //       fit: BoxFit.cover,
+              //       imageUrl: "$imageBaseUrl${_warranty.batteryFrontImage}",
+              //       progressIndicatorBuilder:
+              //           (context, url, downloadProgress) => Center(
+              //         child: CircularProgressIndicator(
+              //             value: downloadProgress.progress),
+              //       ),
+              //       errorWidget: (context, url, error) => Icon(Icons.error),
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 16,
+              // ),
+              // ImageBanner(
+              //   title: AppLocalizations.of(context)
+              //       .translate("yourBatteryFixedImage"),
+              //   child: Material(
+              //     shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(16),
+              //         side: BorderSide(color: Colors.blue, width: 4)),
+              //     clipBehavior: Clip.antiAlias,
+              //     child: CachedNetworkImage(
+              //       fit: BoxFit.cover,
+              //       imageUrl: "$imageBaseUrl${_warranty.fixedBatteryImage}",
+              //       progressIndicatorBuilder:
+              //           (context, url, downloadProgress) => Center(
+              //         child: CircularProgressIndicator(
+              //             value: downloadProgress.progress),
+              //       ),
+              //       errorWidget: (context, url, error) => Icon(Icons.error),
+              //     ),
+              //     // child: Image.asset("assets/images/FixedBatteryImage.png",
+              //     //     fit: BoxFit.cover),
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 16,
+              // ),
+              // ImageBanner(
+              //   title: AppLocalizations.of(context)
+              //       .translate("yourCarsColorAndNumber"),
+              //   child: Material(
+              //     shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(16),
+              //         side: BorderSide(color: Colors.blue, width: 4)),
+              //     clipBehavior: Clip.antiAlias,
+              //     child: CachedNetworkImage(
+              //       fit: BoxFit.cover,
+              //       imageUrl: "$imageBaseUrl${_warranty.carNumberImage}",
+              //       progressIndicatorBuilder:
+              //           (context, url, downloadProgress) => Center(
+              //         child: CircularProgressIndicator(
+              //             value: downloadProgress.progress),
+              //       ),
+              //       errorWidget: (context, url, error) => Icon(Icons.error),
+              //     ),
+              //     // child: Image.asset("assets/images/carFront.png",
+              //     //     fit: BoxFit.cover),
+              //   ),
+              // ),
             ],
           ),
         ),

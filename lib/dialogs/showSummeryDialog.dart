@@ -4,10 +4,12 @@ import "package:ewarrenty/Models/warranty.dart";
 import 'package:ewarrenty/pages/WarrantyDetailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '../app_localizations.dart';
 
 AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
+  FirebaseAnalytics().setCurrentScreen(screenName: "showSummeryDialog");
   var bougthDate = DateTime.parse(warrenty.boughtDate);
   var endDate = DateTime(DateTime.now().year,
       DateTime.now().month + warrenty.warrantyDurationInt, DateTime.now().day);

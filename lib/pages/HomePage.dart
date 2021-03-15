@@ -7,6 +7,7 @@ import 'package:ewarrenty/dialogs/aboutCompanyDialog.dart';
 import 'package:ewarrenty/dialogs/termsOfServiceDialog.dart';
 import 'package:ewarrenty/helpers/PrefKeys.dart';
 import 'package:ewarrenty/pages/RequestDetailPage.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -67,6 +68,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _offsetAnimation = Tween<Offset>(begin: Offset(0, -1), end: Offset(0, 0))
         .animate(_curvedAnimation);
     _animeController.forward();
+    FirebaseAnalytics().setCurrentScreen(screenName: "HomePage");
   }
 
   @override
@@ -251,9 +253,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         .contains("en")) {
                       provider.prefs.setString(PrefKeys.lang, "ar");
                       provider.languageCode = "ar";
+                      FirebaseAnalytics().logEvent(
+                        name: 'change Language',
+                        parameters: <String, dynamic>{
+                          'lang': 'ar',
+                        },
+                      );
                     } else {
                       provider.prefs.setString(PrefKeys.lang, "en");
                       provider.languageCode = "en";
+                      FirebaseAnalytics().logEvent(
+                        name: 'change Language',
+                        parameters: <String, dynamic>{
+                          'lang': 'en',
+                        },
+                      );
                     }
                     provider.notifyListeners();
                     _fadeController.forward();

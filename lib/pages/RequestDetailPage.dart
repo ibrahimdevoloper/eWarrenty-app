@@ -2,6 +2,7 @@ import 'package:ewarrenty/Blocs/GetWarranty/get_warranty_cubit.dart';
 import 'package:ewarrenty/app_localizations.dart';
 import 'package:ewarrenty/pages/ForgottenWarrantyListPage.dart';
 import 'package:ewarrenty/pages/WarrantyDetailPage.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,6 +39,7 @@ class _RequestDetailPageState extends State<RequestDetailPage>
     // });
 
     // _animController.forward();
+    FirebaseAnalytics().setCurrentScreen(screenName: "RequestDetailPage");
   }
 
   @override

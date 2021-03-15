@@ -33,7 +33,8 @@ class _$SendWarrantyService extends SendWarrantyService {
       String notes,
       String car_number_image,
       String battery_front_image,
-      String fixed_battery_image}) {
+      String fixed_battery_image,
+      String bill_image}) {
     final $url = '/Warranty';
     final $headers = {'Authorization': 'Basic YWRtaW46YWRtaW4='};
     final $parts = <PartValue>[
@@ -52,7 +53,8 @@ class _$SendWarrantyService extends SendWarrantyService {
       PartValue<String>('notes', notes),
       PartValueFile<String>('car_number_image', car_number_image),
       PartValueFile<String>('battery_front_image', battery_front_image),
-      PartValueFile<String>('fixed_battery_image', fixed_battery_image)
+      PartValueFile<String>('fixed_battery_image', fixed_battery_image),
+      PartValueFile<String>('bill_image', bill_image)
     ];
     final $request = Request('POST', $url, client.baseUrl,
         parts: $parts, multipart: true, headers: $headers);

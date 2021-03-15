@@ -3,6 +3,7 @@ import 'package:ewarrenty/Blocs/ForgottenWarranty/forgotten_warranty_cubit.dart'
 import 'package:ewarrenty/Function/dateFormatter.dart';
 import 'package:ewarrenty/Models/warranty.dart';
 import 'package:ewarrenty/pages/WarrantyDetailPage.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,6 +37,8 @@ class _ForgottenWarrantyListPageState extends State<ForgottenWarrantyListPage> {
 
     // _emailFieldNode = FocusNode();
     // _phoneNumberFieldNode = FocusNode();
+    FirebaseAnalytics()
+        .setCurrentScreen(screenName: "ForgottenWarrantyListPage");
   }
 
   @override

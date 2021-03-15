@@ -4,6 +4,7 @@ import 'package:ewarrenty/dialogs/PrivacyPolicyDialog.dart';
 import 'package:ewarrenty/dialogs/termsOfServiceDialog.dart';
 import 'package:ewarrenty/helpers/PrefKeys.dart';
 import 'package:ewarrenty/pages/HomePage.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,6 +31,7 @@ class _ChooseLanguagePageState extends State<ChooseLanguagePage>
         .animate(_curvedAnimation);
     super.initState();
     _animeController.forward();
+    FirebaseAnalytics().setCurrentScreen(screenName: "ChooseLanguagePage");
   }
 
   @override

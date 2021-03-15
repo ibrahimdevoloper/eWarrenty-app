@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ewarrenty/Constants/Constants.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 import '../app_localizations.dart';
 
 AlertDialog whereIsSerialNumberDialog(BuildContext context,
     {@required String text, @required String imageUrl}) {
+  FirebaseAnalytics().setCurrentScreen(screenName: "whereIsSerialNumberDialog");
   return AlertDialog(
     title: Text(AppLocalizations.of(context)
         .translate("WhereIsMyBatterysSerialNumber")),

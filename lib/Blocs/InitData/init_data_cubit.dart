@@ -67,10 +67,12 @@ class InitDataCubit extends Cubit<InitDataState> {
   String _frontBatteryPath;
   String _fixedBatteryPath;
   String _carNumberPath;
+  String _billImagePath;
 
   bool _frontBatteryPathIsError = false;
   bool _fixedBatteryPathIsError = false;
   bool _carNumberPathIsError = false;
+  bool _billImagePathIsError = false;
 
   SendWarrantyService service;
 
@@ -111,7 +113,8 @@ class InitDataCubit extends Cubit<InitDataState> {
         _carNumberIsError ||
         _frontBatteryPathIsError ||
         _fixedBatteryPathIsError ||
-        _carNumberPathIsError);
+        _carNumberPathIsError ||
+        _billImagePathIsError);
   }
 
   List<Battery> get batteries => _batteries;
@@ -193,9 +196,11 @@ class InitDataCubit extends Cubit<InitDataState> {
       fixed_battery_image: fixedBatteryPath,
       customer_address: address,
       market_id: market.id,
+      bill_image: billImagePath,
       notes: "empty",
     )
         .then((value) {
+      print("billImagePath: $billImagePath");
       print("AddWarrantybody:${value.body}");
       print("AddWarrantyisSuccessful:${value.isSuccessful}");
       print("AddWarrantyError:${value.error.toString()}");
@@ -490,5 +495,17 @@ class InitDataCubit extends Cubit<InitDataState> {
 
   set carTypeIdIsError(bool value) {
     _carTypeIdIsError = value;
+  }
+
+  bool get billImagePathIsError => _billImagePathIsError;
+
+  set billImagePathIsError(bool value) {
+    _billImagePathIsError = value;
+  }
+
+  String get billImagePath => _billImagePath;
+
+  set billImagePath(String value) {
+    _billImagePath = value;
   }
 }

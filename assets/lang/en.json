@@ -148,5 +148,6 @@
   "makeSureYouAreEntering7CapitalCaseCharactersAndOrNumbers": "please Enter 7 Capital Case Characters and/or Numbers if Included",
   "WhereIsMyBatterysSerialNumber": "Where Is My Battery's Serial Number ?",
   "warrantyExpired": "this battery has Expired Warranty because of the extended storage life",
-  "Connection Error": "Connection Error"
+  "Connection Error": "Connection Error",
+  "billImage": "Bill Image"
 }

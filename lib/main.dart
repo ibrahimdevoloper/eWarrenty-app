@@ -2,6 +2,8 @@ import 'package:ewarrenty/Providers/LangProvider.dart';
 import 'package:ewarrenty/helpers/PrefKeys.dart';
 import 'package:ewarrenty/pages/ChooseLanguagePage.dart';
 import 'package:ewarrenty/pages/HomePage.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,6 +62,9 @@ class MyApp extends StatelessWidget {
                 supportedLocales: [
                   Locale('en'),
                   Locale('ar'),
+                ],
+                navigatorObservers: [
+                  FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
                 ],
                 // These delegates make sure that the localization data for the proper language is loaded
                 localizationsDelegates: [

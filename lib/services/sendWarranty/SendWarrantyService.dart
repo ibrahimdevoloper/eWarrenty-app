@@ -33,6 +33,7 @@ abstract class SendWarrantyService extends ChopperService {
     @PartFile('car_number_image') String car_number_image,
     @PartFile('battery_front_image') String battery_front_image,
     @PartFile('fixed_battery_image') String fixed_battery_image,
+    @PartFile('bill_image') String bill_image,
   });
 
   static SendWarrantyService create() {

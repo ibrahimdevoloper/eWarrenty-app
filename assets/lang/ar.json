@@ -97,7 +97,7 @@
   "carProperty": "ملكية السيارة",
   "country": "أضف بلدك",
 
-  "addBatteryFrontImage": "يرجى تصوير البطارية صورة البطارية الأمامية",
+  "addBatteryFrontImage": "يرجى تصوير البطارية صورة أمامية",
   "addFixedBatteryImage": "يرجى تصوير البطارية و هي مركبة",
   "carNumberIncludingItsColorImage": "يرجى تصوير السيارة موضحاً لونها و رقمها",
 
@@ -151,6 +151,7 @@
   "makeSureYouAreEntering7CapitalCaseCharactersAndOrNumbers": "رجاءً أدخل 7 أحرف أنجليزية كبيرة مع أرقام إن وجد",
   "WhereIsMyBatterysSerialNumber": "أبن الرقم التسلسلي لبطاريتي ؟",
   "warrantyExpired": "هذه البطارية خارج الكفالة بسبب طول فترة التخزين",
-  "Connection Error": "خطأ بالاتصال"
+  "Connection Error": "خطأ بالاتصال",
+  "billImage": "صورة الفاتورة"
 
 }

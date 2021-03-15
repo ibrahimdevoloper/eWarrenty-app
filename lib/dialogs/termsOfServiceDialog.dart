@@ -1,9 +1,11 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import '../app_localizations.dart';
 
 AlertDialog termsOfServiceDialog(BuildContext context) {
+  FirebaseAnalytics().setCurrentScreen(screenName: "termsOfServiceDialog");
   var email = "info@Marvel-battery.ca";
   return AlertDialog(
     title: Text(
