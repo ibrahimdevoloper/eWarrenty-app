@@ -16,6 +16,7 @@ import 'package:ewarrenty/Wrappers/SuggestionsBoxWrapper.dart';
 import 'package:ewarrenty/app_localizations.dart';
 import 'package:ewarrenty/dialogs/showSummeryDialog.dart';
 import 'package:ewarrenty/dialogs/whereIsSerialNumberDialog.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 
 class AddWarrantyPage extends StatefulWidget {
   @override
@@ -282,12 +282,14 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                   print(finalValidation);
                   if (finalValidation) {
                     // ProgressHUD.of(context).show();
-                    // var snackBar = SnackBar(
-                    //   content: Text(AppLocalizations.of(context).translate("pleaseCheckYourInfomation")),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                     await mCubit.submitWarrantyData();
+                  } else {
+                    var snackBar = SnackBar(
+                      content: Text(AppLocalizations.of(context)
+                          .translate("pleaseCheckYourInfomation")),
+                      duration: Duration(milliseconds: 600),
+                    );
+                    Scaffold.of(context).showSnackBar(snackBar);
                   }
                 },
               ),
@@ -527,10 +529,9 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                               height: 8,
                             ),
                             CarNumberIncludingItsColorImageButton(),
-
-                            // SizedBox(
-                            //   height: 16,
-                            // ),
+                            SizedBox(
+                              height: 16,
+                            ),
                           ],
                         ),
                       );

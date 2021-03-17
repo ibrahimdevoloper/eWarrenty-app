@@ -41,6 +41,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397517637204:android:7b8a0bf7bd8e2feff00fc1",
+        "android_client_info": {
+          "package_name": "com.marveltech.ewarrenty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397517637204-ts7fpr7ns3smjaokkcapb53bfrp30o04.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.marveltech.ewarrenty",
+            "certificate_hash": "af20ec13f5ed0390d6ac136b07985737d34c89e3"
+          }
+        },
+        {
+          "client_id": "397517637204-v14d7vsuke3mofjs084vqanfbgmoe296.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxfmhF32f20YSZfc-DZnLIwOCRQ3MBd0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397517637204-v14d7vsuke3mofjs084vqanfbgmoe296.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

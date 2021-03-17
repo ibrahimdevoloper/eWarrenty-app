@@ -6,7 +6,7 @@ import '../app_localizations.dart';
 
 AlertDialog termsOfServiceDialog(BuildContext context) {
   FirebaseAnalytics().setCurrentScreen(screenName: "termsOfServiceDialog");
-  var email = "info@Marvel-battery.ca";
+  var email = "info@canadianbzd.ca";
   return AlertDialog(
     title: Text(
       "Terms Of Service",

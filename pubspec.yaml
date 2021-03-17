@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  # don't forget the ios application Id
   font_awesome_flutter: ^8.10.1
   flutter_swiper: ^1.1.6
   flutter_typeahead: ^1.9.1

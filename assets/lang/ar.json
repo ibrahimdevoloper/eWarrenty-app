@@ -120,7 +120,7 @@
   "submit": "أرسل",
   "pleaseChooseBatteryModel":"يرجى اختيار موديل البطارية",
   "chooseBillDate": "يرجى اختيار تاريخ شراء البطارية",
-  "pleaseCheckYourInfomation": "رجاءً تحقق من معلوماتك",
+  "pleaseCheckYourInfomation": "رجاءً تحقق من معلوماتك الملونة بالأحمر",
   "pleaseEnterSerialNumber": "يرجى إدخال الرقم التسلسلي",
   "SelectBatteryToHelpYouWithInstructions": "يرجى اختيار بطاريتك من أجل مساعدتك بتعليماتها",
   "addFullName": "يرجى إدخال اسمك كاملاً بالعربية",
@@ -152,6 +152,7 @@
   "WhereIsMyBatterysSerialNumber": "أبن الرقم التسلسلي لبطاريتي ؟",
   "warrantyExpired": "هذه البطارية خارج الكفالة بسبب طول فترة التخزين",
   "Connection Error": "خطأ بالاتصال",
-  "billImage": "صورة الفاتورة"
+  "billImage": "يرجى تصوير الفاتورة",
+  "phoneNumber": "رقم الهاتف"
 
 }

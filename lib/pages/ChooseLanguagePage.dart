@@ -257,7 +257,7 @@ class _ChooseLanguagePageState extends State<ChooseLanguagePage>
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      text: "By Choosing a Language You Agreeing to Our\n",
+                      text: "By Choosing a Language You Are Agreeing to Our\n",
                       style: GoogleFonts.cairo(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,

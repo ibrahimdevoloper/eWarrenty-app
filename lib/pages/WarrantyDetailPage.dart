@@ -74,39 +74,36 @@ class WarrantyDetailPage extends StatelessWidget {
               )
             ],
           ),
-          body: ListView(
-            shrinkWrap: true,
-            // mainAxisAlignment: MainAxisAlignment.spaceAround,
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(
-                height: 8,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    // stops: [0.1, 0.85],
-                    colors: [
-                      Colors.blue[700],
-                      // Theme.of(context).primaryColor,
-                      // Theme.of(context).accentColor
-                      // Colors.deepPurpleAccent[500],
-                      Colors.indigo[900]
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      // stops: [0.1, 0.85],
+                      colors: [
+                        Colors.blue[700],
+                        // Theme.of(context).primaryColor,
+                        // Theme.of(context).accentColor
+                        // Colors.deepPurpleAccent[500],
+                        Colors.indigo[900]
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                  height: 75,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Image.asset(
+                      'assets/images/whitelogo.png',
+                      fit: BoxFit.fitHeight,
+                    ),
                   ),
                 ),
-                height: 60,
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Image.asset(
-                    'assets/images/whitelogo.png',
-                    fit: BoxFit.fitHeight,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 16,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -122,6 +119,9 @@ class WarrantyDetailPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
+                        Text(
+                            "${AppLocalizations.of(context).translate("customerName")}:${_warranty.customerName}",
+                            style: insideBoxStyle),
                         Text(
                             "${AppLocalizations.of(context).translate("warrantyCode")}: ${_warranty.warrantyCode}",
                             style: insideBoxStyle),
@@ -144,40 +144,6 @@ class WarrantyDetailPage extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  // color: Theme.of(context).primaryColor.withOpacity(0.3),
-                  color: Color.fromRGBO(0x00, 0x4A, 0x80, 0.21),
-                  // color: Colors.transparent,
-                  elevation: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Text(
-                            "${AppLocalizations.of(context).translate("customerName")}:${_warranty.customerName}",
-                            style: insideBoxStyle),
-                        Text(
-                            "${AppLocalizations.of(context).translate("carModel")}: ${AppLocalizations.of(context).locale.languageCode.contains("ar") ? _warranty.carType.nameAr : _warranty.carType.nameEn}",
-                            style: insideBoxStyle),
-                        Text(
-                          "${AppLocalizations.of(context).translate("carProperty")}: ${AppLocalizations.of(context).locale.languageCode.contains("ar") ? _warranty.carProperty.nameAr : _warranty.carProperty.nameEn}",
-                          style: insideBoxStyle,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 16,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -222,81 +188,148 @@ class WarrantyDetailPage extends StatelessWidget {
                   ),
                 ),
               ),
-              // SizedBox(
-              //   height: 16,
-              // ),
-              // ImageBanner(
-              //   title: AppLocalizations.of(context)
-              //       .translate("yourBatteryFrontImage"),
-              //   child: Material(
-              //     shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(16),
-              //         side: BorderSide(color: Colors.blue, width: 4)),
-              //     clipBehavior: Clip.antiAlias,
-              //     // child: Image.asset("assets/images/home/1.png",
-              //     //     fit: BoxFit.cover),
-              //     child: CachedNetworkImage(
-              //       fit: BoxFit.cover,
-              //       imageUrl: "$imageBaseUrl${_warranty.batteryFrontImage}",
-              //       progressIndicatorBuilder:
-              //           (context, url, downloadProgress) => Center(
-              //         child: CircularProgressIndicator(
-              //             value: downloadProgress.progress),
-              //       ),
-              //       errorWidget: (context, url, error) => Icon(Icons.error),
-              //     ),
+              // Expanded(
+              //   child: Column(
+              //     // shrinkWrap: true,
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     crossAxisAlignment: CrossAxisAlignment.stretch,
+              //     children: [
+              //       // SizedBox(
+              //       //   height: 8,
+              //       // ),
+              //
+              //       // SizedBox(
+              //       //   height: 16,
+              //       // ),
+              //
+              //       // SizedBox(
+              //       //   height: 16,
+              //       // ),
+              //       // Padding(
+              //       //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //       //   child: Card(
+              //       //     shape: RoundedRectangleBorder(
+              //       //         borderRadius: BorderRadius.circular(16)),
+              //       //     // color: Theme.of(context).primaryColor.withOpacity(0.3),
+              //       //     color: Color.fromRGBO(0x00, 0x4A, 0x80, 0.21),
+              //       //     // color: Colors.transparent,
+              //       //     elevation: 0,
+              //       //     child: Padding(
+              //       //       padding: const EdgeInsets.all(8.0),
+              //       //       child: Column(
+              //       //         children: [
+              //       //
+              //       //           Text(
+              //       //               "${AppLocalizations.of(context).translate("carModel")}: ${AppLocalizations.of(context).locale.languageCode.contains("ar") ? _warranty.carType.nameAr : _warranty.carType.nameEn}",
+              //       //               style: insideBoxStyle),
+              //       //           Text(
+              //       //             "${AppLocalizations.of(context).translate("carProperty")}: ${AppLocalizations.of(context).locale.languageCode.contains("ar") ? _warranty.carProperty.nameAr : _warranty.carProperty.nameEn}",
+              //       //             style: insideBoxStyle,
+              //       //           ),
+              //       //         ],
+              //       //       ),
+              //       //     ),
+              //       //   ),
+              //       // ),
+              //       // SizedBox(
+              //       //   height: 16,
+              //       // ),
+              //
+              //       // SizedBox(
+              //       //   height: 16,
+              //       // ),
+              //       // ImageBanner(
+              //       //   title: AppLocalizations.of(context)
+              //       //       .translate("yourBatteryFrontImage"),
+              //       //   child: Material(
+              //       //     shape: RoundedRectangleBorder(
+              //       //         borderRadius: BorderRadius.circular(16),
+              //       //         side: BorderSide(color: Colors.blue, width: 4)),
+              //       //     clipBehavior: Clip.antiAlias,
+              //       //     // child: Image.asset("assets/images/home/1.png",
+              //       //     //     fit: BoxFit.cover),
+              //       //     child: CachedNetworkImage(
+              //       //       fit: BoxFit.cover,
+              //       //       imageUrl: "$imageBaseUrl${_warranty.batteryFrontImage}",
+              //       //       progressIndicatorBuilder:
+              //       //           (context, url, downloadProgress) => Center(
+              //       //         child: CircularProgressIndicator(
+              //       //             value: downloadProgress.progress),
+              //       //       ),
+              //       //       errorWidget: (context, url, error) => Icon(Icons.error),
+              //       //     ),
+              //       //   ),
+              //       // ),
+              //       // SizedBox(
+              //       //   height: 16,
+              //       // ),
+              //       // ImageBanner(
+              //       //   title: AppLocalizations.of(context)
+              //       //       .translate("yourBatteryFixedImage"),
+              //       //   child: Material(
+              //       //     shape: RoundedRectangleBorder(
+              //       //         borderRadius: BorderRadius.circular(16),
+              //       //         side: BorderSide(color: Colors.blue, width: 4)),
+              //       //     clipBehavior: Clip.antiAlias,
+              //       //     child: CachedNetworkImage(
+              //       //       fit: BoxFit.cover,
+              //       //       imageUrl: "$imageBaseUrl${_warranty.fixedBatteryImage}",
+              //       //       progressIndicatorBuilder:
+              //       //           (context, url, downloadProgress) => Center(
+              //       //         child: CircularProgressIndicator(
+              //       //             value: downloadProgress.progress),
+              //       //       ),
+              //       //       errorWidget: (context, url, error) => Icon(Icons.error),
+              //       //     ),
+              //       //     // child: Image.asset("assets/images/FixedBatteryImage.png",
+              //       //     //     fit: BoxFit.cover),
+              //       //   ),
+              //       // ),
+              //       // SizedBox(
+              //       //   height: 16,
+              //       // ),
+              //       // ImageBanner(
+              //       //   title: AppLocalizations.of(context)
+              //       //       .translate("yourCarsColorAndNumber"),
+              //       //   child: Material(
+              //       //     shape: RoundedRectangleBorder(
+              //       //         borderRadius: BorderRadius.circular(16),
+              //       //         side: BorderSide(color: Colors.blue, width: 4)),
+              //       //     clipBehavior: Clip.antiAlias,
+              //       //     child: CachedNetworkImage(
+              //       //       fit: BoxFit.cover,
+              //       //       imageUrl: "$imageBaseUrl${_warranty.carNumberImage}",
+              //       //       progressIndicatorBuilder:
+              //       //           (context, url, downloadProgress) => Center(
+              //       //         child: CircularProgressIndicator(
+              //       //             value: downloadProgress.progress),
+              //       //       ),
+              //       //       errorWidget: (context, url, error) => Icon(Icons.error),
+              //       //     ),
+              //       //     // child: Image.asset("assets/images/carFront.png",
+              //       //     //     fit: BoxFit.cover),
+              //       //   ),
+              //       // ),
+              //     ],
               //   ),
               // ),
-              // SizedBox(
-              //   height: 16,
-              // ),
-              // ImageBanner(
-              //   title: AppLocalizations.of(context)
-              //       .translate("yourBatteryFixedImage"),
-              //   child: Material(
-              //     shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(16),
-              //         side: BorderSide(color: Colors.blue, width: 4)),
-              //     clipBehavior: Clip.antiAlias,
-              //     child: CachedNetworkImage(
-              //       fit: BoxFit.cover,
-              //       imageUrl: "$imageBaseUrl${_warranty.fixedBatteryImage}",
-              //       progressIndicatorBuilder:
-              //           (context, url, downloadProgress) => Center(
-              //         child: CircularProgressIndicator(
-              //             value: downloadProgress.progress),
-              //       ),
-              //       errorWidget: (context, url, error) => Icon(Icons.error),
-              //     ),
-              //     // child: Image.asset("assets/images/FixedBatteryImage.png",
-              //     //     fit: BoxFit.cover),
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 16,
-              // ),
-              // ImageBanner(
-              //   title: AppLocalizations.of(context)
-              //       .translate("yourCarsColorAndNumber"),
-              //   child: Material(
-              //     shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(16),
-              //         side: BorderSide(color: Colors.blue, width: 4)),
-              //     clipBehavior: Clip.antiAlias,
-              //     child: CachedNetworkImage(
-              //       fit: BoxFit.cover,
-              //       imageUrl: "$imageBaseUrl${_warranty.carNumberImage}",
-              //       progressIndicatorBuilder:
-              //           (context, url, downloadProgress) => Center(
-              //         child: CircularProgressIndicator(
-              //             value: downloadProgress.progress),
-              //       ),
-              //       errorWidget: (context, url, error) => Icon(Icons.error),
-              //     ),
-              //     // child: Image.asset("assets/images/carFront.png",
-              //     //     fit: BoxFit.cover),
-              //   ),
-              // ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "${AppLocalizations.of(context).translate("phoneNumber")}:+(1) 437989-8036",
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "${AppLocalizations.of(context).translate("email")}: info@canadianbzd.ca",
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "${AppLocalizations.of(context).translate("address")}: Canadian Business Development",
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ],
           ),
         ),

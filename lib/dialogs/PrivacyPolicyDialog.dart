@@ -6,7 +6,7 @@ import '../app_localizations.dart';
 
 AlertDialog privacyPolicyDialog(BuildContext context) {
   FirebaseAnalytics().setCurrentScreen(screenName: "privacyPolicyDialog");
-  var email = "info@Marvel-battery.ca";
+  var email = "info@canadianbzd.ca";
   return AlertDialog(
     title: Text(
       "Privacy Policy",

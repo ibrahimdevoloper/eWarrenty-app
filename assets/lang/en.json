@@ -117,7 +117,7 @@
   "submit": "submit",
   "pleaseChooseBatteryModel":"please choose battery model",
   "chooseBillDate": "Please choose Battery's Purchase Date",
-  "pleaseCheckYourInfomation": "Please Check Your Infomation",
+  "pleaseCheckYourInfomation": "Please Check Your Infomation Which has the Color Red",
   "pleaseEnterSerialNumber": "Please Enter Serial Number",
   "SelectBatteryToHelpYouWithInstructions": "Please Select Your Battery To Help You With its Instructions",
   "addFullName": "Please Add Your Full Name in English",
@@ -149,5 +149,6 @@
   "WhereIsMyBatterysSerialNumber": "Where Is My Battery's Serial Number ?",
   "warrantyExpired": "this battery has Expired Warranty because of the extended storage life",
   "Connection Error": "Connection Error",
-  "billImage": "Bill Image"
+  "billImage": "Please Capture The Bill Image",
+  "phoneNumber": "Phone Number"
 }
