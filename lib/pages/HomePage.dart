@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _offsetAnimation = Tween<Offset>(begin: Offset(0, -1), end: Offset(0, 0))
         .animate(_curvedAnimation);
     _animeController.forward();
-    FirebaseAnalytics().setCurrentScreen(screenName: "HomePage");
+    FirebaseAnalytics().setCurrentScreen(screenName: "HomePage",screenClassOverride: "HomePage");
   }
 
   @override
@@ -255,7 +255,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       provider.prefs.setString(PrefKeys.lang, "ar");
                       provider.languageCode = "ar";
                       FirebaseAnalytics().logEvent(
-                        name: 'change Language',
+                        name: 'changedLanguage',
                         parameters: <String, dynamic>{
                           'lang': 'ar',
                         },
@@ -264,7 +264,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       provider.prefs.setString(PrefKeys.lang, "en");
                       provider.languageCode = "en";
                       FirebaseAnalytics().logEvent(
-                        name: 'change Language',
+                        name: 'changedLanguage',
                         parameters: <String, dynamic>{
                           'lang': 'en',
                         },

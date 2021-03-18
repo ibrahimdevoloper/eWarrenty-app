@@ -7,7 +7,7 @@ import '../app_localizations.dart';
 
 AlertDialog whereIsSerialNumberDialog(BuildContext context,
     {@required String text, @required String imageUrl}) {
-  FirebaseAnalytics().setCurrentScreen(screenName: "whereIsSerialNumberDialog");
+  FirebaseAnalytics().setCurrentScreen(screenName: "whereIsSerialNumberDialog",screenClassOverride: "whereIsSerialNumberDialog");
   return AlertDialog(
     title: Text(AppLocalizations.of(context)
         .translate("WhereIsMyBatterysSerialNumber")),

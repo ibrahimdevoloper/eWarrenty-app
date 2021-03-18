@@ -13,7 +13,7 @@ class PdfViewerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAnalytics().setCurrentScreen(screenName: "PdfViewerPage");
+    FirebaseAnalytics().setCurrentScreen(screenName: "PdfViewerPage",screenClassOverride: "PdfViewerPage");
     return PDFViewerScaffold(
       appBar: AppBar(
         title: Text(

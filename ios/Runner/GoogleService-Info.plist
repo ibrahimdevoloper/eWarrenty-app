@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>397517637204-2s33br8fg3b3kgtv0gg5d94ffr2apjbs.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.397517637204-2s33br8fg3b3kgtv0gg5d94ffr2apjbs</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>397517637204-cqb9r9n5ho5r99g0olbpef4br5m85hch.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBsYmBM4Q8k7D4HmaQUZtY24LFWJb3fIj0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>397517637204</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.marveltech.ewarrenty</string>
+	<key>PROJECT_ID</key>
+	<string>marvel-s-e-warranty</string>
+	<key>STORAGE_BUCKET</key>
+	<string>marvel-s-e-warranty.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:397517637204:ios:80bb6ee82dc26eadf00fc1</string>
+</dict>
+</plist>

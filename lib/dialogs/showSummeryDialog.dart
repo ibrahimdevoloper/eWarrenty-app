@@ -9,7 +9,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import '../app_localizations.dart';
 
 AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
-  FirebaseAnalytics().setCurrentScreen(screenName: "showSummeryDialog");
+  FirebaseAnalytics().setCurrentScreen(screenName: "showSummeryDialog",screenClassOverride: "showSummeryDialog");
   var bougthDate = DateTime.parse(warrenty.boughtDate);
   var endDate = DateTime(DateTime.now().year,
       DateTime.now().month + warrenty.warrantyDurationInt, DateTime.now().day);

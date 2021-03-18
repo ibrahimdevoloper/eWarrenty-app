@@ -5,7 +5,7 @@ import 'package:flutter_html/flutter_html.dart';
 import '../app_localizations.dart';
 
 AlertDialog privacyPolicyDialog(BuildContext context) {
-  FirebaseAnalytics().setCurrentScreen(screenName: "privacyPolicyDialog");
+  FirebaseAnalytics().setCurrentScreen(screenName: "privacyPolicyDialog",screenClassOverride: "privacyPolicyDialog");
   var email = "info@canadianbzd.ca";
   return AlertDialog(
     title: Text(

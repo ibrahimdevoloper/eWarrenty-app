@@ -57,7 +57,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    FirebaseAnalytics().setCurrentScreen(screenName: "AddWarrantyPage");
+    FirebaseAnalytics().setCurrentScreen(screenName: "AddWarrantyPage",screenClassOverride: "AddWarrantyPage");
   }
 
   @override

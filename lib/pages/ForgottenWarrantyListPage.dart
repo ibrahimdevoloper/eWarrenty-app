@@ -38,7 +38,7 @@ class _ForgottenWarrantyListPageState extends State<ForgottenWarrantyListPage> {
     // _emailFieldNode = FocusNode();
     // _phoneNumberFieldNode = FocusNode();
     FirebaseAnalytics()
-        .setCurrentScreen(screenName: "ForgottenWarrantyListPage");
+        .setCurrentScreen(screenName: "ForgottenWarrantyListPage",screenClassOverride: "ForgottenWarrantyListPage");
   }
 
   @override

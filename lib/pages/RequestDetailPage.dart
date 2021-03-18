@@ -39,7 +39,7 @@ class _RequestDetailPageState extends State<RequestDetailPage>
     // });
 
     // _animController.forward();
-    FirebaseAnalytics().setCurrentScreen(screenName: "RequestDetailPage");
+    FirebaseAnalytics().setCurrentScreen(screenName: "RequestDetailPage",screenClassOverride: "RequestDetailPage");
   }
 
   @override

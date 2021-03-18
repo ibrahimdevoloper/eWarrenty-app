@@ -31,7 +31,7 @@ class _ChooseLanguagePageState extends State<ChooseLanguagePage>
         .animate(_curvedAnimation);
     super.initState();
     _animeController.forward();
-    FirebaseAnalytics().setCurrentScreen(screenName: "ChooseLanguagePage");
+    FirebaseAnalytics().setCurrentScreen(screenName: "ChooseLanguagePage",screenClassOverride: "ChooseLanguagePage");
   }
 
   @override

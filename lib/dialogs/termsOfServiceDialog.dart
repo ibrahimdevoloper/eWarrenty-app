@@ -5,7 +5,7 @@ import 'package:flutter_html/flutter_html.dart';
 import '../app_localizations.dart';
 
 AlertDialog termsOfServiceDialog(BuildContext context) {
-  FirebaseAnalytics().setCurrentScreen(screenName: "termsOfServiceDialog");
+  FirebaseAnalytics().setCurrentScreen(screenName: "termsOfServiceDialog",screenClassOverride: "termsOfServiceDialog");
   var email = "info@canadianbzd.ca";
   return AlertDialog(
     title: Text(

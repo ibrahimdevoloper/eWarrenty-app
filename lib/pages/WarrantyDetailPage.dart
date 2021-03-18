@@ -18,7 +18,7 @@ class WarrantyDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAnalytics().setCurrentScreen(screenName: "WarrantyDetailPage");
+    FirebaseAnalytics().setCurrentScreen(screenName: "WarrantyDetailPage",screenClassOverride: "WarrantyDetailPage");
     final insideBoxStyle = TextStyle(
         color: Color.fromRGBO(0x00, 0x4A, 0x80, 1.00),
         fontSize: Theme.of(context).textTheme.subtitle1.fontSize);
