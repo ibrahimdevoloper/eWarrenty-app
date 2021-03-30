@@ -1,5 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ewarrenty/Constants/Constants.dart';
+import 'package:ewarrenty/CustomWidget/RoundImagePreview.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +6,9 @@ import '../app_localizations.dart';
 
 AlertDialog whereIsSerialNumberDialog(BuildContext context,
     {@required String text, @required String imageUrl}) {
-  FirebaseAnalytics().setCurrentScreen(screenName: "whereIsSerialNumberDialog",screenClassOverride: "whereIsSerialNumberDialog");
+  FirebaseAnalytics().setCurrentScreen(
+      screenName: "whereIsSerialNumberDialog",
+      screenClassOverride: "whereIsSerialNumberDialog");
   return AlertDialog(
     title: Text(AppLocalizations.of(context)
         .translate("WhereIsMyBatterysSerialNumber")),
@@ -15,29 +16,19 @@ AlertDialog whereIsSerialNumberDialog(BuildContext context,
       child: Column(
         // shrinkWrap: true,
         children: [
-          Text(text),
+          Text("example on where you can find the Serial Number"),
           SizedBox(
             height: 8,
           ),
-          Material(
-            clipBehavior: Clip.antiAlias,
-            borderRadius: BorderRadius.all(
-              Radius.circular(16),
-            ),
-            child: AspectRatio(
-              aspectRatio: 4 / 3,
-              child: CachedNetworkImage(
-                fit: BoxFit.cover,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: CircularProgressIndicator(
-                      value: downloadProgress.progress),
-                ),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-                imageUrl: "$imageBaseUrl/$imageUrl",
-              ),
-            ),
-          )
+          RoundImagePreview(
+            child: Image.asset('assets/images/serialNumber/1.png'),
+          ),
+          RoundImagePreview(
+            child: Image.asset('assets/images/serialNumber/2.jpg'),
+          ),
+          RoundImagePreview(
+            child: Image.asset('assets/images/serialNumber/3.png'),
+          ),
         ],
       ),
     ),

@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:ewarrenty/Blocs/InitData/init_data_cubit.dart';
+import 'package:ewarrenty/BottomSheets/AddCarBottomSheet.dart';
+import 'package:ewarrenty/BottomSheets/AddMarketBottomSheet.dart';
 import 'package:ewarrenty/Constants/Constants.dart';
 import 'package:ewarrenty/CustomWidget/ImagePreviewButton.dart';
 import 'package:ewarrenty/Function/dateFormatter.dart';
@@ -25,6 +27,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class AddWarrantyPage extends StatefulWidget {
@@ -57,7 +60,8 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    FirebaseAnalytics().setCurrentScreen(screenName: "AddWarrantyPage",screenClassOverride: "AddWarrantyPage");
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "AddWarrantyPage", screenClassOverride: "AddWarrantyPage");
   }
 
   @override
@@ -142,16 +146,16 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     // );
                     // Scaffold.of(context).showSnackBar(snackBar);
                   }
-                  if (mCubit.eMail == null) {
-                    //TODO: tanslate "Please Add Your E-mail"
-                    mCubit.emit(InitDataEmailError());
-                    mCubit.eMailIsError = true;
-                    // var snackBar = SnackBar(
-                    //   content: Text("Please Add Your E-mail"),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
-                  }
+                  // if (mCubit.eMail == null) {
+                  //   //TODO: tanslate "Please Add Your E-mail"
+                  //   mCubit.emit(InitDataEmailError());
+                  //   mCubit.eMailIsError = true;
+                  //   // var snackBar = SnackBar(
+                  //   //   content: Text("Please Add Your E-mail"),
+                  //   //   duration: Duration(milliseconds: 600),
+                  //   // );
+                  //   // Scaffold.of(context).showSnackBar(snackBar);
+                  // }
                   if (mCubit.phoneNumber == null) {
                     //TODO: tanslate "Please Add Your phone number"
                     mCubit.emit(InitDataPhoneNumberError());
@@ -202,8 +206,9 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     // );
                     // Scaffold.of(context).showSnackBar(snackBar);
                   }
-                  if (mCubit.market == null) {
+                  if (!mCubit.checkMarketValidation()) {
                     //TODO: tanslate "Please Add Your Market"
+                    //TODO: make sure this is working
                     mCubit.emit(InitDataMarketError());
                     mCubit.marketIsError = true;
                     // var snackBar = SnackBar(
@@ -211,15 +216,14 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     //   duration: Duration(milliseconds: 600),
                     // );
                     // Scaffold.of(context).showSnackBar(snackBar);
+
                   }
                   if (mCubit.frontBatteryPath == null) {
                     //TODO: tanslate "Please capture Your battery front"
                     mCubit.frontBatteryPathIsError = true;
                     mCubit.battery == null
-                        ? mCubit.emit(
-                            InitDataFrontBatteryImageErrorWhileBatteyIsNotChoosen())
-                        : mCubit.emit(
-                            InitDataFrontBatteryImageErrorWhileBatteyIsChoosen());
+                        ? mCubit.emit(InitDataFrontBatteryImageError())
+                        : mCubit.emit(InitDataFrontBatteryImageError());
                     // var snackBar = SnackBar(
                     //   content: Text("Please capture Your battery front"),
                     //   duration: Duration(milliseconds: 600),
@@ -256,7 +260,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     // );
                     // Scaffold.of(context).showSnackBar(snackBar);
                   }
-                  if (mCubit.carTypeId == null) {
+                  if (!mCubit.checkCarValidation()) {
                     //TODO: tanslate "Please capture Your car"
                     mCubit.emit(InitDataCarTypeError());
                     mCubit.carTypeIdIsError = true;
@@ -282,7 +286,15 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                   print(finalValidation);
                   if (finalValidation) {
                     // ProgressHUD.of(context).show();
-                    await mCubit.submitWarrantyData();
+                    //TODO: test the connection to the api
+                    if (mCubit.carTypeId != null && mCubit.market != null)
+                      await mCubit.submitWarrantyData();
+                    else if (mCubit.carTypeId == null && mCubit.market != null)
+                      await mCubit.submitWarrantyDataWithoutCar();
+                    else if (mCubit.carTypeId != null && mCubit.market == null)
+                      await mCubit.submitWarrantyDataWithoutMarket();
+                    else if (mCubit.carTypeId == null && mCubit.market == null)
+                      await mCubit.submitWarrantyDataWithoutMarketAndCar();
                   } else {
                     var snackBar = SnackBar(
                       content: Text(AppLocalizations.of(context)
@@ -376,16 +388,20 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                         (current is InitDataCarTypeReset) ||
                         (current is InitDataCarPropertyError) ||
                         (current is InitDataCarPropertyReset) ||
-                        (current
-                            is InitDataFrontBatteryImageErrorWhileBatteyIsNotChoosen) ||
-                        (current
-                            is InitDataFrontBatteryImageErrorWhileBatteyIsChoosen) ||
+                        (current is InitDataFrontBatteryImageError) ||
+                        // (current
+                        //     is InitDataFrontBatteryImageErrorWhileBatteyIsChoosen) ||
                         (current is InitDataFixedBatteryImage) ||
                         (current is InitDataFixedBatteryImageError) ||
                         (current is InitDataCarNumberImage) ||
                         (current is InitDataCarNumberImageError) ||
                         (current is InitDataBillImageImage) ||
-                        (current is InitDataBillImageImageError));
+                        (current is InitDataBillImageImageError) ||
+                        (current is InitDataPhoneNumberCountryCode) ||
+                        (current is InitDataNewMarketNameError) ||
+                        (current is InitDataNewMarketAddressError) ||
+                        (current is InitDataNewMarketNameReset) ||
+                        (current is InitDataNewMarketAddressReset));
                   },
                   builder: (context, state) {
                     if (state is InitDataInitial) {
@@ -464,7 +480,6 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                             SizedBox(
                               height: 8,
                             ),
-
                             PhoneNumberTextField(
                               phoneNumberTextEditingController:
                                   _phoneNumberTextEditingController,
@@ -1085,12 +1100,13 @@ class AddBatteryFrontImageButton extends StatelessWidget {
         //     current is InitDataFrontBatteryImage);
         return current is InitDataBatteryChosenForImage ||
             current is InitDataFrontBatteryImage ||
-            current is InitDataFrontBatteryImageErrorWhileBatteyIsNotChoosen ||
-            current is InitDataFrontBatteryImageErrorWhileBatteyIsChoosen;
+            current is InitDataFrontBatteryImageError;
+        // current is InitDataFrontBatteryImageErrorWhileBatteyIsNotChoosen ||
+        // current is InitDataFrontBatteryImageErrorWhileBatteyIsChoosen;
       },
       builder: (context, state) {
         print(state);
-        if (state is InitDataFrontBatteryImageErrorWhileBatteyIsChoosen) {
+        if (state is InitDataFrontBatteryImageError) {
           return CustomButtonForImagePreview(
             isError: true,
             title:
@@ -1101,106 +1117,7 @@ class AddBatteryFrontImageButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   side: BorderSide(color: Colors.blue, width: 4)),
               clipBehavior: Clip.antiAlias,
-              child: CachedNetworkImage(
-                imageUrl:
-                    "$imageBaseUrl/${BlocProvider.of<InitDataCubit>(context).battery.frontImage}",
-                fit: BoxFit.cover,
-                errorWidget: (context, url, error) => Container(
-                  height: 100,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Icon(WarrantyIcons.warrenty_clear),
-                        Text(AppLocalizations.of(context)
-                            .translate("errorLoadingImage"))
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            onTap: () async {
-              // final picker = ImagePicker();
-              // final pickedFile = await picker.getImage(
-              //     source: ImageSource.camera);
-              // print(pickedFile.path);
-              var mPath = await myImagePicker();
-              BlocProvider.of<InitDataCubit>(context).frontBatteryPathIsError =
-                  false;
-              BlocProvider.of<InitDataCubit>(context)
-                  .emit(InitDataFrontBatteryImage(mPath));
-              BlocProvider.of<InitDataCubit>(context).frontBatteryPath = mPath;
-            },
-          );
-        } else if (state
-            is InitDataFrontBatteryImageErrorWhileBatteyIsNotChoosen) {
-          return CustomButtonForImagePreview(
-            isError: true,
-            title:
-                AppLocalizations.of(context).translate("addBatteryFrontImage"),
-            subtitle: AppLocalizations.of(context)
-                .translate("SelectBatteryToHelpYouWithInstructions"),
-            child: Material(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  side: BorderSide(color: Colors.blue, width: 4)),
-              clipBehavior: Clip.antiAlias,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Icon(
-                    WarrantyIcons.warrenty_clear,
-                    size: 108,
-                    color: Colors.blueAccent,
-                  ),
-                  Text(
-                    "Please Choose A Battery",
-                    style: TextStyle(color: Colors.blueAccent),
-                  )
-                ],
-              ),
-            ),
-            onTap: () async {
-              var snackbar = SnackBar(
-                content: Text(AppLocalizations.of(context)
-                    .translate("SelectBatteryToHelpYouWithInstructions")),
-              );
-              Scaffold.of(context).showSnackBar(snackbar);
-            },
-          );
-        }
-        if (BlocProvider.of<InitDataCubit>(context).frontBatteryPathIsError &&
-            BlocProvider.of<InitDataCubit>(context).battery != null) {
-          // ignore: missing_return
-          return CustomButtonForImagePreview(
-            isError: true,
-            title:
-                AppLocalizations.of(context).translate("addBatteryFrontImage"),
-            subtitle: AppLocalizations.of(context).translate("example"),
-            child: Material(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  side: BorderSide(color: Colors.blue, width: 4)),
-              clipBehavior: Clip.antiAlias,
-              child: CachedNetworkImage(
-                imageUrl:
-                    "$imageBaseUrl/${BlocProvider.of<InitDataCubit>(context).battery.frontImage}",
-                fit: BoxFit.cover,
-                errorWidget: (context, url, error) => Container(
-                  height: 100,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Icon(WarrantyIcons.warrenty_clear),
-                        Text(AppLocalizations.of(context)
-                            .translate("errorLoadingImage"))
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              child: Image.asset('assets/images/batteryExample.png'),
             ),
             onTap: () async {
               // final picker = ImagePicker();
@@ -1216,45 +1133,10 @@ class AddBatteryFrontImageButton extends StatelessWidget {
             },
           );
         } else if (BlocProvider.of<InitDataCubit>(context)
-                .frontBatteryPathIsError &&
-            BlocProvider.of<InitDataCubit>(context).battery == null) {
+            .frontBatteryPathIsError) {
+          // ignore: missing_return
           return CustomButtonForImagePreview(
             isError: true,
-            title:
-                AppLocalizations.of(context).translate("addBatteryFrontImage"),
-            subtitle: AppLocalizations.of(context)
-                .translate("SelectBatteryToHelpYouWithInstructions"),
-            child: Material(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  side: BorderSide(color: Colors.blue, width: 4)),
-              clipBehavior: Clip.antiAlias,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Icon(
-                    WarrantyIcons.warrenty_clear,
-                    size: 108,
-                    color: Colors.blueAccent,
-                  ),
-                  Text(
-                    "Please Choose A Battery",
-                    style: TextStyle(color: Colors.blueAccent),
-                  )
-                ],
-              ),
-            ),
-            onTap: () async {
-              var snackbar = SnackBar(
-                content: Text(AppLocalizations.of(context)
-                    .translate("SelectBatteryToHelpYouWithInstructions")),
-              );
-              Scaffold.of(context).showSnackBar(snackbar);
-            },
-          );
-        } else if (state is InitDataBatteryChosenForImage) {
-          return CustomButtonForImagePreview(
-            isError: false,
             title:
                 AppLocalizations.of(context).translate("addBatteryFrontImage"),
             subtitle: AppLocalizations.of(context).translate("example"),
@@ -1263,24 +1145,7 @@ class AddBatteryFrontImageButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   side: BorderSide(color: Colors.blue, width: 4)),
               clipBehavior: Clip.antiAlias,
-              child: CachedNetworkImage(
-                imageUrl:
-                    "$imageBaseUrl/${BlocProvider.of<InitDataCubit>(context).battery.frontImage}",
-                fit: BoxFit.cover,
-                errorWidget: (context, url, error) => Container(
-                  height: 100,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Icon(WarrantyIcons.warrenty_clear),
-                        Text(AppLocalizations.of(context)
-                            .translate("errorLoadingImage"))
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              child: Image.asset('assets/images/batteryExample.png'),
             ),
             onTap: () async {
               // final picker = ImagePicker();
@@ -1328,7 +1193,7 @@ class AddBatteryFrontImageButton extends StatelessWidget {
             },
           );
         } else if (BlocProvider.of<InitDataCubit>(context).frontBatteryPath !=
-            null)
+            null) {
           return CustomButtonForImagePreview(
             isError: false,
             title:
@@ -1357,28 +1222,24 @@ class AddBatteryFrontImageButton extends StatelessWidget {
               BlocProvider.of<InitDataCubit>(context).frontBatteryPath = mPath;
             },
           );
-        else if (BlocProvider.of<InitDataCubit>(context).battery != null)
+        } else {
           return CustomButtonForImagePreview(
             isError: false,
             title:
                 AppLocalizations.of(context).translate("addBatteryFrontImage"),
             subtitle: AppLocalizations.of(context).translate("example"),
             child: Material(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  side: BorderSide(color: Colors.blue, width: 4)),
-              clipBehavior: Clip.antiAlias,
-              child: CachedNetworkImage(
-                imageUrl:
-                    "$imageBaseUrl/${BlocProvider.of<InitDataCubit>(context).battery.frontImage}",
-                fit: BoxFit.cover,
-              ),
-            ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    side: BorderSide(color: Colors.blue, width: 4)),
+                clipBehavior: Clip.antiAlias,
+                child: Image.asset('assets/images/batteryExample.png')),
             onTap: () async {
-              // final picker = ImagePicker();
-              // final pickedFile = await picker.getImage(
-              //     source: ImageSource.camera);
-              // print(pickedFile.path);
+              // var snackbar = SnackBar(
+              //   content: Text(AppLocalizations.of(context)
+              //       .translate("SelectBatteryToHelpYouWithInstructions")),
+              // );
+              // Scaffold.of(context).showSnackBar(snackbar);
               var mPath = await myImagePicker();
               BlocProvider.of<InitDataCubit>(context).frontBatteryPathIsError =
                   false;
@@ -1387,41 +1248,7 @@ class AddBatteryFrontImageButton extends StatelessWidget {
               BlocProvider.of<InitDataCubit>(context).frontBatteryPath = mPath;
             },
           );
-        else
-          return CustomButtonForImagePreview(
-            isError: false,
-            title:
-                AppLocalizations.of(context).translate("addBatteryFrontImage"),
-            subtitle: AppLocalizations.of(context)
-                .translate("SelectBatteryToHelpYouWithInstructions"),
-            child: Material(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  side: BorderSide(color: Colors.blue, width: 4)),
-              clipBehavior: Clip.antiAlias,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Icon(
-                    WarrantyIcons.warrenty_clear,
-                    size: 108,
-                    color: Colors.blueAccent,
-                  ),
-                  Text(
-                    "Please Choose A Battery",
-                    style: TextStyle(color: Colors.blueAccent),
-                  )
-                ],
-              ),
-            ),
-            onTap: () async {
-              var snackbar = SnackBar(
-                content: Text(AppLocalizations.of(context)
-                    .translate("SelectBatteryToHelpYouWithInstructions")),
-              );
-              Scaffold.of(context).showSnackBar(snackbar);
-            },
-          );
+        }
       },
     );
   }
@@ -1459,6 +1286,7 @@ class CarNumberTextField extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
         decoration: InputDecoration(
+          hintText: AppLocalizations.of(context).translate("carNumberExample"),
           errorText: (state is InitDataCarNumberError) ||
                   (BlocProvider.of<InitDataCubit>(context).carNumberIsError)
               ? AppLocalizations.of(context).translate("pleaseAddYourCarNumber")
@@ -1523,6 +1351,75 @@ class MarketDropdown extends StatelessWidget {
         return current is InitDataMarketError || current is InitDataMarketReset;
       },
       builder: (context, state) => TypeAheadFormField(
+        noItemsFoundBuilder: (context1) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: RaisedButton(
+              color: Theme.of(context).accentColor,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: "Market ",
+                    style: GoogleFonts.cairo(
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.bold,
+                        fontSize:
+                            Theme.of(context).textTheme.headline6.fontSize),
+                    children: [
+                      TextSpan(
+                        text: "NOT",
+                        style: GoogleFonts.cairo(
+                          color: Colors.redAccent,
+                          fontWeight: FontWeight.bold,
+                          fontSize:
+                              Theme.of(context).textTheme.headline6.fontSize,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                      TextSpan(
+                        text: " Found\n",
+                        style: GoogleFonts.cairo(
+                          color: Colors.redAccent,
+                          fontWeight: FontWeight.bold,
+                          fontSize:
+                              Theme.of(context).textTheme.headline6.fontSize,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "You Must Add Yours By Pressing Here",
+                        style: GoogleFonts.cairo(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize:
+                              Theme.of(context).textTheme.caption.fontSize,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              onPressed: () {
+                _marketFieldNode.unfocus();
+                showMaterialModalBottomSheet(
+                  expand: true,
+                  context: context,
+                  builder: (context1) {
+                    return BlocProvider.value(
+                      value: BlocProvider.of<InitDataCubit>(context),
+                      child: AddMarketBottomSheet(),
+                    );
+                  },
+                  backgroundColor: Colors.transparent,
+                ).then((value) {
+                  _marketTextEditingController.text = value;
+                  // print(value);
+                });
+              },
+            ),
+          );
+        },
         textFieldConfiguration: TextFieldConfiguration(
           focusNode: _marketFieldNode,
           onTap: () {
@@ -1533,6 +1430,7 @@ class MarketDropdown extends StatelessWidget {
           // keyboardType: TextInputType.number,
           controller: _marketTextEditingController,
           decoration: InputDecoration(
+            hintText: AppLocalizations.of(context).translate("marketExample"),
             errorText: ((state is InitDataMarketError) ||
                     (BlocProvider.of<InitDataCubit>(context).marketIsError))
                 ? AppLocalizations.of(context).translate("addMarket")
@@ -1735,6 +1633,19 @@ class CarTypeDropdown extends StatelessWidget {
                 onChanged: (e) {
                   BlocProvider.of<InitDataCubit>(context)
                       .carTypeIdSelectedValue(e);
+                  if (e == 0) {
+                    showMaterialModalBottomSheet(
+                      expand: true,
+                      context: context,
+                      builder: (context1) {
+                        return BlocProvider.value(
+                          value: BlocProvider.of<InitDataCubit>(context),
+                          child: AddCarBottomSheet(),
+                        );
+                      },
+                      backgroundColor: Colors.transparent,
+                    );
+                  }
                 },
                 isExpanded: true,
                 hint: Text(AppLocalizations.of(context).translate("carModel")),
@@ -1774,58 +1685,363 @@ class PhoneNumberTextField extends StatelessWidget {
     return BlocBuilder<InitDataCubit, InitDataState>(
       buildWhen: (previous, current) {
         return current is InitDataPhoneNumberError ||
-            current is InitDataPhoneNumberReset;
+            current is InitDataPhoneNumberReset ||
+            current is InitDataPhoneNumberCountryCode;
       },
-      builder: (context, state) => TextFormField(
-        onTap: () {
-          BlocProvider.of<InitDataCubit>(context).phoneNumberIsError = false;
-          BlocProvider.of<InitDataCubit>(context)
-              .emit(InitDataPhoneNumberReset());
-        },
-        controller: _phoneNumberTextEditingController,
-        keyboardType: TextInputType.phone,
-        focusNode: _phoneNumberFieldNode,
-        onFieldSubmitted: (value) {
-          FocusScope.of(context).unfocus();
-        },
-        decoration: InputDecoration(
-          errorText: ((state is InitDataPhoneNumberError) ||
-                  (BlocProvider.of<InitDataCubit>(context).phoneNumberIsError))
-              ? AppLocalizations.of(context).translate("pleaseEnterPhoneNumber")
-              : null,
-          labelText: AppLocalizations.of(context).translate("yourPhoneNumber"),
-          labelStyle: TextStyle(
-            color: _phoneNumberFieldNode.hasFocus
-                ? Theme.of(context).accentColor
-                : Colors.blue,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4.0)),
-            borderSide: BorderSide(color: Colors.blue),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4.0)),
-            borderSide: BorderSide(
-              color: Theme.of(context).accentColor,
+      builder: (context, state) {
+        if (state is InitDataPhoneNumberError)
+          return TextFormField(
+            onTap: () {
+              BlocProvider.of<InitDataCubit>(context).phoneNumberIsError =
+                  false;
+              BlocProvider.of<InitDataCubit>(context)
+                  .emit(InitDataPhoneNumberReset());
+            },
+            controller: _phoneNumberTextEditingController,
+            // keyboardType: TextInputType.phone,
+            focusNode: _phoneNumberFieldNode,
+            onFieldSubmitted: (value) {
+              FocusScope.of(context).unfocus();
+            },
+            textDirection: TextDirection.ltr,
+            inputFormatters: [
+              new WhitelistingTextInputFormatter(RegExp("[0-9]"))
+            ],
+            decoration: InputDecoration(
+              hintText:
+                  AppLocalizations.of(context).translate("phoneNumberExample"),
+              prefix: AppLocalizations.of(context)
+                          .locale
+                          .languageCode
+                          .contains("en") &&
+                      BlocProvider.of<InitDataCubit>(context).countryCode !=
+                          null
+                  ? Text(
+                      BlocProvider.of<InitDataCubit>(context)
+                          .countryCode
+                          .dialCode,
+                      textDirection: TextDirection.ltr)
+                  : Container(
+                      height: 0,
+                      width: 0,
+                    ),
+              suffix: AppLocalizations.of(context)
+                          .locale
+                          .languageCode
+                          .contains("ar") &&
+                      BlocProvider.of<InitDataCubit>(context).countryCode !=
+                          null
+                  ? Text(
+                      BlocProvider.of<InitDataCubit>(context)
+                          .countryCode
+                          .dialCode,
+                      textDirection: TextDirection.ltr)
+                  : Container(
+                      height: 0,
+                      width: 0,
+                    ),
+              errorText: ((state is InitDataPhoneNumberError) ||
+                      (BlocProvider.of<InitDataCubit>(context)
+                          .phoneNumberIsError))
+                  ? AppLocalizations.of(context)
+                      .translate("pleaseEnterPhoneNumber")
+                  : null,
+              labelText:
+                  AppLocalizations.of(context).translate("yourPhoneNumber"),
+              labelStyle: TextStyle(
+                color: _phoneNumberFieldNode.hasFocus
+                    ? Theme.of(context).accentColor
+                    : Colors.blue,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                borderSide: BorderSide(color: Colors.blue),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                borderSide: BorderSide(
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+              // enabledBorder: OutlineInputBorder(
+              //   borderRadius:
+              //       BorderRadius.all(Radius.circular(4.0)),
+              //   borderSide:
+              //       BorderSide(color: Colors.black45),
+              // ),
+              // focusedBorder: OutlineInputBorder(
+              //   borderRadius:
+              //       BorderRadius.all(Radius.circular(4.0)),
+              //   borderSide: BorderSide(
+              //       color: Theme.of(context).primaryColor),
+              // ),
             ),
-          ),
-          // enabledBorder: OutlineInputBorder(
-          //   borderRadius:
-          //       BorderRadius.all(Radius.circular(4.0)),
-          //   borderSide:
-          //       BorderSide(color: Colors.black45),
-          // ),
-          // focusedBorder: OutlineInputBorder(
-          //   borderRadius:
-          //       BorderRadius.all(Radius.circular(4.0)),
-          //   borderSide: BorderSide(
-          //       color: Theme.of(context).primaryColor),
-          // ),
-        ),
-        onChanged: (value) {
-          BlocProvider.of<InitDataCubit>(context).phoneNumber = value;
-        },
-      ),
+            onChanged: (value) {
+              BlocProvider.of<InitDataCubit>(context).phoneNumber = value;
+            },
+          );
+        else if (state is InitDataPhoneNumberReset)
+          return TextFormField(
+            onTap: () {
+              BlocProvider.of<InitDataCubit>(context).phoneNumberIsError =
+                  false;
+              BlocProvider.of<InitDataCubit>(context)
+                  .emit(InitDataPhoneNumberReset());
+            },
+            controller: _phoneNumberTextEditingController,
+            // keyboardType: TextInputType.phone,
+            focusNode: _phoneNumberFieldNode,
+            onFieldSubmitted: (value) {
+              FocusScope.of(context).unfocus();
+            },
+            textDirection: TextDirection.ltr,
+            inputFormatters: [
+              new WhitelistingTextInputFormatter(RegExp("[0-9]"))
+            ],
+            decoration: InputDecoration(
+              hintText:
+                  AppLocalizations.of(context).translate("phoneNumberExample"),
+              prefix: AppLocalizations.of(context)
+                          .locale
+                          .languageCode
+                          .contains("en") &&
+                      BlocProvider.of<InitDataCubit>(context).countryCode !=
+                          null
+                  ? Text(
+                      BlocProvider.of<InitDataCubit>(context)
+                          .countryCode
+                          .dialCode,
+                      textDirection: TextDirection.ltr)
+                  : Container(
+                      height: 0,
+                      width: 0,
+                    ),
+              suffix: AppLocalizations.of(context)
+                          .locale
+                          .languageCode
+                          .contains("ar") &&
+                      BlocProvider.of<InitDataCubit>(context).countryCode !=
+                          null
+                  ? Text(
+                      BlocProvider.of<InitDataCubit>(context)
+                          .countryCode
+                          .dialCode,
+                      textDirection: TextDirection.ltr)
+                  : Container(
+                      height: 0,
+                      width: 0,
+                    ),
+              errorText: ((state is InitDataPhoneNumberError) ||
+                      (BlocProvider.of<InitDataCubit>(context)
+                          .phoneNumberIsError))
+                  ? AppLocalizations.of(context)
+                      .translate("pleaseEnterPhoneNumber")
+                  : null,
+              labelText:
+                  AppLocalizations.of(context).translate("yourPhoneNumber"),
+              labelStyle: TextStyle(
+                color: _phoneNumberFieldNode.hasFocus
+                    ? Theme.of(context).accentColor
+                    : Colors.blue,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                borderSide: BorderSide(color: Colors.blue),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                borderSide: BorderSide(
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+              // enabledBorder: OutlineInputBorder(
+              //   borderRadius:
+              //       BorderRadius.all(Radius.circular(4.0)),
+              //   borderSide:
+              //       BorderSide(color: Colors.black45),
+              // ),
+              // focusedBorder: OutlineInputBorder(
+              //   borderRadius:
+              //       BorderRadius.all(Radius.circular(4.0)),
+              //   borderSide: BorderSide(
+              //       color: Theme.of(context).primaryColor),
+              // ),
+            ),
+            onChanged: (value) {
+              BlocProvider.of<InitDataCubit>(context).phoneNumber = value;
+            },
+          );
+        else if (state is InitDataPhoneNumberCountryCode)
+          return TextFormField(
+            onTap: () {
+              BlocProvider.of<InitDataCubit>(context).phoneNumberIsError =
+                  false;
+              BlocProvider.of<InitDataCubit>(context)
+                  .emit(InitDataPhoneNumberReset());
+            },
+            controller: _phoneNumberTextEditingController,
+            // keyboardType: TextInputType.phone,
+            focusNode: _phoneNumberFieldNode,
+            onFieldSubmitted: (value) {
+              FocusScope.of(context).unfocus();
+            },
+            textDirection: TextDirection.ltr,
+            inputFormatters: [
+              new WhitelistingTextInputFormatter(RegExp("[0-9]"))
+            ],
+            decoration: InputDecoration(
+              hintText:
+                  AppLocalizations.of(context).translate("phoneNumberExample"),
+              prefix: AppLocalizations.of(context)
+                      .locale
+                      .languageCode
+                      .contains("en")
+                  ? Text(state.countryCode, textDirection: TextDirection.ltr)
+                  : Container(
+                      height: 0,
+                      width: 0,
+                    ),
+              suffix: AppLocalizations.of(context)
+                      .locale
+                      .languageCode
+                      .contains("ar")
+                  ? Text(state.countryCode, textDirection: TextDirection.ltr)
+                  : Container(
+                      height: 0,
+                      width: 0,
+                    ),
+              errorText: ((state is InitDataPhoneNumberError) ||
+                      (BlocProvider.of<InitDataCubit>(context)
+                          .phoneNumberIsError))
+                  ? AppLocalizations.of(context)
+                      .translate("pleaseEnterPhoneNumber")
+                  : null,
+              labelText:
+                  AppLocalizations.of(context).translate("yourPhoneNumber"),
+              labelStyle: TextStyle(
+                color: _phoneNumberFieldNode.hasFocus
+                    ? Theme.of(context).accentColor
+                    : Colors.blue,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                borderSide: BorderSide(color: Colors.blue),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                borderSide: BorderSide(
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+              // enabledBorder: OutlineInputBorder(
+              //   borderRadius:
+              //       BorderRadius.all(Radius.circular(4.0)),
+              //   borderSide:
+              //       BorderSide(color: Colors.black45),
+              // ),
+              // focusedBorder: OutlineInputBorder(
+              //   borderRadius:
+              //       BorderRadius.all(Radius.circular(4.0)),
+              //   borderSide: BorderSide(
+              //       color: Theme.of(context).primaryColor),
+              // ),
+            ),
+            onChanged: (value) {
+              BlocProvider.of<InitDataCubit>(context).phoneNumber = value;
+            },
+          );
+        else
+          return TextFormField(
+            onTap: () {
+              BlocProvider.of<InitDataCubit>(context).phoneNumberIsError =
+                  false;
+              BlocProvider.of<InitDataCubit>(context)
+                  .emit(InitDataPhoneNumberReset());
+            },
+            controller: _phoneNumberTextEditingController,
+            // keyboardType: TextInputType.phone,
+            textDirection: TextDirection.ltr,
+            inputFormatters: [
+              new WhitelistingTextInputFormatter(RegExp("[0-9]"))
+            ],
+            focusNode: _phoneNumberFieldNode,
+            onFieldSubmitted: (value) {
+              FocusScope.of(context).unfocus();
+            },
+            decoration: InputDecoration(
+              hintText:
+                  AppLocalizations.of(context).translate("phoneNumberExample"),
+              prefix: AppLocalizations.of(context)
+                          .locale
+                          .languageCode
+                          .contains("en") &&
+                      BlocProvider.of<InitDataCubit>(context).countryCode !=
+                          null
+                  ? Text(
+                      BlocProvider.of<InitDataCubit>(context)
+                          .countryCode
+                          .dialCode,
+                      textDirection: TextDirection.ltr)
+                  : Container(
+                      height: 0,
+                      width: 0,
+                    ),
+              suffix: AppLocalizations.of(context)
+                          .locale
+                          .languageCode
+                          .contains("ar") &&
+                      BlocProvider.of<InitDataCubit>(context).countryCode !=
+                          null
+                  ? Text(
+                      BlocProvider.of<InitDataCubit>(context)
+                          .countryCode
+                          .dialCode,
+                      textDirection: TextDirection.ltr)
+                  : Container(
+                      height: 0,
+                      width: 0,
+                    ),
+              errorText: ((state is InitDataPhoneNumberError) ||
+                      (BlocProvider.of<InitDataCubit>(context)
+                          .phoneNumberIsError))
+                  ? AppLocalizations.of(context)
+                      .translate("pleaseEnterPhoneNumber")
+                  : null,
+              labelText:
+                  AppLocalizations.of(context).translate("yourPhoneNumber"),
+              labelStyle: TextStyle(
+                color: _phoneNumberFieldNode.hasFocus
+                    ? Theme.of(context).accentColor
+                    : Colors.blue,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                borderSide: BorderSide(color: Colors.blue),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                borderSide: BorderSide(
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+              // enabledBorder: OutlineInputBorder(
+              //   borderRadius:
+              //       BorderRadius.all(Radius.circular(4.0)),
+              //   borderSide:
+              //       BorderSide(color: Colors.black45),
+              // ),
+              // focusedBorder: OutlineInputBorder(
+              //   borderRadius:
+              //       BorderRadius.all(Radius.circular(4.0)),
+              //   borderSide: BorderSide(
+              //       color: Theme.of(context).primaryColor),
+              // ),
+            ),
+            onChanged: (value) {
+              BlocProvider.of<InitDataCubit>(context).phoneNumber = value;
+            },
+          );
+      },
     );
   }
 }
@@ -1860,6 +2076,7 @@ class EmailTextField extends StatelessWidget {
         controller: _emailTextEditingController,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
+          hintText: AppLocalizations.of(context).translate("emailExample"),
           errorText: ((state is InitDataEmailError) ||
                   (BlocProvider.of<InitDataCubit>(context).eMailIsError))
               ? AppLocalizations.of(context).translate("pleaseEnterEMail")
@@ -1944,6 +2161,7 @@ class AddressTextField extends StatelessWidget {
               : FilteringTextInputFormatter.allow(RegExp(r'[a-z A-Z]')),
         ],
         decoration: InputDecoration(
+          hintText: AppLocalizations.of(context).translate("addressExample"),
           errorText: ((state is InitDataAddressError) ||
                   (BlocProvider.of<InitDataCubit>(context).addressIsError))
               ? AppLocalizations.of(context).translate("addAddress")
@@ -1986,7 +2204,7 @@ class AddressTextField extends StatelessWidget {
 }
 
 class CountryPickerButton extends StatelessWidget {
-  const CountryPickerButton({
+  CountryPickerButton({
     Key key,
   }) : super(key: key);
 
@@ -2033,18 +2251,25 @@ class CountryPickerButton extends StatelessWidget {
                 showDropDownButton: true,
                 textStyle: TextStyle(color: Colors.white),
                 // showDropDownButton: true,
+
                 showFlag: true,
+
                 // countryFilter: ['IL'],
                 onChanged: (countryCode) {
                   BlocProvider.of<InitDataCubit>(context).countryIsError =
                       false;
-                  BlocProvider.of<InitDataCubit>(context)
-                      .emit(InitDataCountryReset());
+
                   print(countryCode.name);
                   BlocProvider.of<InitDataCubit>(context).countryName =
                       countryCode.name;
                   BlocProvider.of<InitDataCubit>(context).countryCode =
                       countryCode;
+                  BlocProvider.of<InitDataCubit>(context).emit(
+                      InitDataPhoneNumberCountryCode(countryCode.dialCode));
+                  BlocProvider.of<InitDataCubit>(context)
+                      .emit(InitDataCountryReset());
+
+                  // phoneNumberTextEditingController.text = countryCode.dialCode;
                 },
                 // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
                 initialSelection:
@@ -2103,6 +2328,7 @@ class FullnameTextField extends StatelessWidget {
               : FilteringTextInputFormatter.allow(RegExp(r'[a-z A-Z]')),
         ],
         decoration: InputDecoration(
+          hintText: AppLocalizations.of(context).translate("fullNameExample"),
           errorText: ((state is InitDataFullNameError) ||
                   (BlocProvider.of<InitDataCubit>(context).addressIsError))
               ? AppLocalizations.of(context).translate("addFullName")
@@ -2172,6 +2398,8 @@ class SerialNumberTextField extends StatelessWidget {
               .emit(InitDataSerialNumberReset());
         },
         decoration: InputDecoration(
+          hintText:
+              AppLocalizations.of(context).translate("ex1052E3orG0014Y0004"),
           errorText: ((state is InitDataSerialNumberError) ||
                   (BlocProvider.of<InitDataCubit>(context).serialNumberIsError))
               ? AppLocalizations.of(context)
@@ -2183,32 +2411,30 @@ class SerialNumberTextField extends StatelessWidget {
                 : Colors.indigo,
             icon: Icon(WarrantyIcons.warrenty_comment),
             onPressed: () {
-              if (BlocProvider.of<InitDataCubit>(context).battery != null) {
-                var serialNumberImage = BlocProvider.of<InitDataCubit>(context)
-                    .battery
-                    .serialNumberImage;
-                var info = AppLocalizations.of(context)
-                        .locale
-                        .languageCode
-                        .contains("ar")
-                    ? BlocProvider.of<InitDataCubit>(context).battery.infoAr
-                    : BlocProvider.of<InitDataCubit>(context).battery.infoEn;
-                showDialog(
-                  context: context,
-                  builder: (context) => whereIsSerialNumberDialog(
-                    context,
-                    imageUrl: serialNumberImage,
-                    text: info,
-                  ),
-                );
-              } else {
-                var snackbar = SnackBar(
-                    content: Text(
-                  AppLocalizations.of(context)
-                      .translate("SelectBatteryToHelpYouWithInstructions"),
-                ));
-                Scaffold.of(context).showSnackBar(snackbar);
-              }
+              // if (BlocProvider.of<InitDataCubit>(context).battery != null) {
+              //   var serialNumberImage = BlocProvider.of<InitDataCubit>(context)
+              //       .battery
+              //       .serialNumberImage;
+              //   var info = AppLocalizations.of(context)
+              //           .locale
+              //           .languageCode
+              //           .contains("ar")
+              //       ? BlocProvider.of<InitDataCubit>(context).battery.infoAr
+              //       : BlocProvider.of<InitDataCubit>(context).battery.infoEn;
+              showDialog(
+                context: context,
+                builder: (context) => whereIsSerialNumberDialog(
+                  context,
+                ),
+              );
+              // } else {
+              //   var snackbar = SnackBar(
+              //       content: Text(
+              //     AppLocalizations.of(context)
+              //         .translate("SelectBatteryToHelpYouWithInstructions"),
+              //   ));
+              //   Scaffold.of(context).showSnackBar(snackbar);
+              // }
             },
           ),
           labelText: AppLocalizations.of(context).translate("serialNumber"),

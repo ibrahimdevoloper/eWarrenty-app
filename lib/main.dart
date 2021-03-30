@@ -98,7 +98,7 @@ class MyApp extends StatelessWidget {
                   }
                   return supportedLocales.first;
                 },
-                title: 'Flutter Demo',
+                title: 'Marvel tech\'s E-Warranty',
                 theme: ThemeData(
                   textTheme: GoogleFonts.cairoTextTheme(
                     Theme.of(context).textTheme,
@@ -146,7 +146,7 @@ class MyApp extends StatelessWidget {
                 }
                 return supportedLocales.first;
               },
-              title: 'Flutter Demo',
+              title: 'Marvel tech\'s E-Warranty',
               theme: ThemeData(
                 textTheme: GoogleFonts.cairoTextTheme(
                   Theme.of(context).textTheme,

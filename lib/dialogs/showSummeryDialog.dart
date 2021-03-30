@@ -2,14 +2,16 @@ import "package:ewarrenty/Function/checkIfCurrentDateIsBeforeDueDate.dart";
 import "package:ewarrenty/Function/dateFormatter.dart";
 import "package:ewarrenty/Models/warranty.dart";
 import 'package:ewarrenty/pages/WarrantyDetailPage.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '../app_localizations.dart';
 
 AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
-  FirebaseAnalytics().setCurrentScreen(screenName: "showSummeryDialog",screenClassOverride: "showSummeryDialog");
+  FirebaseAnalytics().setCurrentScreen(
+      screenName: "showSummeryDialog",
+      screenClassOverride: "showSummeryDialog");
   var bougthDate = DateTime.parse(warrenty.boughtDate);
   var endDate = DateTime(DateTime.now().year,
       DateTime.now().month + warrenty.warrantyDurationInt, DateTime.now().day);
@@ -30,8 +32,11 @@ AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
                   height: 0,
                   width: 0,
                 ),
-          Text(AppLocalizations.of(context)
-              .translate("pleaseSaveTheFollowingCodeInASecurePlace")),
+          Text(
+            AppLocalizations.of(context)
+                .translate("pleaseSaveTheFollowingCodeInASecurePlace"),
+            style: Theme.of(context).textTheme.headline6,
+          ),
           SizedBox(
             height: 8,
           ),
@@ -47,6 +52,17 @@ AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
           ),
           Text(
               "${AppLocalizations.of(context).translate("endDate")}: ${dateFormater(endDate)}"),
+          SizedBox(
+            height: 8,
+          ),
+          Text(
+            AppLocalizations.of(context).translate("warrantyTerms"),
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Text(AppLocalizations.of(context).translate("warrantyTermsContent")),
           SizedBox(
             height: 8,
           ),

@@ -1,18 +1,16 @@
-import 'package:ewarrenty/Constants/prefKeys.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LangProvider extends ChangeNotifier{
-  String _languageCode="";
+class LangProvider extends ChangeNotifier {
+  String _languageCode = "";
   SharedPreferences _prefs;
 
-  LangProvider(){
+  LangProvider() {
     // SharedPreferences.getInstance().then((value){
     //         _prefs=value;
     //         if(_prefs.containsKey(languageCode));
     //         _languageCode =_prefs.getString(langCode)??"";
     //     });
-
   }
   // async {
   //

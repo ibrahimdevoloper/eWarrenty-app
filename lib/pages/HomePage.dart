@@ -3,6 +3,7 @@ import 'package:ewarrenty/Icons/warranty_icons_icons.dart';
 import 'package:ewarrenty/Providers/LangProvider.dart';
 import 'package:ewarrenty/app_localizations.dart';
 import 'package:ewarrenty/dialogs/PrivacyPolicyDialog.dart';
+import 'package:ewarrenty/dialogs/WarrentyTermsDialog.dart';
 import 'package:ewarrenty/dialogs/aboutCompanyDialog.dart';
 import 'package:ewarrenty/dialogs/termsOfServiceDialog.dart';
 import 'package:ewarrenty/helpers/PrefKeys.dart';
@@ -68,7 +69,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _offsetAnimation = Tween<Offset>(begin: Offset(0, -1), end: Offset(0, 0))
         .animate(_curvedAnimation);
     _animeController.forward();
-    FirebaseAnalytics().setCurrentScreen(screenName: "HomePage",screenClassOverride: "HomePage");
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "HomePage", screenClassOverride: "HomePage");
   }
 
   @override
@@ -82,17 +84,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // decoration: BoxDecoration(
-      //   gradient: LinearGradient(
-      //     begin: Alignment.topLeft,
-      //     end: Alignment.bottomRight,
-      //     // stops: [0,0.35],
-      //     colors: [
-      //       Theme.of(context).primaryColor,
-      //       Theme.of(context).accentColor
-      //     ],
-      //   ),
-      // ),
       child: Scaffold(
         // backgroundColor: Theme.of(context).primaryColor,
         drawer: Drawer(
@@ -108,14 +99,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 )),
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
-                  //   gradient: LinearGradient(
-                  // begin: AlignmentDirectional.topCenter,
-                  // end: AlignmentDirectional.bottomCenter,
-                  // colors: [
-                  //   Theme.of(context).primaryColor,
-                  //   Colors.white30
-                  // ]
-                  // ),
                 ),
               ),
               ListTile(
@@ -152,6 +135,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
               ListTile(
                 title: Text(
+                    AppLocalizations.of(context).translate("warrantyTerms")),
+                leading: Icon(WarrantyIcons.warrenty_target),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => warrantyTermsDialog(context));
+                },
+              ),
+              ListTile(
+                title: Text(
                     AppLocalizations.of(context).translate("privacyPolicy")),
                 leading: Icon(WarrantyIcons.warrenty_comment),
                 onTap: () {
@@ -170,21 +163,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       builder: (context) => termsOfServiceDialog(context));
                 },
               ),
-              // ListTile(
-              //   title: Text(AppLocalizations.of(context).translate("requestWarranty")),
-              //   leading: Icon(WarrantyIcons.warrenty_correct),
-              //   onTap: () {
-              //     // Update the state of the app.
-              //     // ...
-              //   },
-              // ),
-              // ListTile(
-              //   title: Text('Item 2'),
-              //   onTap: () {
-              //     // Update the state of the app.
-              //     // ...
-              //   },
-              // ),
             ],
           ),
         ),
@@ -193,7 +171,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           // backgroundColor: Colors.transparent,
           elevation: 0,
           actions: [
-            // SvgPicture.asset("assets/document/plank.svg",color: Colors.red,),
             Consumer<LangProvider>(
               builder: (_, provider, __) => IconButton(
                   icon: FadeTransition(
@@ -236,12 +213,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 ),
                               ),
                       ),
-                      // child: Image.asset(
-                      //   provider.languageCode.contains("en")
-                      //       ? 'assets/images/english.png'
-                      //       : 'assets/images/arabic.png',
-                      //   fit: BoxFit.cover,
-                      // ),
                     ),
                   ),
                   // Icon(Icons.language),
@@ -274,12 +245,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     _fadeController.forward();
                   }),
             ),
-            // IconButton(
-            //     icon: Icon(FontAwesomeIcons.userCircle),
-            //     onPressed: () {
-            //       Navigator.of(context).push(
-            //           MaterialPageRoute(builder: (context) => LoginPage()));
-            //     })
           ],
           title: Text(AppLocalizations.of(context).translate("eWarranty"),
               style: GoogleFonts.cairo()),
@@ -325,41 +290,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 height: 120,
                                 width: 220,
                               ),
-                              // Image.asset(
-                              //   "assets/images/whitelogo.png",
-                              //   fit: BoxFit.scaleDown,
-                              //   height: 86,
-                              //   width: 140,
-                              // ),
-                              // Container(
-                              //   decoration: BoxDecoration(
-                              //     borderRadius: BorderRadius.only(
-                              //       bottomLeft: Radius.circular(16),
-                              //       bottomRight: Radius.circular(16),
-                              //     ),
-                              //     border: Border(
-                              //       bottom: BorderSide(
-                              //           width: 4,
-                              //           color: Theme.of(context).primaryColor),
-                              //       top: BorderSide(
-                              //           width: 4,
-                              //           color: Theme.of(context).primaryColor),
-                              //       left: BorderSide(
-                              //           width: 4,
-                              //           color: Theme.of(context).primaryColor),
-                              //       right: BorderSide(
-                              //           width: 4,
-                              //           color: Theme.of(context).primaryColor),
-                              //     ),
-                              //     color: Colors.white,
-                              //   ),
-                              //   child: Image.asset(
-                              //     "assets/images/whitelogo.png",
-                              //     fit: BoxFit.scaleDown,
-                              //     height: 86,
-                              //     width: 140,
-                              //   ),
-                              // ),
                             ],
                           ),
                         ],
@@ -367,35 +297,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-                // Divider(
-                //   height: 4,
-                //   color: Theme.of(context).primaryColor,
-                //   thickness: 4,
-                // ),
-                // Expanded(
-                //   flex: 5,
-                //   child: Container(
-                //     child: SlideTransition(
-                //       position: _offsetAnimation,
-                //       child: Card(
-                //         margin: EdgeInsets.zero,
-                //         shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.only(
-                //                 bottomLeft: Radius.circular(16),
-                //                 bottomRight: Radius.circular(16))),
-                //         elevation: 0,
-                //         color: Theme.of(context).primaryColor,
-                //         child: Center(
-                //           child: Center(
-                //               child: CircleAvatar(
-                //                   backgroundColor: Theme.of(context).accentColor,
-                //                   radius: 72,
-                //                   child: Text("Golden Warranty"))),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 Expanded(
                   flex: 4,
                   child: Row(
@@ -413,24 +314,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             },
                             title: AppLocalizations.of(context)
                                 .translate("requestWarranty"),
-                            // child: SvgPicture.asset(
-                            //   "assets/images/english.svg",
-                            //   height: 50,
-                            //   width: 60,
-                            //   fit: BoxFit.cover,
-                            // ),
                             child: Icon(
                               WarrantyIcons.warrenty_correct,
                               size: 56,
                               color: Theme.of(context).accentColor,
-                            )
-                            // child: Icon(IconData(0xe911)),
-                            // child: Container(
-                            //   color: Colors.red,
-                            //   height: 50,
-                            //   width: 50,
-                            // ),
-                            ),
+                            )),
                       ),
                       Consumer<LangProvider>(
                         builder: (context, provider, _) => MyFlatButton(
@@ -462,66 +350,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             )),
           ],
         ),
-        // body: Center(
-        //   child: Column(
-        //     mainAxisSize: MainAxisSize.min,
-        //     children: [
-        //       Material(
-        //         color: Colors.transparent,
-        //         clipBehavior: Clip.antiAlias,
-        //         shape: CircleBorder(),
-        //         child: SlideTransition(
-        //           position: _offsetAnime,
-        //           child: Container(
-        //             height: 200,
-        //             width: 200,
-        //             child: Stack(
-        //               fit: StackFit.expand,
-        //               children: [
-        //                 CustomPaint(
-        //                   painter: CurvePainter(),
-        //                 ),
-        //                 Center(child: Text("OMG"))
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //       SizedBox(
-        //         height: 36,
-        //       ),
-        //       Row(
-        //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //         children: [
-        //           FlatButton(
-        //             textColor: Colors.white,
-        //             color: Theme.of(context).primaryColor,
-        //             onPressed: () {
-        //               Navigator.push(
-        //                   context,
-        //                   MaterialPageRoute(
-        //                       builder: (context) => AddWarrantyPage()));
-        //             },
-        //             child: Text(
-        //                 AppLocalizations.of(context).translate("addWarranty")),
-        //           ),
-        //           FlatButton(
-        //             textColor: Colors.white,
-        //             color: Theme.of(context).primaryColor,
-        //             onPressed: () {
-        //               Navigator.push(
-        //                   context,
-        //                   MaterialPageRoute(
-        //                       builder: (context) => RequestDetailPage()));
-        //             },
-        //             child: Text(AppLocalizations.of(context)
-        //                 .translate("requestWarranty")),
-        //           ),
-        //         ],
-        //       )
-        //     ],
-        //   ),
-        // ),
       ),
     );
   }

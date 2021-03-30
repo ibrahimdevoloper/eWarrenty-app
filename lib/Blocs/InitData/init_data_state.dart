@@ -58,14 +58,17 @@ class InitDataFrontBatteryImage extends InitDataState {
   InitDataFrontBatteryImage(this.imagePath);
 } // when a front date battery is choosen but the user didn't capture the image
 
-class InitDataFrontBatteryImageErrorWhileBatteyIsNotChoosen
-    extends InitDataState {
-  InitDataFrontBatteryImageErrorWhileBatteyIsNotChoosen();
+class InitDataFrontBatteryImageError extends InitDataState {
+  InitDataFrontBatteryImageError();
 }
-
-class InitDataFrontBatteryImageErrorWhileBatteyIsChoosen extends InitDataState {
-  InitDataFrontBatteryImageErrorWhileBatteyIsChoosen();
-}
+// class InitDataFrontBatteryImageErrorWhileBatteyIsNotChoosen
+//     extends InitDataState {
+//   InitDataFrontBatteryImageErrorWhileBatteyIsNotChoosen();
+// }
+//
+// class InitDataFrontBatteryImageErrorWhileBatteyIsChoosen extends InitDataState {
+//   InitDataFrontBatteryImageErrorWhileBatteyIsChoosen();
+// }
 
 // user didn't capture the fixed battery image is choosen
 class InitDataFixedBatteryImage extends InitDataState {
@@ -170,6 +173,12 @@ class InitDataPhoneNumberError extends InitDataState {
   InitDataPhoneNumberError();
 }
 
+// to Phone Number Country Code
+class InitDataPhoneNumberCountryCode extends InitDataState {
+  final String countryCode;
+  InitDataPhoneNumberCountryCode(this.countryCode);
+}
+
 // to Car Number field reset
 class InitDataCarNumberReset extends InitDataState {
   InitDataCarNumberReset();
@@ -238,4 +247,34 @@ class InitDataSubmitError extends InitDataState {
   final String errorEnglish;
 
   InitDataSubmitError(this.errorArabic, this.errorEnglish);
+}
+
+//state when the New Market Name Resets
+class InitDataNewMarketNameReset extends InitDataState {
+  InitDataNewMarketNameReset();
+}
+
+//state when the New Market Name has error
+class InitDataNewMarketNameError extends InitDataState {
+  InitDataNewMarketNameError();
+}
+
+//state when the New Market Address Resets
+class InitDataNewMarketAddressReset extends InitDataState {
+  InitDataNewMarketAddressReset();
+}
+
+//state when the New Market Address has error
+class InitDataNewMarketAddressError extends InitDataState {
+  InitDataNewMarketAddressError();
+}
+
+//state when the New Car Name Resets
+class InitDataNewCarNameReset extends InitDataState {
+  InitDataNewCarNameReset();
+}
+
+//state when the New Car Name has error
+class InitDataNewCarNameError extends InitDataState {
+  InitDataNewCarNameError();
 }

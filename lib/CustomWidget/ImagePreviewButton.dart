@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomButtonForImagePreview extends StatelessWidget {
@@ -21,25 +22,25 @@ class CustomButtonForImagePreview extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(16)),
         gradient: _isError
             ? LinearGradient(
-          colors: [
-            Colors.redAccent[700],
-            // Theme.of(context).accentColor
-            Colors.black
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        )
+                colors: [
+                  Colors.redAccent[700],
+                  // Theme.of(context).accentColor
+                  Colors.black
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              )
             : LinearGradient(
-          stops: [0.1, 0.85],
-          colors: [
-            Theme.of(context).primaryColor,
-            // Theme.of(context).accentColor
-            // Colors.deepPurpleAccent[500],
-            Colors.indigo[600]
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+                stops: [0.1, 0.85],
+                colors: [
+                  Theme.of(context).primaryColor,
+                  // Theme.of(context).accentColor
+                  // Colors.deepPurpleAccent[500],
+                  Colors.indigo[600]
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
       ),
       child: Material(
         color: Colors.transparent,
@@ -73,20 +74,20 @@ class ImagePreview extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
+          AutoSizeText(
             _title,
-            style: TextStyle(
-                fontSize: 20,
-                color: Colors.white),
+            style: TextStyle(fontSize: 20, color: Colors.white),
+            textAlign: TextAlign.center,
+            maxLines: 1,
           ),
           SizedBox(
             height: 8,
           ),
-          Text(
+          AutoSizeText(
             _subtitle,
-            style: TextStyle(
-                fontSize: 14,
-                color: Colors.white),
+            style: TextStyle(fontSize: 14, color: Colors.white),
+            textAlign: TextAlign.center,
+            maxLines: 1,
           ),
           SizedBox(
             height: 10,
@@ -94,15 +95,15 @@ class ImagePreview extends StatelessWidget {
           Container(
             height: 200,
             child: AspectRatio(aspectRatio: 4 / 3, child: _widget
-              // _imagePath.contains("assets")
-              //     ? Image.asset(_imagePath)
-              //     : Image.file(
-              //         File(
-              //           _imagePath,
-              //         ),
-              //         fit: BoxFit.cover,
-              //       ),
-            ),
+                // _imagePath.contains("assets")
+                //     ? Image.asset(_imagePath)
+                //     : Image.file(
+                //         File(
+                //           _imagePath,
+                //         ),
+                //         fit: BoxFit.cover,
+                //       ),
+                ),
           ),
           SizedBox(
             height: 10,
