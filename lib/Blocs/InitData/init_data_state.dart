@@ -249,26 +249,6 @@ class InitDataSubmitError extends InitDataState {
   InitDataSubmitError(this.errorArabic, this.errorEnglish);
 }
 
-//state when the New Market Name Resets
-class InitDataNewMarketNameReset extends InitDataState {
-  InitDataNewMarketNameReset();
-}
-
-//state when the New Market Name has error
-class InitDataNewMarketNameError extends InitDataState {
-  InitDataNewMarketNameError();
-}
-
-//state when the New Market Address Resets
-class InitDataNewMarketAddressReset extends InitDataState {
-  InitDataNewMarketAddressReset();
-}
-
-//state when the New Market Address has error
-class InitDataNewMarketAddressError extends InitDataState {
-  InitDataNewMarketAddressError();
-}
-
 //state when the New Car Name Resets
 class InitDataNewCarNameReset extends InitDataState {
   InitDataNewCarNameReset();
@@ -277,4 +257,28 @@ class InitDataNewCarNameReset extends InitDataState {
 //state when the New Car Name has error
 class InitDataNewCarNameError extends InitDataState {
   InitDataNewCarNameError();
+}
+
+//state when the New Market bottom sheet Initial page
+class InitDataNewCarInitial extends InitDataState {
+  InitDataNewCarInitial();
+}
+
+//state when the New Market bottom sheet Loading
+class InitDataNewCarLoading extends InitDataState {
+  InitDataNewCarLoading();
+}
+
+//state when the New Market bottom sheet Error
+class InitDataNewCarError extends InitDataState {
+  final String errorArabic;
+  final String errorEnglish;
+
+  InitDataNewCarError(this.errorArabic, this.errorEnglish);
+}
+
+class InitDataNewCarLoaded extends InitDataState {
+  final CarType carType;
+
+  InitDataNewCarLoaded(this.carType);
 }

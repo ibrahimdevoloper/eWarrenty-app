@@ -75,9 +75,8 @@ class InitDataCubit extends Cubit<InitDataState> {
   bool _billImagePathIsError = false;
 
   String _notes;
-  String _notesMarketName;
-  String _notesMarketAddress;
-  String _notesCarName;
+
+  String _newCarName;
 
   String get notes => _notes;
 
@@ -85,10 +84,8 @@ class InitDataCubit extends Cubit<InitDataState> {
     _notes = value;
   }
 
-  SendWarrantyService service;
-
   InitDataCubit() : super(InitDataInitial()) {
-    service = SendWarrantyService.create();
+    // service = SendWarrantyService.create();
 
     // todo: replace with BehaviorSubject from rxdart package
     // it destroy the lisener  when the widget rebuilds
@@ -110,27 +107,27 @@ class InitDataCubit extends Cubit<InitDataState> {
   }
 
   // return true If data is correct
-  bool checkCarValidation() {
-    return _carTypeId != null || _notesCarName != null;
-  }
+  // bool checkCarValidation() {
+  //   return _carTypeId != null || _newCarName != null;
+  // }
 
-  void getNote() {
-    if (_notesCarName != null) {
-      this._notes = "${this._notes ?? ''}\nCar Name: ${this._notesCarName}\n";
-    }
-    if (_notesMarketName != null && _notesMarketAddress != null) {
-      this._notes =
-          "${this._notes ?? ''}\nMarket Name: ${this._notesMarketName}\n";
-      this._notes =
-          "${this._notes ?? ''}\nMarket Address: ${this._notesMarketAddress}\n";
-    }
-  }
+  // void getNote() {
+  //   if (_newCarName != null) {
+  //     this._notes = "${this._notes ?? ''}\nCar Name: ${this._newCarName}\n";
+  //   }
+  //   if (_newMarketName != null && _newMarketAddress != null) {
+  //     this._notes =
+  //     "${this._notes ?? ''}\nMarket Name: ${this._newMarketName}\n";
+  //     this._notes =
+  //     "${this._notes ?? ''}\nMarket Address: ${this._newMarketAddress}\n";
+  //   }
+  // }
 
   // return true If data is correct
-  bool checkMarketValidation() {
-    return _market != null ||
-        (_notesMarketName != null && _notesMarketAddress != null);
-  }
+  // bool checkMarketValidation() {
+  //   return _market != null ||
+  //       (_newMarketName != null && _newMarketAddress != null);
+  // }
 
   bool getFinalValidtion() {
     return !(_carTypeIdIsError ||
@@ -221,7 +218,7 @@ class InitDataCubit extends Cubit<InitDataState> {
   submitWarrantyData() {
     // emit(InitDataLoading());
     emit(InitDataSubmitLoading());
-    service
+    SendWarrantyService.create()
         .sendWarrenty(
       battery_front_image: frontBatteryPath,
       battery_model_id: battery.id,
@@ -319,304 +316,7 @@ class InitDataCubit extends Cubit<InitDataState> {
           });
   }
 
-  submitWarrantyDataWithoutCar() {
-    // emit(InitDataLoading());
-    emit(InitDataSubmitLoading());
-    service
-        .sendWarrenty(
-      battery_front_image: frontBatteryPath,
-      battery_model_id: battery.id,
-      battery_serial_number: serialNumber,
-      bought_date: billDate,
-      car_number: carNumber,
-      car_number_image: carNumberPath,
-      car_property_id: carPropertyId,
-      customer_country: countryName,
-      customer_email: eMail,
-      customer_name: fullName,
-      customer_phone_number: phoneNumber,
-      fixed_battery_image: fixedBatteryPath,
-      customer_address: address,
-      market_id: market.id,
-      bill_image: billImagePath,
-      notes: notes,
-    )
-        .then((value) {
-      print("billImagePath: $billImagePath");
-      print("AddWarrantybody:${value.body}");
-      print("AddWarrantyisSuccessful:${value.isSuccessful}");
-      print("AddWarrantyError:${value.error.toString()}");
-      if (value.error.toString() != null) {
-        var errorString = value.error.toString();
-        print("AddWarrantyError:${value.error.toString()}");
-      }
-
-      // print("AddWarrantyError:${getJSONMap(
-      //     value.body
-      // )}");
-
-      if (value.statusCode >= 200 && value.statusCode <= 299) {
-        if (value.body.containsKey("error")) {
-          Map<String, dynamic> errorMap = value.body;
-          print("AddWarrantyErrorMap:${value.body}");
-          if (errorMap['error'].contains('this serial number')) {
-            var errorArabic = "إن هذا الرقم التسلسلي غير موجود";
-            var errorEnglish = "This Serial Number Do NOT Exist";
-            emit(InitDataSubmitError(errorArabic, errorEnglish));
-          } else {
-            Map<String, dynamic> errorMap = value.body;
-            print("AddWarrantyErrorMap:${value.body}");
-            emit(InitDataSubmitError(errorMap['error'], errorMap['error']));
-            // if (errorMap['error'].contains('this serial number')) {
-            //   var errorArabic = "إن هذا الرقم التسلسلي غير موجود" ;
-            //   var errorEnglish = "This Serial Number Do NOT Exist" ;
-            //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-            // }
-          }
-        } else if (value.body.containsKey("data")) {
-          var data = value.body['data'];
-          print(data);
-          emit(InitDataSubmitSent(Warranty.fromJson(data)));
-        }
-      }
-      // else if (value.statusCode == 400) {
-      //   print("error :400 ,${value.error} ");
-      //   var error = getJSONMap(value.error);
-      //   var errorArabic = error['messageAr'];
-      //   var errorEnglish = error['messageEn'];
-      //
-      //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-      // } else if (value.statusCode == 502) {
-      //   var error = getJSONMap(value.error);
-      //   var errorArabic = error['messageAr'];
-      //   var errorEnglish = error['messageEn'];
-      //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-      // }
-      else {
-        firebaseCrashLog(
-          code: value.statusCode.toString(),
-          tag: "InitDataCubit.submitWarrantyData",
-          message: value.error.toString(),
-        );
-        emit(
-          InitDataSubmitError("خطأ بالاتصال: ${value.statusCode}",
-              "Connection Error: ${value.statusCode}"),
-        );
-      }
-    })
-          ..catchError((e) {
-            print(e);
-            firebaseCrashLog(
-              tag: "InitDataCubit.submitWarrantyData",
-              message: e.toString(),
-            );
-            emit(
-              InitDataSubmitError(
-                "تأكد من اتصالك بالانترنيت",
-                "check your internet connection",
-              ),
-            );
-          });
-  }
-
-  submitWarrantyDataWithoutMarket() {
-    // emit(InitDataLoading());
-    emit(InitDataSubmitLoading());
-    service
-        .sendWarrenty(
-      battery_front_image: frontBatteryPath,
-      battery_model_id: battery.id,
-      battery_serial_number: serialNumber,
-      bought_date: billDate,
-      car_number: carNumber,
-      car_number_image: carNumberPath,
-      car_property_id: carPropertyId,
-      customer_country: countryName,
-      customer_email: eMail,
-      customer_name: fullName,
-      customer_phone_number: phoneNumber,
-      fixed_battery_image: fixedBatteryPath,
-      car_type_id: carTypeId,
-      customer_address: address,
-      bill_image: billImagePath,
-      notes: notes,
-    )
-        .then((value) {
-      print("billImagePath: $billImagePath");
-      print("AddWarrantybody:${value.body}");
-      print("AddWarrantyisSuccessful:${value.isSuccessful}");
-      print("AddWarrantyError:${value.error.toString()}");
-      if (value.error.toString() != null) {
-        var errorString = value.error.toString();
-        print("AddWarrantyError:${value.error.toString()}");
-      }
-
-      // print("AddWarrantyError:${getJSONMap(
-      //     value.body
-      // )}");
-
-      if (value.statusCode >= 200 && value.statusCode <= 299) {
-        if (value.body.containsKey("error")) {
-          Map<String, dynamic> errorMap = value.body;
-          print("AddWarrantyErrorMap:${value.body}");
-          if (errorMap['error'].contains('this serial number')) {
-            var errorArabic = "إن هذا الرقم التسلسلي غير موجود";
-            var errorEnglish = "This Serial Number Do NOT Exist";
-            emit(InitDataSubmitError(errorArabic, errorEnglish));
-          } else {
-            Map<String, dynamic> errorMap = value.body;
-            print("AddWarrantyErrorMap:${value.body}");
-            emit(InitDataSubmitError(errorMap['error'], errorMap['error']));
-            // if (errorMap['error'].contains('this serial number')) {
-            //   var errorArabic = "إن هذا الرقم التسلسلي غير موجود" ;
-            //   var errorEnglish = "This Serial Number Do NOT Exist" ;
-            //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-            // }
-          }
-        } else if (value.body.containsKey("data")) {
-          var data = value.body['data'];
-          print(data);
-          emit(InitDataSubmitSent(Warranty.fromJson(data)));
-        }
-      }
-      // else if (value.statusCode == 400) {
-      //   print("error :400 ,${value.error} ");
-      //   var error = getJSONMap(value.error);
-      //   var errorArabic = error['messageAr'];
-      //   var errorEnglish = error['messageEn'];
-      //
-      //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-      // } else if (value.statusCode == 502) {
-      //   var error = getJSONMap(value.error);
-      //   var errorArabic = error['messageAr'];
-      //   var errorEnglish = error['messageEn'];
-      //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-      // }
-      else {
-        firebaseCrashLog(
-          code: value.statusCode.toString(),
-          tag: "InitDataCubit.submitWarrantyData",
-          message: value.error.toString(),
-        );
-        emit(
-          InitDataSubmitError("خطأ بالاتصال: ${value.statusCode}",
-              "Connection Error: ${value.statusCode}"),
-        );
-      }
-    })
-          ..catchError((e) {
-            print(e);
-            firebaseCrashLog(
-              tag: "InitDataCubit.submitWarrantyData",
-              message: e.toString(),
-            );
-            emit(
-              InitDataSubmitError(
-                "تأكد من اتصالك بالانترنيت",
-                "check your internet connection",
-              ),
-            );
-          });
-  }
-
-  submitWarrantyDataWithoutMarketAndCar() {
-    // emit(InitDataLoading());
-    emit(InitDataSubmitLoading());
-    service
-        .sendWarrenty(
-      battery_front_image: frontBatteryPath,
-      battery_model_id: battery.id,
-      battery_serial_number: serialNumber,
-      bought_date: billDate,
-      car_number: carNumber,
-      car_number_image: carNumberPath,
-      car_property_id: carPropertyId,
-      customer_country: countryName,
-      customer_email: eMail,
-      customer_name: fullName,
-      customer_phone_number: phoneNumber,
-      fixed_battery_image: fixedBatteryPath,
-      customer_address: address,
-      bill_image: billImagePath,
-      notes: notes,
-    )
-        .then((value) {
-      print("billImagePath: $billImagePath");
-      print("AddWarrantybody:${value.body}");
-      print("AddWarrantyisSuccessful:${value.isSuccessful}");
-      print("AddWarrantyError:${value.error.toString()}");
-      if (value.error.toString() != null) {
-        var errorString = value.error.toString();
-        print("AddWarrantyError:${value.error.toString()}");
-      }
-
-      // print("AddWarrantyError:${getJSONMap(
-      //     value.body
-      // )}");
-
-      if (value.statusCode >= 200 && value.statusCode <= 299) {
-        if (value.body.containsKey("error")) {
-          Map<String, dynamic> errorMap = value.body;
-          print("AddWarrantyErrorMap:${value.body}");
-          if (errorMap['error'].contains('this serial number')) {
-            var errorArabic = "إن هذا الرقم التسلسلي غير موجود";
-            var errorEnglish = "This Serial Number Do NOT Exist";
-            emit(InitDataSubmitError(errorArabic, errorEnglish));
-          } else {
-            Map<String, dynamic> errorMap = value.body;
-            print("AddWarrantyErrorMap:${value.body}");
-            emit(InitDataSubmitError(errorMap['error'], errorMap['error']));
-            // if (errorMap['error'].contains('this serial number')) {
-            //   var errorArabic = "إن هذا الرقم التسلسلي غير موجود" ;
-            //   var errorEnglish = "This Serial Number Do NOT Exist" ;
-            //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-            // }
-          }
-        } else if (value.body.containsKey("data")) {
-          var data = value.body['data'];
-          print(data);
-          emit(InitDataSubmitSent(Warranty.fromJson(data)));
-        }
-      }
-      // else if (value.statusCode == 400) {
-      //   print("error :400 ,${value.error} ");
-      //   var error = getJSONMap(value.error);
-      //   var errorArabic = error['messageAr'];
-      //   var errorEnglish = error['messageEn'];
-      //
-      //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-      // } else if (value.statusCode == 502) {
-      //   var error = getJSONMap(value.error);
-      //   var errorArabic = error['messageAr'];
-      //   var errorEnglish = error['messageEn'];
-      //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-      // }
-      else {
-        firebaseCrashLog(
-          code: value.statusCode.toString(),
-          tag: "InitDataCubit.submitWarrantyData",
-          message: value.error.toString(),
-        );
-        emit(
-          InitDataSubmitError("خطأ بالاتصال: ${value.statusCode}",
-              "Connection Error: ${value.statusCode}"),
-        );
-      }
-    })
-          ..catchError((e) {
-            print(e);
-            firebaseCrashLog(
-              tag: "InitDataCubit.submitWarrantyData",
-              message: e.toString(),
-            );
-            emit(
-              InitDataSubmitError(
-                "تأكد من اتصالك بالانترنيت",
-                "check your internet connection",
-              ),
-            );
-          });
-  }
+  sendNewCar(String lang) {}
 
   String get carNumberPath => _carNumberPath;
 
@@ -850,21 +550,9 @@ class InitDataCubit extends Cubit<InitDataState> {
     _billImagePath = value;
   }
 
-  String get notesMarketName => _notesMarketName;
+  String get newCarName => _newCarName;
 
-  set notesMarketName(String value) {
-    _notesMarketName = value;
-  }
-
-  String get notesMarketAddress => _notesMarketAddress;
-
-  set notesMarketAddress(String value) {
-    _notesMarketAddress = value;
-  }
-
-  String get notesCarName => _notesCarName;
-
-  set notesCarName(String value) {
-    _notesCarName = value;
+  set newCarName(String value) {
+    _newCarName = value;
   }
 }

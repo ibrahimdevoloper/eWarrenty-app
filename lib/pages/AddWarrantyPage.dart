@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:ewarrenty/Blocs/AddMarket/add_market_cubit.dart';
 import 'package:ewarrenty/Blocs/InitData/init_data_cubit.dart';
-import 'package:ewarrenty/BottomSheets/AddCarBottomSheet.dart';
 import 'package:ewarrenty/BottomSheets/AddMarketBottomSheet.dart';
 import 'package:ewarrenty/Constants/Constants.dart';
 import 'package:ewarrenty/CustomWidget/ImagePreviewButton.dart';
@@ -206,9 +206,8 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     // );
                     // Scaffold.of(context).showSnackBar(snackBar);
                   }
-                  if (!mCubit.checkMarketValidation()) {
+                  if (mCubit.market == null) {
                     //TODO: tanslate "Please Add Your Market"
-                    //TODO: make sure this is working
                     mCubit.emit(InitDataMarketError());
                     mCubit.marketIsError = true;
                     // var snackBar = SnackBar(
@@ -260,7 +259,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     // );
                     // Scaffold.of(context).showSnackBar(snackBar);
                   }
-                  if (!mCubit.checkCarValidation()) {
+                  if (mCubit.carTypeId == null) {
                     //TODO: tanslate "Please capture Your car"
                     mCubit.emit(InitDataCarTypeError());
                     mCubit.carTypeIdIsError = true;
@@ -285,16 +284,15 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                   var finalValidation = mCubit.getFinalValidtion();
                   print(finalValidation);
                   if (finalValidation) {
-                    // ProgressHUD.of(context).show();
                     //TODO: test the connection to the api
-                    if (mCubit.carTypeId != null && mCubit.market != null)
-                      await mCubit.submitWarrantyData();
-                    else if (mCubit.carTypeId == null && mCubit.market != null)
-                      await mCubit.submitWarrantyDataWithoutCar();
-                    else if (mCubit.carTypeId != null && mCubit.market == null)
-                      await mCubit.submitWarrantyDataWithoutMarket();
-                    else if (mCubit.carTypeId == null && mCubit.market == null)
-                      await mCubit.submitWarrantyDataWithoutMarketAndCar();
+                    // if (mCubit.carTypeId != null && mCubit.market != null)
+                    await mCubit.submitWarrantyData();
+                    // else if (mCubit.carTypeId == null && mCubit.market != null)
+                    //   await mCubit.submitWarrantyDataWithoutCar();
+                    // else if (mCubit.carTypeId != null && mCubit.market == null)
+                    //   await mCubit.submitWarrantyDataWithoutMarket();
+                    // else if (mCubit.carTypeId == null && mCubit.market == null)
+                    //   await mCubit.submitWarrantyDataWithoutMarketAndCar();
                   } else {
                     var snackBar = SnackBar(
                       content: Text(AppLocalizations.of(context)
@@ -357,51 +355,53 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                   },
                   buildWhen: (previous, current) {
                     return !((current is InitDataBillDate) ||
-                        (current is InitDataBatteryChosenForImage) ||
-                        (current is InitDataFixedBatteryImage) ||
-                        (current is InitDataFrontBatteryImage) ||
-                        (current is InitDataCarNumberImage) ||
-                        (current is InitDataBatteryChoosenTextFieldReset) ||
-                        (current is InitDataBatteryChoosenTextFieldError) ||
-                        (current is InitDataBillDateReset) ||
-                        (current is InitDataBillDateError) ||
-                        (current is InitDataSerialNumberReset) ||
-                        (current is InitDataSerialNumberError) ||
-                        (current is InitDataFullNameReset) ||
-                        (current is InitDataFullNameError) ||
-                        (current is InitDataAddressReset) ||
-                        (current is InitDataAddressError) ||
-                        (current is InitDataEmailReset) ||
-                        (current is InitDataEmailError) ||
-                        (current is InitDataPhoneNumberReset) ||
-                        (current is InitDataPhoneNumberError) ||
-                        (current is InitDataCarNumberReset) ||
-                        (current is InitDataCarNumberError) ||
-                        (current is InitDataCountryReset) ||
-                        (current is InitDataCountryError) ||
-                        (current is InitDataMarketReset) ||
-                        (current is InitDataMarketError) ||
-                        (current is InitDataSubmitError) ||
-                        (current is InitDataSubmitLoading) ||
-                        (current is InitDataSubmitSent) ||
-                        (current is InitDataCarTypeError) ||
-                        (current is InitDataCarTypeReset) ||
-                        (current is InitDataCarPropertyError) ||
-                        (current is InitDataCarPropertyReset) ||
-                        (current is InitDataFrontBatteryImageError) ||
-                        // (current
-                        //     is InitDataFrontBatteryImageErrorWhileBatteyIsChoosen) ||
-                        (current is InitDataFixedBatteryImage) ||
-                        (current is InitDataFixedBatteryImageError) ||
-                        (current is InitDataCarNumberImage) ||
-                        (current is InitDataCarNumberImageError) ||
-                        (current is InitDataBillImageImage) ||
-                        (current is InitDataBillImageImageError) ||
-                        (current is InitDataPhoneNumberCountryCode) ||
-                        (current is InitDataNewMarketNameError) ||
-                        (current is InitDataNewMarketAddressError) ||
-                        (current is InitDataNewMarketNameReset) ||
-                        (current is InitDataNewMarketAddressReset));
+                            (current is InitDataBatteryChosenForImage) ||
+                            (current is InitDataFixedBatteryImage) ||
+                            (current is InitDataFrontBatteryImage) ||
+                            (current is InitDataCarNumberImage) ||
+                            (current is InitDataBatteryChoosenTextFieldReset) ||
+                            (current is InitDataBatteryChoosenTextFieldError) ||
+                            (current is InitDataBillDateReset) ||
+                            (current is InitDataBillDateError) ||
+                            (current is InitDataSerialNumberReset) ||
+                            (current is InitDataSerialNumberError) ||
+                            (current is InitDataFullNameReset) ||
+                            (current is InitDataFullNameError) ||
+                            (current is InitDataAddressReset) ||
+                            (current is InitDataAddressError) ||
+                            (current is InitDataEmailReset) ||
+                            (current is InitDataEmailError) ||
+                            (current is InitDataPhoneNumberReset) ||
+                            (current is InitDataPhoneNumberError) ||
+                            (current is InitDataCarNumberReset) ||
+                            (current is InitDataCarNumberError) ||
+                            (current is InitDataCountryReset) ||
+                            (current is InitDataCountryError) ||
+                            (current is InitDataMarketReset) ||
+                            (current is InitDataMarketError) ||
+                            (current is InitDataSubmitError) ||
+                            (current is InitDataSubmitLoading) ||
+                            (current is InitDataSubmitSent) ||
+                            (current is InitDataCarTypeError) ||
+                            (current is InitDataCarTypeReset) ||
+                            (current is InitDataCarPropertyError) ||
+                            (current is InitDataCarPropertyReset) ||
+                            (current is InitDataFrontBatteryImageError) ||
+                            // (current
+                            //     is InitDataFrontBatteryImageErrorWhileBatteyIsChoosen) ||
+                            (current is InitDataFixedBatteryImage) ||
+                            (current is InitDataFixedBatteryImageError) ||
+                            (current is InitDataCarNumberImage) ||
+                            (current is InitDataCarNumberImageError) ||
+                            (current is InitDataBillImageImage) ||
+                            (current is InitDataBillImageImageError) ||
+                            (current is InitDataPhoneNumberCountryCode)
+                        // ||
+                        // (current is InitDataNewMarketNameError) ||
+                        // (current is InitDataNewMarketAddressError) ||
+                        // (current is InitDataNewMarketNameReset) ||
+                        // (current is InitDataNewMarketAddressReset)
+                        );
                   },
                   builder: (context, state) {
                     if (state is InitDataInitial) {
@@ -1360,62 +1360,149 @@ class MarketDropdown extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: RichText(
                   textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text: "Market ",
-                    style: GoogleFonts.cairo(
-                        color: Colors.redAccent,
-                        fontWeight: FontWeight.bold,
-                        fontSize:
-                            Theme.of(context).textTheme.headline6.fontSize),
-                    children: [
-                      TextSpan(
-                        text: "NOT",
-                        style: GoogleFonts.cairo(
-                          color: Colors.redAccent,
-                          fontWeight: FontWeight.bold,
-                          fontSize:
-                              Theme.of(context).textTheme.headline6.fontSize,
-                          decoration: TextDecoration.underline,
+                  //TODO: this is a  hot fix please fin a rialiable solution
+                  text: AppLocalizations.of(context)
+                          .locale
+                          .languageCode
+                          .contains("ar")
+                      ? TextSpan(
+                          text: "موزعك ",
+                          style: GoogleFonts.cairo(
+                              color: Colors.redAccent,
+                              fontWeight: FontWeight.bold,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .fontSize),
+                          children: [
+                            TextSpan(
+                              text: "غير",
+                              style: GoogleFonts.cairo(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    .fontSize,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                            TextSpan(
+                              text: " مسجل\n",
+                              style: GoogleFonts.cairo(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    .fontSize,
+                              ),
+                            ),
+                            TextSpan(
+                              text: "يجب عليك إضافته عبر الضغط هنا",
+                              style: GoogleFonts.cairo(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    .fontSize,
+                              ),
+                            ),
+                          ],
+                        )
+                      : TextSpan(
+                          text: "Market ",
+                          style: GoogleFonts.cairo(
+                              color: Colors.redAccent,
+                              fontWeight: FontWeight.bold,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .fontSize),
+                          children: [
+                            TextSpan(
+                              text: "NOT",
+                              style: GoogleFonts.cairo(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    .fontSize,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                            TextSpan(
+                              text: " Found\n",
+                              style: GoogleFonts.cairo(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    .fontSize,
+                              ),
+                            ),
+                            TextSpan(
+                              text: "You Must Add Yours By Pressing Here",
+                              style: GoogleFonts.cairo(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    .fontSize,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      TextSpan(
-                        text: " Found\n",
-                        style: GoogleFonts.cairo(
-                          color: Colors.redAccent,
-                          fontWeight: FontWeight.bold,
-                          fontSize:
-                              Theme.of(context).textTheme.headline6.fontSize,
-                        ),
-                      ),
-                      TextSpan(
-                        text: "You Must Add Yours By Pressing Here",
-                        style: GoogleFonts.cairo(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize:
-                              Theme.of(context).textTheme.caption.fontSize,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
               onPressed: () {
                 _marketFieldNode.unfocus();
-                showMaterialModalBottomSheet(
-                  expand: true,
-                  context: context,
-                  builder: (context1) {
-                    return BlocProvider.value(
-                      value: BlocProvider.of<InitDataCubit>(context),
-                      child: AddMarketBottomSheet(),
-                    );
-                  },
-                  backgroundColor: Colors.transparent,
-                ).then((value) {
-                  _marketTextEditingController.text = value;
-                  // print(value);
-                });
+                if (BlocProvider.of<InitDataCubit>(context).countryCode !=
+                    null) {
+                  // BlocProvider.of<InitDataCubit>(context)
+                  //     .emit(InitDataNewMarketInitial());
+                  var countryCode =
+                      BlocProvider.of<InitDataCubit>(context).countryCode;
+                  showMaterialModalBottomSheet(
+                    expand: true,
+                    context: context,
+                    builder: (context1) {
+                      return BlocProvider.value(
+                        value: AddMarketCubit(
+                          countryCode: countryCode,
+                          language:
+                              AppLocalizations.of(context).locale.languageCode,
+                        ),
+                        child: AddMarketBottomSheet(
+                          countryCode: countryCode,
+                        ),
+                      );
+                    },
+                    backgroundColor: Colors.transparent,
+                  ).then((value) {
+                    print("Add Warranty:$value");
+                    // _marketTextEditingController.text = value;
+                    // print(value);
+                  });
+                } else {
+                  BlocProvider.of<InitDataCubit>(context)
+                      .emit(InitDataCountryError());
+                  BlocProvider.of<InitDataCubit>(context).countryIsError = true;
+                  //TODO: translate: Please Select Your Country
+                  var snackbar = SnackBar(
+                    content: Text(AppLocalizations.of(context)
+                            .locale
+                            .languageCode
+                            .contains("ar")
+                        ? "رجاءً أختر بلدك"
+                        : "Please Select Your Country"),
+                  );
+                  Scaffold.of(context).showSnackBar(snackbar);
+                }
               },
             ),
           );
@@ -1472,9 +1559,20 @@ class MarketDropdown extends StatelessWidget {
           markets.forEach((market) {
             // if (battreyModel.capacity == searchedCapacity)
             //   results.add(battreyModel);
-            if (market.nameAr.contains(pattern) ||
-                (market.nameEn.toLowerCase()).contains(pattern.toLowerCase()))
-              results.add(market);
+            // if (market.nameAr.contains(pattern) ||
+            //     (market.nameEn.toLowerCase()).contains(pattern.toLowerCase()))
+            //   results.add(market);
+
+            if (AppLocalizations.of(context)
+                .locale
+                .languageCode
+                .contains("ar")) {
+              if (market.nameAr != null) if (market.nameAr.contains(pattern))
+                results.add(market);
+            } else {
+              if (market.nameEn != null) if ((market.nameEn.toLowerCase())
+                  .contains(pattern.toLowerCase())) results.add(market);
+            }
           });
 
           return results;
@@ -1483,7 +1581,7 @@ class MarketDropdown extends StatelessWidget {
           // print(suggestion is Battery);
           Market suggestedMarket = suggestion;
           if (_marketTextEditingController.text.isNotEmpty) {
-            print("${_marketTextEditingController.text}");
+            // print("${_marketTextEditingController.text}");
             return Card(
               child: ListTile(
                 title: Text(AppLocalizations.of(context)
@@ -1633,19 +1731,19 @@ class CarTypeDropdown extends StatelessWidget {
                 onChanged: (e) {
                   BlocProvider.of<InitDataCubit>(context)
                       .carTypeIdSelectedValue(e);
-                  if (e == 0) {
-                    showMaterialModalBottomSheet(
-                      expand: true,
-                      context: context,
-                      builder: (context1) {
-                        return BlocProvider.value(
-                          value: BlocProvider.of<InitDataCubit>(context),
-                          child: AddCarBottomSheet(),
-                        );
-                      },
-                      backgroundColor: Colors.transparent,
-                    );
-                  }
+                  // if (e == 0) {
+                  //   showMaterialModalBottomSheet(
+                  //     expand: true,
+                  //     context: context,
+                  //     builder: (context1) {
+                  //       return BlocProvider.value(
+                  //         value: BlocProvider.of<InitDataCubit>(context),
+                  //         child: AddCarBottomSheet(),
+                  //       );
+                  //     },
+                  //     backgroundColor: Colors.transparent,
+                  //   );
+                  // }
                 },
                 isExpanded: true,
                 hint: Text(AppLocalizations.of(context).translate("carModel")),

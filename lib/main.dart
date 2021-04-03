@@ -58,59 +58,60 @@ class MyApp extends StatelessWidget {
               }
             }
             return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                locale: provider.languageCode.isEmpty
-                    ? null
-                    : Locale(provider.languageCode),
-                supportedLocales: [
-                  Locale('en'),
-                  Locale('ar'),
-                ],
-                navigatorObservers: [
-                  FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
-                ],
-                // These delegates make sure that the localization data for the proper language is loaded
-                localizationsDelegates: [
-                  // A class which loads the translations from JSON files
-                  AppLocalizations.delegate,
-                  // Built-in localization of basic text for Material widgets
-                  GlobalMaterialLocalizations.delegate,
-                  // Built-in localization for text direction LTR/RTL
-                  GlobalWidgetsLocalizations.delegate,
-                ],
-                // Returns a locale which will be used by the app
-                localeResolutionCallback: (locale, supportedLocales) {
-                  //TODO: here save the lang
-                  print("Main ${locale.languageCode}");
-                  // Check if THERE IS A SAVED LOCALE
-                  if (provider.prefs.containsKey(PrefKeys.lang)) {
-                    if (provider.languageCode.isEmpty) {
-                      provider.languageCode =
-                          provider.prefs.getString(PrefKeys.lang);
-                      return Locale(provider.languageCode);
-                    }
+              debugShowCheckedModeBanner: false,
+              locale: provider.languageCode.isEmpty
+                  ? null
+                  : Locale(provider.languageCode),
+              supportedLocales: [
+                Locale('en'),
+                Locale('ar'),
+              ],
+              navigatorObservers: [
+                FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
+              ],
+              // These delegates make sure that the localization data for the proper language is loaded
+              localizationsDelegates: [
+                // A class which loads the translations from JSON files
+                AppLocalizations.delegate,
+                // Built-in localization of basic text for Material widgets
+                GlobalMaterialLocalizations.delegate,
+                // Built-in localization for text direction LTR/RTL
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              // Returns a locale which will be used by the app
+              localeResolutionCallback: (locale, supportedLocales) {
+                //TODO: here save the lang
+                print("Main ${locale.languageCode}");
+                // Check if THERE IS A SAVED LOCALE
+                if (provider.prefs.containsKey(PrefKeys.lang)) {
+                  if (provider.languageCode.isEmpty) {
+                    provider.languageCode =
+                        provider.prefs.getString(PrefKeys.lang);
+                    return Locale(provider.languageCode);
                   }
-                  // Check if the current device locale is supported
-                  for (var supportedLocale in supportedLocales) {
-                    if (supportedLocale.languageCode == locale.languageCode) {
-                      return supportedLocale;
-                    }
+                }
+                // Check if the current device locale is supported
+                for (var supportedLocale in supportedLocales) {
+                  if (supportedLocale.languageCode == locale.languageCode) {
+                    return supportedLocale;
                   }
-                  return supportedLocales.first;
-                },
-                title: 'Marvel tech\'s E-Warranty',
-                theme: ThemeData(
-                  textTheme: GoogleFonts.cairoTextTheme(
-                    Theme.of(context).textTheme,
-                  ),
-                  primaryColor: Color.fromARGB(0xFF, 0x1F, 0x8D, 0xC5),
-                  accentColor: Color.fromARGB(0xFF, 0xFD, 0xB9, 0x13),
-                  // primarySwatch: Colors.blue,
-                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                }
+                return supportedLocales.first;
+              },
+              title: 'Marvel tech\'s E-Warranty',
+              theme: ThemeData(
+                textTheme: GoogleFonts.cairoTextTheme(
+                  Theme.of(context).textTheme,
                 ),
-                home: provider.languageCode.isEmpty
-                    ? ChooseLanguagePage()
-                    : HomePage());
+                primaryColor: Color.fromARGB(0xFF, 0x1F, 0x8D, 0xC5),
+                accentColor: Color.fromARGB(0xFF, 0xFD, 0xB9, 0x13),
+                // primarySwatch: Colors.blue,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+              ),
+              home: provider.languageCode.isEmpty
+                  ? ChooseLanguagePage()
+                  : HomePage(),
+            );
           });
         } else {
           return MaterialApp(
