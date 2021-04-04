@@ -29,6 +29,7 @@ void main() async {
   runApp(MultiProvider(providers: [
     // ChangeNotifierProvider(create: (context) => LoginProvider()),
     ChangeNotifierProvider(create: (context) => LangProvider()),
+
     // ChangeNotifierProvider(create: (context) => ShoppingCartProvider()),
   ], child: MyApp()));
 }

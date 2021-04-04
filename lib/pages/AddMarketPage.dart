@@ -11,17 +11,17 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../app_localizations.dart';
 
-class AddMarketBottomSheet extends StatefulWidget {
+class AddMarketPage extends StatefulWidget {
   @override
-  _AddMarketBottomSheetState createState() => _AddMarketBottomSheetState();
+  _AddMarketPageState createState() => _AddMarketPageState();
 
   final CountryCode _countryCode;
 
-  AddMarketBottomSheet({@required CountryCode countryCode})
+  AddMarketPage({@required CountryCode countryCode})
       : this._countryCode = countryCode;
 }
 
-class _AddMarketBottomSheetState extends State<AddMarketBottomSheet> {
+class _AddMarketPageState extends State<AddMarketPage> {
   TextEditingController addressTextEditingController = TextEditingController();
   TextEditingController nameTextEditingController = TextEditingController();
   TextEditingController phoneNumberTextEditingController =
@@ -55,7 +55,7 @@ class _AddMarketBottomSheetState extends State<AddMarketBottomSheet> {
               Scaffold.of(context).showSnackBar(snackbar);
             }
             if (state is AddMarketLoaded) {
-              print("AddMarketBottomSheet ${state.market}");
+              print("AddMarketPage ${state.market}");
               Navigator.of(context).pop<Market>(state.market);
             }
           },
@@ -109,7 +109,7 @@ class _AddMarketBottomSheetState extends State<AddMarketBottomSheet> {
   }
 }
 
-// class AddMarketBottomSheet extends StatelessWidget {
+// class AddMarketPage extends StatelessWidget {
 //   TextEditingController addressTextEditingController = TextEditingController();
 //   TextEditingController nameTextEditingController = TextEditingController();
 //   TextEditingController phoneNumberTextEditingController =
@@ -207,16 +207,16 @@ class _InitialAddMarketWidgetState extends State<InitialAddMarketWidget> {
               // }
               if (mCubit.getValidation()) {
                 BlocProvider.of<AddMarketCubit>(context).sendNewMarket(
-                    // onDone: () {
-                    //   var snackBar = SnackBar(
-                    //     content: Text("jksdvbjkbkjbjkbsdvbkj"),
-                    //     duration: Duration(milliseconds: 600),
-                    //   );
-                    //   Scaffold.of(context).showSnackBar(snackBar);
-                    //   // Navigator.pop(
-                    //   //     context, BlocProvider.of<AddMarketCubit>(context).market);
-                    // },
-                    );
+                  // onDone: () {
+                  //   var snackBar = SnackBar(
+                  //     content: Text("jksdvbjkbkjbjkbsdvbkj"),
+                  //     duration: Duration(milliseconds: 600),
+                  //   );
+                  //   Scaffold.of(context).showSnackBar(snackBar);
+                  //   // Navigator.pop(
+                  //   //     context, BlocProvider.of<AddMarketCubit>(context).market);
+                  // },
+                );
               } else {
                 var snackBar = SnackBar(
                   content: Text(AppLocalizations.of(context)

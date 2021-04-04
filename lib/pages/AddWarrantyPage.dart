@@ -3,21 +3,24 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:ewarrenty/Blocs/AddCar/add_car_cubit.dart';
 import 'package:ewarrenty/Blocs/AddMarket/add_market_cubit.dart';
 import 'package:ewarrenty/Blocs/InitData/init_data_cubit.dart';
-import 'package:ewarrenty/BottomSheets/AddMarketBottomSheet.dart';
 import 'package:ewarrenty/Constants/Constants.dart';
 import 'package:ewarrenty/CustomWidget/ImagePreviewButton.dart';
 import 'package:ewarrenty/Function/dateFormatter.dart';
 import 'package:ewarrenty/Function/myImagePicker.dart';
 import 'package:ewarrenty/Icons/warranty_icons_icons.dart';
 import 'package:ewarrenty/Models/Battery.dart';
+import 'package:ewarrenty/Models/car_type.dart';
 import 'package:ewarrenty/Models/market.dart';
 import 'package:ewarrenty/Wrappers/DropdownBoxWrapper.dart';
 import 'package:ewarrenty/Wrappers/SuggestionsBoxWrapper.dart';
 import 'package:ewarrenty/app_localizations.dart';
 import 'package:ewarrenty/dialogs/showSummeryDialog.dart';
 import 'package:ewarrenty/dialogs/whereIsSerialNumberDialog.dart';
+// import 'package:ewarrenty/BottomSheets/AddMarketBottomSheet.dart';
+import 'package:ewarrenty/pages/AddMarketPage.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,7 +30,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class AddWarrantyPage extends StatefulWidget {
@@ -1467,26 +1469,54 @@ class MarketDropdown extends StatelessWidget {
                   //     .emit(InitDataNewMarketInitial());
                   var countryCode =
                       BlocProvider.of<InitDataCubit>(context).countryCode;
-                  showMaterialModalBottomSheet(
-                    expand: true,
-                    context: context,
-                    builder: (context1) {
-                      return BlocProvider.value(
-                        value: AddMarketCubit(
-                          countryCode: countryCode,
-                          language:
-                              AppLocalizations.of(context).locale.languageCode,
-                        ),
-                        child: AddMarketBottomSheet(
-                          countryCode: countryCode,
-                        ),
-                      );
-                    },
-                    backgroundColor: Colors.transparent,
-                  ).then((value) {
+                  // showMaterialModalBottomSheet(
+                  //   expand: true,
+                  //   context: context,
+                  //   builder: (context1) {
+                  //     return BlocProvider.value(
+                  //       value: AddMarketCubit(
+                  //         countryCode: countryCode,
+                  //         language:
+                  //             AppLocalizations.of(context).locale.languageCode,
+                  //       ),
+                  //       child: AddMarketBottomSheet(
+                  //         countryCode: countryCode,
+                  //       ),
+                  //     );
+                  //   },
+                  //   backgroundColor: Colors.transparent,
+                  // )
+                  // .then((value) {
+                  //   print("Add Warranty:$value");
+                  //   // _marketTextEditingController.text = value;
+                  //   // print(value);
+                  // });
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                          builder: (context) =>
+                              BlocProvider<AddMarketCubit>.value(
+                                value: AddMarketCubit(
+                                  countryCode: countryCode,
+                                  language: AppLocalizations.of(context)
+                                      .locale
+                                      .languageCode,
+                                ),
+                                child: AddMarketPage(
+                                  countryCode: countryCode,
+                                ),
+                              )))
+                      .then((value) {
                     print("Add Warranty:$value");
-                    // _marketTextEditingController.text = value;
-                    // print(value);
+                    Market market = value;
+                    _marketTextEditingController.text =
+                        AppLocalizations.of(context)
+                                .locale
+                                .languageCode
+                                .contains("ar")
+                            ? market.nameAr
+                            : market.nameEn;
+                    BlocProvider.of<InitDataCubit>(context).market = value;
+                    print(value);
                   });
                 } else {
                   BlocProvider.of<InitDataCubit>(context)
@@ -1731,19 +1761,56 @@ class CarTypeDropdown extends StatelessWidget {
                 onChanged: (e) {
                   BlocProvider.of<InitDataCubit>(context)
                       .carTypeIdSelectedValue(e);
-                  // if (e == 0) {
-                  //   showMaterialModalBottomSheet(
-                  //     expand: true,
-                  //     context: context,
-                  //     builder: (context1) {
-                  //       return BlocProvider.value(
-                  //         value: BlocProvider.of<InitDataCubit>(context),
-                  //         child: AddCarBottomSheet(),
-                  //       );
-                  //     },
-                  //     backgroundColor: Colors.transparent,
-                  //   );
-                  // }
+                  if (e == 0) {
+                    // showMaterialModalBottomSheet(
+                    //   expand: true,
+                    //   context: context,
+                    //   builder: (context1) {
+                    //     return BlocProvider.value(
+                    //       value: BlocProvider.of<InitDataCubit>(context),
+                    //       child: AddCarBottomSheet(),
+                    //     );
+                    //   },
+                    //   backgroundColor: Colors.transparent,
+                    // );
+                    var countryCode =
+                        BlocProvider.of<InitDataCubit>(context).countryCode;
+                    Navigator.of(context)
+                        .push(
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider<AddCarCubit>.value(
+                          value: AddCarCubit(
+                            language: AppLocalizations.of(context)
+                                .locale
+                                .languageCode,
+                          ),
+                          child: AddMarketPage(
+                            countryCode: countryCode,
+                          ),
+                        ),
+                      ),
+                    )
+                        .then((value) {
+                      print("Add Warranty:$value");
+                      CarType carType = value;
+                      // _marketTextEditingController.text =
+                      // AppLocalizations.of(context)
+                      //     .locale
+                      //     .languageCode
+                      //     .contains("ar")
+                      //     ? market.nameAr
+                      //     : market.nameEn;
+
+                      BlocProvider.of<InitDataCubit>(context)
+                          .carTypes
+                          .add(carType);
+                      BlocProvider.of<InitDataCubit>(context)
+                          .carTypeIdSelectedValue(e);
+                      BlocProvider.of<InitDataCubit>(context)
+                          .emit(InitDataCarTypeReset());
+                      print(value);
+                    });
+                  }
                 },
                 isExpanded: true,
                 hint: Text(AppLocalizations.of(context).translate("carModel")),
