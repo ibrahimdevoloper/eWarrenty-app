@@ -19,6 +19,7 @@ import 'package:ewarrenty/Wrappers/SuggestionsBoxWrapper.dart';
 import 'package:ewarrenty/app_localizations.dart';
 import 'package:ewarrenty/dialogs/showSummeryDialog.dart';
 import 'package:ewarrenty/dialogs/whereIsSerialNumberDialog.dart';
+import 'package:ewarrenty/pages/AddCarPage.dart';
 // import 'package:ewarrenty/BottomSheets/AddMarketBottomSheet.dart';
 import 'package:ewarrenty/pages/AddMarketPage.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -1784,9 +1785,7 @@ class CarTypeDropdown extends StatelessWidget {
                                 .locale
                                 .languageCode,
                           ),
-                          child: AddMarketPage(
-                            countryCode: countryCode,
-                          ),
+                          child: AddCarPage(),
                         ),
                       ),
                     )
@@ -1800,15 +1799,16 @@ class CarTypeDropdown extends StatelessWidget {
                       //     .contains("ar")
                       //     ? market.nameAr
                       //     : market.nameEn;
-
-                      BlocProvider.of<InitDataCubit>(context)
-                          .carTypes
-                          .add(carType);
-                      BlocProvider.of<InitDataCubit>(context)
-                          .carTypeIdSelectedValue(e);
-                      BlocProvider.of<InitDataCubit>(context)
-                          .emit(InitDataCarTypeReset());
-                      print(value);
+                      if (carType != null) {
+                        BlocProvider.of<InitDataCubit>(context)
+                            .carTypes
+                            .add(carType);
+                        BlocProvider.of<InitDataCubit>(context)
+                            .carTypeIdSelectedValue(e);
+                        BlocProvider.of<InitDataCubit>(context)
+                            .emit(InitDataCarTypeReset());
+                        print(value);
+                      }
                     });
                   }
                 },
