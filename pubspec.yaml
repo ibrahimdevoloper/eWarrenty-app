@@ -59,7 +59,7 @@ dependencies:
   flutter_html: ^1.2.0
 #  flutter_keyboard_visibility: ^4.0.4
 #  http: ^0.12.2
-  modal_bottom_sheet: ^1.0.0
+#  modal_bottom_sheet: ^1.0.0
   auto_size_text: ^2.1.0
 
 
