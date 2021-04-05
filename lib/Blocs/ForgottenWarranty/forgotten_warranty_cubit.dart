@@ -26,7 +26,7 @@ class ForgottenWarrantyCubit extends Cubit<ForgottenWarrantyState> {
     // emit(ForgottenWarrantyLoading());
     // _emailService.getWarrenties(email)
     emit(ForgottenWarrantyLoading());
-    print("getWarrantyByEmail");
+    // print("getWarrantyByEmail");
     _emailService.getWarrenties(email).then((value) {
       if (value.statusCode >= 200 && value.statusCode <= 299) {
         if (value.body['error'] != null) {
@@ -47,7 +47,7 @@ class ForgottenWarrantyCubit extends Cubit<ForgottenWarrantyState> {
             );
         } else {
           var data = value.body['data'];
-          print(data);
+          // print(data);
           if (_warranties.isNotEmpty) _warranties.clear();
           data.forEach(
             (element) {
@@ -92,7 +92,7 @@ class ForgottenWarrantyCubit extends Cubit<ForgottenWarrantyState> {
     // emit(ForgottenWarrantyLoading());
     // _emailService.getWarrenties(email)
     emit(ForgottenWarrantyLoading());
-    print("getWarrantyByEmail");
+    // print("getWarrantyByEmail");
     _phoneNumberService.getWarrenties(phoneNumber).then((value) {
       if (value.statusCode >= 200 && value.statusCode <= 299) {
         if (value.body['error'] != null) {
@@ -113,7 +113,7 @@ class ForgottenWarrantyCubit extends Cubit<ForgottenWarrantyState> {
             );
         } else {
           var data = value.body['data'];
-          print(data);
+          // print(data);
           if (_warranties.isNotEmpty) _warranties.clear();
           data.forEach(
             (element) {

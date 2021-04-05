@@ -35,8 +35,8 @@ class _AddMarketPageState extends State<AddMarketPage> {
         body: BlocConsumer<AddMarketCubit, AddMarketState>(
           cubit: BlocProvider.of<AddMarketCubit>(context),
           listenWhen: (previous, current) {
-            print("AddMarketLoaded IS TRUE: ${current is AddMarketLoaded}");
-            print("AddMarketLoaded IS TRUE: ${current}");
+            // print("AddMarketLoaded IS TRUE: ${current is AddMarketLoaded}");
+            // print("AddMarketLoaded IS TRUE: ${current}");
             return current is AddMarketError || current is AddMarketLoaded;
           },
           listener: (context, state) {
@@ -55,7 +55,7 @@ class _AddMarketPageState extends State<AddMarketPage> {
               Scaffold.of(context).showSnackBar(snackbar);
             }
             if (state is AddMarketLoaded) {
-              print("AddMarketPage ${state.market}");
+              // print("AddMarketPage ${state.market}");
               Navigator.of(context).pop<Market>(state.market);
             }
           },
@@ -207,16 +207,16 @@ class _InitialAddMarketWidgetState extends State<InitialAddMarketWidget> {
               // }
               if (mCubit.getValidation()) {
                 BlocProvider.of<AddMarketCubit>(context).sendNewMarket(
-                  // onDone: () {
-                  //   var snackBar = SnackBar(
-                  //     content: Text("jksdvbjkbkjbjkbsdvbkj"),
-                  //     duration: Duration(milliseconds: 600),
-                  //   );
-                  //   Scaffold.of(context).showSnackBar(snackBar);
-                  //   // Navigator.pop(
-                  //   //     context, BlocProvider.of<AddMarketCubit>(context).market);
-                  // },
-                );
+                    // onDone: () {
+                    //   var snackBar = SnackBar(
+                    //     content: Text("jksdvbjkbkjbjkbsdvbkj"),
+                    //     duration: Duration(milliseconds: 600),
+                    //   );
+                    //   Scaffold.of(context).showSnackBar(snackBar);
+                    //   // Navigator.pop(
+                    //   //     context, BlocProvider.of<AddMarketCubit>(context).market);
+                    // },
+                    );
               } else {
                 var snackBar = SnackBar(
                   content: Text(AppLocalizations.of(context)

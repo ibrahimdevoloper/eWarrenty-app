@@ -22,7 +22,7 @@ class GetWarrantyCubit extends Cubit<GetWarrantyState> {
     _getWarrantyService.getWarrenty(code).then((value) {
       if (value.statusCode >= 200 && value.statusCode <= 299) {
         var data = value.body['data'];
-        print(data);
+        // print(data);
         _warranty = Warranty.fromJson(data);
         emit(GetWarrantyLoaded(Warranty.fromJson(data)));
         onDone.call();

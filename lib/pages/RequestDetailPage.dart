@@ -39,7 +39,9 @@ class _RequestDetailPageState extends State<RequestDetailPage>
     // });
 
     // _animController.forward();
-    FirebaseAnalytics().setCurrentScreen(screenName: "RequestDetailPage",screenClassOverride: "RequestDetailPage");
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "RequestDetailPage",
+        screenClassOverride: "RequestDetailPage");
   }
 
   @override
@@ -507,7 +509,7 @@ class _RequestDetailPageState extends State<RequestDetailPage>
         code: _textController.text,
         onDone: () {
           var warranty = BlocProvider.of<GetWarrantyCubit>(context).warranty;
-          print(BlocProvider.of<GetWarrantyCubit>(context).warranty);
+          // print(BlocProvider.of<GetWarrantyCubit>(context).warranty);
           Navigator.push(
               context,
               MaterialPageRoute(

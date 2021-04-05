@@ -158,7 +158,7 @@ class InitDataCubit extends Cubit<InitDataState> {
 
   carTypeIdSelectedValue(value) {
     _carTypeId = value;
-    print(_carTypeId);
+    // print(_carTypeId);
     _carTypesStreamController.sink.add(value);
   }
 
@@ -181,7 +181,7 @@ class InitDataCubit extends Cubit<InitDataState> {
     InitDataService initDataService = InitDataService.create();
     initDataService.getData().then((value) {
       //TODO: handle statues Codes
-      print(value.body);
+      // print(value.body);
       var data = value.body;
       for (var JSONItem in data['batteries']) {
         _batteries.add(Battery.fromJson(JSONItem));
@@ -209,7 +209,7 @@ class InitDataCubit extends Cubit<InitDataState> {
 
       emit(InitDataLoaded(_batteries, _carTypes, _carProperties, _markets));
     }).catchError((e) {
-      print('InitDataCubit $e');
+      // print('InitDataCubit $e');
       //TODO: taranslate "check your internet connection "
       emit(InitDataError("no network", "لا توجد شبكة"));
     });
@@ -224,7 +224,7 @@ class InitDataCubit extends Cubit<InitDataState> {
       battery_model_id: battery.id,
       battery_serial_number: serialNumber,
       bought_date: billDate,
-      car_number: carNumber,
+      car_number: "${countryCode.dialCode}$carNumber",
       car_number_image: carNumberPath,
       car_property_id: carPropertyId,
       car_type_id: carTypeId,
@@ -239,13 +239,13 @@ class InitDataCubit extends Cubit<InitDataState> {
       notes: "clear",
     )
         .then((value) {
-      print("billImagePath: $billImagePath");
-      print("AddWarrantybody:${value.body}");
-      print("AddWarrantyisSuccessful:${value.isSuccessful}");
-      print("AddWarrantyError:${value.error.toString()}");
+      // print("billImagePath: $billImagePath");
+      // print("AddWarrantybody:${value.body}");
+      // print("AddWarrantyisSuccessful:${value.isSuccessful}");
+      // print("AddWarrantyError:${value.error.toString()}");
       if (value.error.toString() != null) {
         var errorString = value.error.toString();
-        print("AddWarrantyError:${value.error.toString()}");
+        // print("AddWarrantyError:${value.error.toString()}");
       }
 
       // print("AddWarrantyError:${getJSONMap(
@@ -255,14 +255,14 @@ class InitDataCubit extends Cubit<InitDataState> {
       if (value.statusCode >= 200 && value.statusCode <= 299) {
         if (value.body.containsKey("error")) {
           Map<String, dynamic> errorMap = value.body;
-          print("AddWarrantyErrorMap:${value.body}");
+          // print("AddWarrantyErrorMap:${value.body}");
           if (errorMap['error'].contains('this serial number')) {
             var errorArabic = "إن هذا الرقم التسلسلي غير موجود";
             var errorEnglish = "This Serial Number Do NOT Exist";
             emit(InitDataSubmitError(errorArabic, errorEnglish));
           } else {
             Map<String, dynamic> errorMap = value.body;
-            print("AddWarrantyErrorMap:${value.body}");
+            // print("AddWarrantyErrorMap:${value.body}");
             emit(InitDataSubmitError(errorMap['error'], errorMap['error']));
             // if (errorMap['error'].contains('this serial number')) {
             //   var errorArabic = "إن هذا الرقم التسلسلي غير موجود" ;
@@ -272,7 +272,7 @@ class InitDataCubit extends Cubit<InitDataState> {
           }
         } else if (value.body.containsKey("data")) {
           var data = value.body['data'];
-          print(data);
+          // print(data);
           emit(InitDataSubmitSent(Warranty.fromJson(data)));
         }
       }
@@ -302,7 +302,7 @@ class InitDataCubit extends Cubit<InitDataState> {
       }
     })
           ..catchError((e) {
-            print(e);
+            // print(e);
             firebaseCrashLog(
               tag: "InitDataCubit.submitWarrantyData",
               message: e.toString(),

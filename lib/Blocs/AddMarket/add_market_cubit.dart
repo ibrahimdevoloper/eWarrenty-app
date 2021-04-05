@@ -61,7 +61,7 @@ class AddMarketCubit extends Cubit<AddMarketState> {
       if (value.statusCode >= 200 && value.statusCode <= 299) {
         if (value.body.containsKey("error")) {
           Map<String, dynamic> errorMap = value.body;
-          print("AddWarrantyErrorMap:${value.body}");
+          // print("AddWarrantyErrorMap:${value.body}");
           emit(AddMarketError(errorMap['error'], errorMap['error']));
           // if (errorMap['error'].contains('this serial number')) {
           //   var errorArabic = "إن هذا الرقم التسلسلي غير موجود" ;
@@ -106,7 +106,7 @@ class AddMarketCubit extends Cubit<AddMarketState> {
       }
     })
           ..catchError((e) {
-            print(e);
+            // print(e);
             firebaseCrashLog(
               tag: "AddMarketCubit.sendNewMarket",
               message: e.toString(),

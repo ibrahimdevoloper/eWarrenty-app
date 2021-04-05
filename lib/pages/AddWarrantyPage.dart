@@ -73,7 +73,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
       create: (context) => InitDataCubit(),
       child: BlocBuilder<InitDataCubit, InitDataState>(
         buildWhen: (previous, current) {
-          print("ModalProgressHUD: $current");
+          // print("ModalProgressHUD: $current");
           return true;
         },
         builder: (context, state) => ModalProgressHUD(
@@ -285,7 +285,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                   }
                   // print(mCubit.toString());
                   var finalValidation = mCubit.getFinalValidtion();
-                  print(finalValidation);
+                  // print(finalValidation);
                   if (finalValidation) {
                     //TODO: test the connection to the api
                     // if (mCubit.carTypeId != null && mCubit.market != null)
@@ -326,7 +326,7 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                         current is InitDataSubmitError;
                   },
                   listener: (context, state) {
-                    print("listener: $state");
+                    // print("listener: $state");
                     // final progress = ProgressHUD.of(context);
                     if (state is InitDataSubmitLoading) {
                       // var warranty = state.warranty;
@@ -1108,7 +1108,7 @@ class AddBatteryFrontImageButton extends StatelessWidget {
         // current is InitDataFrontBatteryImageErrorWhileBatteyIsChoosen;
       },
       builder: (context, state) {
-        print(state);
+        // print(state);
         if (state is InitDataFrontBatteryImageError) {
           return CustomButtonForImagePreview(
             isError: true,
@@ -1507,7 +1507,7 @@ class MarketDropdown extends StatelessWidget {
                                 ),
                               )))
                       .then((value) {
-                    print("Add Warranty:$value");
+                    // print("Add Warranty:$value");
                     Market market = value;
                     _marketTextEditingController.text =
                         AppLocalizations.of(context)
@@ -1517,7 +1517,7 @@ class MarketDropdown extends StatelessWidget {
                             ? market.nameAr
                             : market.nameEn;
                     BlocProvider.of<InitDataCubit>(context).market = value;
-                    print(value);
+                    // print(value);
                   });
                 } else {
                   BlocProvider.of<InitDataCubit>(context)
@@ -1774,8 +1774,6 @@ class CarTypeDropdown extends StatelessWidget {
                     //   },
                     //   backgroundColor: Colors.transparent,
                     // );
-                    var countryCode =
-                        BlocProvider.of<InitDataCubit>(context).countryCode;
                     Navigator.of(context)
                         .push(
                       MaterialPageRoute(
@@ -1790,7 +1788,7 @@ class CarTypeDropdown extends StatelessWidget {
                       ),
                     )
                         .then((value) {
-                      print("Add Warranty:$value");
+                      // print("Add Warranty.AddCarPage:$value");
                       CarType carType = value;
                       // _marketTextEditingController.text =
                       // AppLocalizations.of(context)
@@ -1804,9 +1802,9 @@ class CarTypeDropdown extends StatelessWidget {
                             .carTypes
                             .add(carType);
                         BlocProvider.of<InitDataCubit>(context)
-                            .carTypeIdSelectedValue(e);
-                        BlocProvider.of<InitDataCubit>(context)
                             .emit(InitDataCarTypeReset());
+                        BlocProvider.of<InitDataCubit>(context)
+                            .carTypeIdSelectedValue(carType.id);
                         print(value);
                       }
                     });
@@ -1818,12 +1816,14 @@ class CarTypeDropdown extends StatelessWidget {
                 items: carTypes
                     .map((e) => DropdownMenuItem<int>(
                           value: e.id,
-                          child: Text(AppLocalizations.of(context)
-                                  .locale
-                                  .languageCode
-                                  .contains("ar")
-                              ? e.nameAr
-                              : e.nameEn),
+                          child: Text(
+                            AppLocalizations.of(context)
+                                    .locale
+                                    .languageCode
+                                    .contains("ar")
+                                ? e.nameAr ?? e.nameEn
+                                : e.nameEn ?? e.nameAr,
+                          ),
                         ))
                     .toList(),
               );

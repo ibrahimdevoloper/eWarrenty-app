@@ -11,7 +11,7 @@ Future<String> myImagePicker() async {
     source: ImageSource.camera,
     // imageQuality: 15,
   );
-  print(pickedFile.path);
+  // print(pickedFile.path);
   var dir = await getTemporaryDirectory();
   var tempPath = dir.path;
   File compressedFile = await testCompressAndGetFile(

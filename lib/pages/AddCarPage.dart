@@ -1,4 +1,5 @@
 import 'package:ewarrenty/Blocs/AddCar/add_car_cubit.dart';
+import 'package:ewarrenty/Models/car_type.dart';
 import 'package:ewarrenty/Wrappers/ResponsiveSafeArea.dart';
 import 'package:ewarrenty/app_localizations.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,45 +14,116 @@ class AddCarPage extends StatefulWidget {
 
 class _AddCarPageState extends State<AddCarPage> {
   var nameTextEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveSafeArea(
       builder: (context, size) {
         return Scaffold(
-          body: Container(
-            color: Colors.white,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: NameTextField(
-                      nameTextEditingController: nameTextEditingController),
-                ),
-                RaisedButton(
-                    child:
-                        Text(AppLocalizations.of(context).translate("submit")),
-                    textColor: Colors.white,
-                    color: Theme.of(context).primaryColor,
-                    onPressed: () {
-                      //TODO: Check if field are null
-                      // if (nameTextEditingController.text.isNotEmpty) {
-                      //   BlocProvider.of<InitDataCubit>(context).notesCarName =
-                      //       nameTextEditingController.text;
-                      //   Navigator.of(context)
-                      //       .pop(nameTextEditingController.text);
-                      // } else {
-                      //   BlocProvider.of<InitDataCubit>(context)
-                      //       .emit(AddCarNameError());
-                      // }
-                    }),
-                Expanded(
-                    child: Center(child: Image.asset("assets/images/logo.png")))
-              ],
-            ),
+          body: BlocConsumer<AddCarCubit, AddCarState>(
+            listenWhen: (previous, current) {
+              return current is AddCarError || current is AddCarLoaded;
+            },
+            listener: (context, state) {
+              if (state is AddCarError) {
+                var snackbar = SnackBar(
+                  content: Text(
+                    AppLocalizations.of(context)
+                            .locale
+                            .languageCode
+                            .contains("ar")
+                        ? state.errorArabic
+                        : state.errorEnglish,
+                  ),
+                );
+                Scaffold.of(context).showSnackBar(snackbar);
+              } else if (state is AddCarLoaded) {
+                Navigator.of(context).pop<CarType>(state.market);
+              }
+            },
+            buildWhen: (previous, current) {
+              return current is AddCarError ||
+                  current is AddCarLoaded ||
+                  current is AddCarLoading ||
+                  current is AddCarInitial;
+            },
+            builder: (context, state) {
+              if (state is AddCarLoading)
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              else
+                return InitialCarAddionWidget(
+                  nameTextEditingController: nameTextEditingController,
+                );
+            },
           ),
         );
       },
+    );
+  }
+}
+
+class InitialCarAddionWidget extends StatelessWidget {
+  const InitialCarAddionWidget({
+    Key key,
+    @required this.nameTextEditingController,
+  }) : super(key: key);
+
+  final TextEditingController nameTextEditingController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: NameTextField(
+              nameTextEditingController: nameTextEditingController),
+        ),
+        RaisedButton(
+            child: Text(AppLocalizations.of(context).translate("submit")),
+            textColor: Colors.white,
+            color: Theme.of(context).primaryColor,
+            onPressed: () {
+              //TODO: Check if field are null
+              // if (nameTextEditingController.text.isNotEmpty) {
+              //   BlocProvider.of<InitDataCubit>(context).notesCarName =
+              //       nameTextEditingController.text;
+              //   Navigator.of(context)
+              //       .pop(nameTextEditingController.text);
+              // } else {
+              //   BlocProvider.of<InitDataCubit>(context)
+              //       .emit(AddCarNameError());
+              // }
+              AddCarCubit mCubit = BlocProvider.of<AddCarCubit>(context);
+              if (mCubit.name == null) {
+                mCubit.isNameError = true;
+                mCubit.emit(AddCarNameError());
+              } else if (mCubit.name.isEmpty) {
+                mCubit.isNameError = true;
+                mCubit.emit(AddCarNameError());
+              }
+
+              if (!mCubit.isNameError) {
+                // mCubit.emit(AddCarLoading());
+                // Future.delayed(Duration(seconds: 2)).then((value) {
+                //   mCubit.emit(
+                //     AddCarLoaded(
+                //       CarType(
+                //         nameAr: "سيارة جديدة",
+                //         nameEn: "new Car",
+                //         id: 100,
+                //       ),
+                //     ),
+                //   );
+                // });
+                mCubit.sendNewCar();
+              }
+            }),
+        Expanded(child: Center(child: Image.asset("assets/images/logo.png")))
+      ],
     );
   }
 }
@@ -77,7 +149,7 @@ class NameTextField extends StatelessWidget {
       },
       builder: (context, state) => TextFormField(
         onTap: () {
-          // BlocProvider.of<InitDataCubit>(context).addressIsError = false;
+          BlocProvider.of<AddCarCubit>(context).isNameError = false;
           BlocProvider.of<AddCarCubit>(context).emit(AddCarNameReset());
         },
         controller: _nameTextEditingController,
@@ -88,8 +160,8 @@ class NameTextField extends StatelessWidget {
         inputFormatters: [
           AppLocalizations.of(context).locale.languageCode.contains("ar")
               ? FilteringTextInputFormatter.allow(
-                  RegExp(r"[\u0600-\u065F\u066A-\u06EF\u06FA-\u06FF ]"))
-              : FilteringTextInputFormatter.allow(RegExp(r'[a-z A-Z]')),
+                  RegExp(r"[\u0600-\u065F\u066A-\u06EF\u06FA-\u06FF 0-9]"))
+              : FilteringTextInputFormatter.allow(RegExp(r'[a-z A-Z0-9]')),
         ],
         decoration: InputDecoration(
           errorText: ((state is AddCarNameError))

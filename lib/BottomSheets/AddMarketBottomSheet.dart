@@ -35,8 +35,8 @@ class _AddMarketBottomSheetState extends State<AddMarketBottomSheet> {
         body: BlocConsumer<AddMarketCubit, AddMarketState>(
           cubit: BlocProvider.of<AddMarketCubit>(context),
           listenWhen: (previous, current) {
-            print("AddMarketLoaded IS TRUE: ${current is AddMarketLoaded}");
-            print("AddMarketLoaded IS TRUE: ${current}");
+            // print("AddMarketLoaded IS TRUE: ${current is AddMarketLoaded}");
+            // print("AddMarketLoaded IS TRUE: ${current}");
             return current is AddMarketError || current is AddMarketLoaded;
           },
           listener: (context, state) {
@@ -55,7 +55,7 @@ class _AddMarketBottomSheetState extends State<AddMarketBottomSheet> {
               Scaffold.of(context).showSnackBar(snackbar);
             }
             if (state is AddMarketLoaded) {
-              print("AddMarketBottomSheet ${state.market}");
+              // print("AddMarketBottomSheet ${state.market}");
               Navigator.of(context).pop<Market>(state.market);
             }
           },

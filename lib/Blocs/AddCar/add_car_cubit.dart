@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:ewarrenty/Function/FirebaseCrashlyticsLog.dart';
 import 'package:ewarrenty/Models/car_type.dart';
-import 'package:ewarrenty/services/sendMarket/SendMarketService.dart';
+import 'package:ewarrenty/services/sendCar/SendCarService.dart';
 import 'package:meta/meta.dart';
 
 part 'add_car_state.dart';
@@ -26,22 +26,22 @@ class AddCarCubit extends Cubit<AddCarState> {
   //   _language = value;
   // }
 
-  sendNewMarket() {
+  sendNewCar() {
     emit(AddCarLoading());
     // print("${_countryCode.dialCode}$_phoneNumber");
     Map<String, dynamic> map = {
       "name_ar": _language.contains("ar") ? _name : "",
       "name_en": _language.contains("en") ? _name : "",
     };
-    SendMarketService.create()
-        .sendMarket(
+    SendCarService.create()
+        .sendCar(
       body: map,
     )
         .then((value) {
       if (value.statusCode >= 200 && value.statusCode <= 299) {
         if (value.body.containsKey("error")) {
           Map<String, dynamic> errorMap = value.body;
-          print("AddWarrantyErrorMap:${value.body}");
+          // print("AddWarrantyErrorMap:${value.body}");
           emit(AddCarError(errorMap['error'], errorMap['error']));
           // if (errorMap['error'].contains('this serial number')) {
           //   var errorArabic = "إن هذا الرقم التسلسلي غير موجود" ;
@@ -86,7 +86,7 @@ class AddCarCubit extends Cubit<AddCarState> {
       }
     })
           ..catchError((e) {
-            print(e);
+            // print(e);
             firebaseCrashLog(
               tag: "InitDataCubit.sendNewMarket",
               message: e.toString(),

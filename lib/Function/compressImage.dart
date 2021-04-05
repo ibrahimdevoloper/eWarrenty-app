@@ -13,13 +13,12 @@ Future<Uint8List> testCompressFile(File file) async {
     quality: 15,
     // rotate: 90,
   );
-  print("file length: ${file.lengthSync()}");
-  print("compress length: ${result.length}");
+  // print("file length: ${file.lengthSync()}");
+  // print("compress length: ${result.length}");
   // File compressedFile = File.fromRawPath(result);
   return result;
   // return compressedFile;
 }
-
 
 Future<File> testCompressAndGetFile(File file, String targetPath) async {
   var result = await FlutterImageCompress.compressAndGetFile(
@@ -29,8 +28,8 @@ Future<File> testCompressAndGetFile(File file, String targetPath) async {
     // rotate: 180,
   );
 
-  print("file length: ${file.lengthSync()}");
-  print("result length:${result.lengthSync()}");
+  // print("file length: ${file.lengthSync()}");
+  // print("result length:${result.lengthSync()}");
 
   return result;
 }

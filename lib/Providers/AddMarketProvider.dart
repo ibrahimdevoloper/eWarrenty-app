@@ -49,7 +49,7 @@ class AddMarketProvider extends ChangeNotifier {
     };
     SendMarketService service = SendMarketService.create();
     try {
-      print("delay");
+      // print("delay");
       // await Future<void>.delayed(
       //   const Duration(
       //     seconds: 5,
@@ -63,9 +63,9 @@ class AddMarketProvider extends ChangeNotifier {
 
       if (value.statusCode >= 200 && value.statusCode <= 299) {
         if (value.body.containsKey("error")) {
-          print("error Checked");
+          // print("error Checked");
           Map<String, dynamic> errorMap = value.body;
-          print("AddWarrantyErrorMap:${value.body}");
+          // print("AddWarrantyErrorMap:${value.body}");
           // emit(AddMarketError(errorMap['error'], errorMap['error']));
           // if (errorMap['error'].contains('this serial number')) {
           //   var errorArabic = "إن هذا الرقم التسلسلي غير موجود" ;
@@ -76,7 +76,7 @@ class AddMarketProvider extends ChangeNotifier {
         } else {
           var data = value.body;
           _market = Market.fromJson(data);
-          print("before emitting");
+          // print("before emitting");
           // onDone.call();
           // emit(
           //   AddMarketLoaded(
@@ -110,7 +110,7 @@ class AddMarketProvider extends ChangeNotifier {
         // );
       }
     } catch (e) {
-      print(e);
+      // print(e);
       firebaseCrashLog(
         tag: "InitDataCubit.sendNewMarket",
         message: e.toString(),
