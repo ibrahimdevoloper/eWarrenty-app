@@ -631,7 +631,7 @@ packages:
     source: hosted
     version: "0.9.7"
   modal_bottom_sheet:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: modal_bottom_sheet
       url: "https://pub.dartlang.org"

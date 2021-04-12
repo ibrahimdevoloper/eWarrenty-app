@@ -224,14 +224,14 @@ class InitDataCubit extends Cubit<InitDataState> {
       battery_model_id: battery.id,
       battery_serial_number: serialNumber,
       bought_date: billDate,
-      car_number: "${countryCode.dialCode}$carNumber",
+      car_number: carNumber,
       car_number_image: carNumberPath,
       car_property_id: carPropertyId,
       car_type_id: carTypeId,
       customer_country: countryName,
       customer_email: eMail,
       customer_name: fullName,
-      customer_phone_number: phoneNumber,
+      customer_phone_number: "${countryCode.dialCode}$phoneNumber",
       fixed_battery_image: fixedBatteryPath,
       customer_address: address,
       market_id: market.id,
@@ -243,6 +243,7 @@ class InitDataCubit extends Cubit<InitDataState> {
       // print("AddWarrantybody:${value.body}");
       // print("AddWarrantyisSuccessful:${value.isSuccessful}");
       // print("AddWarrantyError:${value.error.toString()}");
+      print("battery Id:${battery.id}");
       if (value.error.toString() != null) {
         var errorString = value.error.toString();
         // print("AddWarrantyError:${value.error.toString()}");
@@ -255,10 +256,15 @@ class InitDataCubit extends Cubit<InitDataState> {
       if (value.statusCode >= 200 && value.statusCode <= 299) {
         if (value.body.containsKey("error")) {
           Map<String, dynamic> errorMap = value.body;
-          // print("AddWarrantyErrorMap:${value.body}");
+          print("AddWarrantyErrorMap:${value.body}");
           if (errorMap['error'].contains('this serial number')) {
-            var errorArabic = "إن هذا الرقم التسلسلي غير موجود";
+            var errorArabic = "إن الرقم التسلسلي المستخدم غير موجود";
             var errorEnglish = "This Serial Number Do NOT Exist";
+            emit(InitDataSubmitError(errorArabic, errorEnglish));
+          } else if (errorMap['error']
+              .contains('this car number already exists')) {
+            var errorArabic = "إن رقم السيارة المدخل مرتبط ببطارية مكفولة";
+            var errorEnglish = "This Car Number is Already Entered for a Warranted Battery";
             emit(InitDataSubmitError(errorArabic, errorEnglish));
           } else {
             Map<String, dynamic> errorMap = value.body;
