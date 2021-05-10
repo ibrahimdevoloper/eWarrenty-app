@@ -17,9 +17,12 @@ class _$SendCarService extends SendCarService {
   final definitionType = SendCarService;
 
   @override
-  Future<Response<dynamic>> sendCar({Map<String, dynamic> body}) {
+  Future<Response<dynamic>> sendCar({dynamic body}) {
     final $url = '/cartype';
-    final $headers = {'Authorization': 'Basic YWRtaW46YWRtaW4='};
+    final $headers = {
+      'Authorization': 'Basic YWRtaW46YWRtaW4=',
+    };
+
     final $body = body;
     final $request =
         Request('POST', $url, client.baseUrl, body: $body, headers: $headers);

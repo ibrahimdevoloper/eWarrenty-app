@@ -17,7 +17,7 @@ abstract class SendCarService extends ChopperService {
   Future<Response> sendCar({
     // @Part('name_ar') String nameAr,
     // @Part('name_en') String nameEn,
-    @Body() Map<String, dynamic> body,
+    @Body() body,
   });
 
   static SendCarService create() {

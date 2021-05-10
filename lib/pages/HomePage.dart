@@ -9,6 +9,7 @@ import 'package:ewarrenty/dialogs/termsOfServiceDialog.dart';
 import 'package:ewarrenty/helpers/PrefKeys.dart';
 import 'package:ewarrenty/pages/RequestDetailPage.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   AnimationController _animeController;
   CurvedAnimation _curvedAnimation;
   Animation<Offset> _offsetAnimation;
+
+  AnimationController _flickerController;
+  Animation<double> _flickerAnime;
+  CurvedAnimation _flickerCurvedAnimation;
 
   @override
   void initState() {
@@ -69,6 +74,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _offsetAnimation = Tween<Offset>(begin: Offset(0, -1), end: Offset(0, 0))
         .animate(_curvedAnimation);
     _animeController.forward();
+
+    _flickerController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1500));
+    _flickerCurvedAnimation = CurvedAnimation(
+      curve: Curves.easeInOut,
+      parent: _flickerController,
+    );
+    _flickerAnime =
+        Tween<double>(begin: 0.0, end: 1.0).animate(_flickerCurvedAnimation);
+    _flickerController.repeat(reverse: true);
     FirebaseAnalytics().setCurrentScreen(
         screenName: "HomePage", screenClassOverride: "HomePage");
   }
@@ -77,6 +92,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void dispose() {
     _animeController.dispose();
     _fadeController.dispose();
+    _flickerController.dispose();
     super.dispose();
     // _animController.dispose();
   }
@@ -257,100 +273,167 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               fit: BoxFit.cover,
             ),
             Center(
-                child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  flex: 5,
-                  child: Container(
-                    child: SlideTransition(
-                      position: _offsetAnimation,
-                      child: Stack(
-                        alignment: AlignmentDirectional.topCenter,
-                        fit: StackFit.expand,
-                        children: [
-                          Material(
-                            clipBehavior: Clip.antiAlias,
-                            shape: RoundedRectangleBorder(
-                                side: BorderSide(),
-                                borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(24),
-                                    bottomRight: Radius.circular(24))),
-                            child: Image.asset(
-                              "assets/images/carBackground1.png",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Wrap(
-                            alignment: WrapAlignment.center,
-                            children: [
-                              Image.asset(
-                                "assets/images/logo.png",
-                                fit: BoxFit.scaleDown,
-                                height: 120,
-                                width: 220,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: Container(
+                      child: SlideTransition(
+                        position: _offsetAnimation,
+                        child: Stack(
+                          alignment: AlignmentDirectional.topCenter,
+                          fit: StackFit.expand,
+                          children: [
+                            Material(
+                              clipBehavior: Clip.antiAlias,
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(),
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(24),
+                                      bottomRight: Radius.circular(24))),
+                              child: Image.asset(
+                                "assets/images/carBackground1.png",
+                                fit: BoxFit.cover,
                               ),
-                            ],
-                          ),
-                        ],
+                            ),
+                            Wrap(
+                              alignment: WrapAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/images/logo.png",
+                                  fit: BoxFit.scaleDown,
+                                  height: 120,
+                                  width: 220,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 4,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Consumer<LangProvider>(
-                        builder: (context, provider, _) => MyFlatButton(
-                            function: () {
-                              // var provider = Provider.of<LangProvider>(context);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          RequestDetailPage()));
-                            },
-                            title: AppLocalizations.of(context)
-                                .translate("requestWarranty"),
-                            child: Icon(
-                              WarrantyIcons.warrenty_correct,
-                              size: 56,
-                              color: Theme.of(context).accentColor,
-                            )),
-                      ),
-                      Consumer<LangProvider>(
-                        builder: (context, provider, _) => MyFlatButton(
-                            function: () {
-                              // var provider = Provider.of<LangProvider>(context);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AddWarrantyPage()));
-                            },
-                            title: AppLocalizations.of(context)
-                                .translate("addWarranty"),
-                            // child: SvgPicture.asset(
-                            //   "assets/images/arabic.svg",
-                            //   height: 50,
-                            //   width: 60,
-                            //   fit: BoxFit.cover,
-                            // ),
-                            child: Icon(
-                              WarrantyIcons.warrenty_add,
-                              size: 56,
-                              color: Theme.of(context).accentColor,
-                            )),
-                      ),
-                    ],
+                  Expanded(
+                    flex: 4,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Consumer<LangProvider>(
+                          builder: (context, provider, _) => MyFlatButton(
+                              function: () {
+                                // var provider = Provider.of<LangProvider>(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RequestDetailPage()));
+                              },
+                              title: AppLocalizations.of(context)
+                                  .translate("requestWarranty"),
+                              child: Icon(
+                                WarrantyIcons.warrenty_correct,
+                                size: 56,
+                                color: Theme.of(context).accentColor,
+                              )),
+                        ),
+                        Consumer<LangProvider>(
+                          builder: (context, provider, _) => MyFlatButton(
+                              function: () {
+                                // var provider = Provider.of<LangProvider>(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AddWarrantyPage()));
+                              },
+                              title: AppLocalizations.of(context)
+                                  .translate("addWarranty"),
+                              // child: SvgPicture.asset(
+                              //   "assets/images/arabic.svg",
+                              //   height: 50,
+                              //   width: 60,
+                              //   fit: BoxFit.cover,
+                              // ),
+                              child: Icon(
+                                WarrantyIcons.warrenty_add,
+                                size: 56,
+                                color: Theme.of(context).accentColor,
+                              )),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            )),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: FadeTransition(
+                      opacity: _flickerAnime,
+                      child: RichText(
+                        text: TextSpan(
+                            text: AppLocalizations.of(context)
+                                .translate("forReviewingTheWarrantyTermsPress"),
+                            style: GoogleFonts.cairo(
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 2.0,
+                                  color: Theme.of(context).primaryColor,
+                                  offset: Offset(0, 0),
+                                ),
+                              ],
+                              fontSize:
+                                  Theme.of(context).textTheme.button.fontSize,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: AppLocalizations.of(context)
+                                    .translate("here"),
+                                style: GoogleFonts.cairo(
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 2.0,
+                                      color: Colors.redAccent,
+                                      offset: Offset(0, 0),
+                                    ),
+                                  ],
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .button
+                                      .fontSize,
+                                  color: Colors.redAccent,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            warrantyTermsDialog(context));
+                                  },
+                              ),
+                            ]),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+}
+
+class FlickerCurve extends Curve {
+  FlickerCurve();
+
+  @override
+  double transformInternal(double t) {
+    var result = 0.0;
+    if ((t >= 0.2 && t <= 0.25) || (t >= 0.4 && t <= 0.5) || (t >= 0.7))
+      result = 1.0;
+    else
+      result = 0.0;
+
+    return result;
   }
 }

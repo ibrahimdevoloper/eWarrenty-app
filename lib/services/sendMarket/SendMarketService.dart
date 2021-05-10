@@ -22,7 +22,7 @@ abstract class SendMarketService extends ChopperService {
     // @Part('country') String country,
     // @Part('address_ar') String addressAr,
     // @Part('address_en') String addressEn,
-    @Body() Map<String, dynamic> body,
+    @Body() body,
   });
 
   static SendMarketService create() {

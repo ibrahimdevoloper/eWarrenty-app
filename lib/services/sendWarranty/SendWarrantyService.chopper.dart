@@ -18,43 +18,46 @@ class _$SendWarrantyService extends SendWarrantyService {
 
   @override
   Future<Response<dynamic>> sendWarrenty(
-      {String battery_serial_number,
-      String bought_date,
-      String car_number,
-      int battery_model_id,
-      int car_property_id,
-      int car_type_id,
-      int market_id,
-      String customer_name,
-      String customer_email,
-      String customer_country,
-      String customer_address,
-      String customer_phone_number,
-      String notes,
-      String car_number_image,
-      String battery_front_image,
-      String fixed_battery_image,
-      String bill_image}) {
+      {dynamic battery_serial_number,
+      dynamic bought_date,
+      dynamic car_number,
+      dynamic battery_model_id,
+      dynamic car_property_id,
+      dynamic car_type_id,
+      dynamic market_id,
+      dynamic customer_name,
+      dynamic customer_email,
+      dynamic customer_country,
+      dynamic customer_address,
+      dynamic customer_phone_number,
+      dynamic notes,
+      dynamic car_number_image,
+      dynamic battery_front_image,
+      dynamic fixed_battery_image,
+      dynamic bill_image}) {
     final $url = '/Warranty';
-    final $headers = {'Authorization': 'Basic YWRtaW46YWRtaW4='};
+    final $headers = {
+      'Authorization': 'Basic YWRtaW46YWRtaW4=',
+    };
+
     final $parts = <PartValue>[
-      PartValue<String>('battery_serial_number', battery_serial_number),
-      PartValue<String>('bought_date', bought_date),
-      PartValue<String>('car_number', car_number),
-      PartValue<int>('battery_model_id', battery_model_id),
-      PartValue<int>('car_property_id', car_property_id),
-      PartValue<int>('car_type_id', car_type_id),
-      PartValue<int>('market_id', market_id),
-      PartValue<String>('customer_name', customer_name),
-      PartValue<String>('customer_email', customer_email),
-      PartValue<String>('customer_country', customer_country),
-      PartValue<String>('customer_address', customer_address),
-      PartValue<String>('customer_phone_number', customer_phone_number),
-      PartValue<String>('notes', notes),
-      PartValueFile<String>('car_number_image', car_number_image),
-      PartValueFile<String>('battery_front_image', battery_front_image),
-      PartValueFile<String>('fixed_battery_image', fixed_battery_image),
-      PartValueFile<String>('bill_image', bill_image)
+      PartValue<dynamic>('battery_serial_number', battery_serial_number),
+      PartValue<dynamic>('bought_date', bought_date),
+      PartValue<dynamic>('car_number', car_number),
+      PartValue<dynamic>('battery_model_id', battery_model_id),
+      PartValue<dynamic>('car_property_id', car_property_id),
+      PartValue<dynamic>('car_type_id', car_type_id),
+      PartValue<dynamic>('market_id', market_id),
+      PartValue<dynamic>('customer_name', customer_name),
+      PartValue<dynamic>('customer_email', customer_email),
+      PartValue<dynamic>('customer_country', customer_country),
+      PartValue<dynamic>('customer_address', customer_address),
+      PartValue<dynamic>('customer_phone_number', customer_phone_number),
+      PartValue<dynamic>('notes', notes),
+      PartValueFile<dynamic>('car_number_image', car_number_image),
+      PartValueFile<dynamic>('battery_front_image', battery_front_image),
+      PartValueFile<dynamic>('fixed_battery_image', fixed_battery_image),
+      PartValueFile<dynamic>('bill_image', bill_image)
     ];
     final $request = Request('POST', $url, client.baseUrl,
         parts: $parts, multipart: true, headers: $headers);

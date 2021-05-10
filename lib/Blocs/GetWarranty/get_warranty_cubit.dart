@@ -21,8 +21,44 @@ class GetWarrantyCubit extends Cubit<GetWarrantyState> {
     emit(GetWarrantyLoading());
     _getWarrantyService.getWarrenty(code).then((value) {
       if (value.statusCode >= 200 && value.statusCode <= 299) {
+        if (value.body['error'] != null) {
+          var error = value.body['error'];
+          firebaseCrashLog(
+            code: value.statusCode.toString(),
+            tag: "ForgottenWarrantyCubit.getWarrantyByEmail",
+            message: error,
+          );
+          if (error.toString().contains("this warranty code not found"))
+            emit(
+              GetWarrantyError(
+                  "هذا الكود غير موجود", "This Warranty Code NOT Found"),
+            );
+          else
+            emit(
+              GetWarrantyError(error, error),
+            );
+        } else {
+          var data = value.body['data'];
+          print(value.body);
+          _warranty = Warranty.fromJson(data);
+          emit(GetWarrantyLoaded(Warranty.fromJson(data)));
+          onDone.call();
+        }
+      } else {
+        firebaseCrashLog(
+          code: value.statusCode.toString(),
+          tag: "ForgottenWarrantyCubit.getWarrantyByEmail",
+          message: value.error.toString(),
+        );
+        emit(
+          GetWarrantyError("خطأ بالاتصال: ${value.statusCode}",
+              "Connection Error: ${value.statusCode}"),
+        );
+      }
+
+      if (value.statusCode >= 200 && value.statusCode <= 299) {
         var data = value.body['data'];
-        // print(data);
+        print(value.body);
         _warranty = Warranty.fromJson(data);
         emit(GetWarrantyLoaded(Warranty.fromJson(data)));
         onDone.call();

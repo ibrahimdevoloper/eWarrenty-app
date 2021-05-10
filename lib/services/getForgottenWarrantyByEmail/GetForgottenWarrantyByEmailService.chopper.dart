@@ -18,9 +18,12 @@ class _$GetForgottenWarrantyByEmailService
   final definitionType = GetForgottenWarrantyByEmailService;
 
   @override
-  Future<Response<dynamic>> getWarrenties(String email) {
+  Future<Response<dynamic>> getWarrenties(dynamic email) {
     final $url = '/getForgottenwarrantybyEmail/$email';
-    final $headers = {'Authorization': 'Basic YWRtaW46YWRtaW4='};
+    final $headers = {
+      'Authorization': 'Basic YWRtaW46YWRtaW4=',
+    };
+
     final $request = Request('GET', $url, client.baseUrl, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }

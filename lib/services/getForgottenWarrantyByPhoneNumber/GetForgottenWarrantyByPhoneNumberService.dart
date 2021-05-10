@@ -13,7 +13,7 @@ abstract class GetForgottenWarrantyByPhoneNumberService extends ChopperService {
     path: "/{phoneNumber}",
   )
   // Future<Response> getWarrenty(@QueryMap() Map<String, dynamic> body);
-  Future<Response> getWarrenties(@Path('phoneNumber') String phoneNumber);
+  Future<Response> getWarrenties(@Path('phoneNumber') phoneNumber);
 
   static GetForgottenWarrantyByPhoneNumberService create() {
     final client = ChopperClient(

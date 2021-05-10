@@ -18,9 +18,12 @@ class _$GetForgottenWarrantyByPhoneNumberService
   final definitionType = GetForgottenWarrantyByPhoneNumberService;
 
   @override
-  Future<Response<dynamic>> getWarrenties(String phoneNumber) {
+  Future<Response<dynamic>> getWarrenties(dynamic phoneNumber) {
     final $url = '/getForgottenwarrantybyPhone/$phoneNumber';
-    final $headers = {'Authorization': 'Basic YWRtaW46YWRtaW4='};
+    final $headers = {
+      'Authorization': 'Basic YWRtaW46YWRtaW4=',
+    };
+
     final $request = Request('GET', $url, client.baseUrl, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }

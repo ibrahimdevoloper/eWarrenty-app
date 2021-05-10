@@ -239,10 +239,10 @@ class InitDataCubit extends Cubit<InitDataState> {
       notes: "clear",
     )
         .then((value) {
-      // print("billImagePath: $billImagePath");
-      // print("AddWarrantybody:${value.body}");
-      // print("AddWarrantyisSuccessful:${value.isSuccessful}");
-      // print("AddWarrantyError:${value.error.toString()}");
+      print("billImagePath: $billImagePath");
+      print("AddWarrantybody:${value.body}");
+      print("AddWarrantyisSuccessful:${value.isSuccessful}");
+      print("AddWarrantyError:${value.error.toString()}");
       print("battery Id:${battery.id}");
       if (value.error.toString() != null) {
         var errorString = value.error.toString();
@@ -264,11 +264,12 @@ class InitDataCubit extends Cubit<InitDataState> {
           } else if (errorMap['error']
               .contains('this car number already exists')) {
             var errorArabic = "إن رقم السيارة المدخل مرتبط ببطارية مكفولة";
-            var errorEnglish = "This Car Number is Already Entered for a Warranted Battery";
+            var errorEnglish =
+                "This Car Number is Already Entered for a zz Battery";
             emit(InitDataSubmitError(errorArabic, errorEnglish));
           } else {
             Map<String, dynamic> errorMap = value.body;
-            // print("AddWarrantyErrorMap:${value.body}");
+            print("AddWarrantyErrorMap:${value.body}");
             emit(InitDataSubmitError(errorMap['error'], errorMap['error']));
             // if (errorMap['error'].contains('this serial number')) {
             //   var errorArabic = "إن هذا الرقم التسلسلي غير موجود" ;
@@ -278,7 +279,7 @@ class InitDataCubit extends Cubit<InitDataState> {
           }
         } else if (value.body.containsKey("data")) {
           var data = value.body['data'];
-          // print(data);
+          print(data);
           emit(InitDataSubmitSent(Warranty.fromJson(data)));
         }
       }

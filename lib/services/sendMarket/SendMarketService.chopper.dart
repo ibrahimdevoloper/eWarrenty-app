@@ -17,9 +17,12 @@ class _$SendMarketService extends SendMarketService {
   final definitionType = SendMarketService;
 
   @override
-  Future<Response<dynamic>> sendMarket({Map<String, dynamic> body}) {
+  Future<Response<dynamic>> sendMarket({dynamic body}) {
     final $url = '/market';
-    final $headers = {'Authorization': 'Basic YWRtaW46YWRtaW4='};
+    final $headers = {
+      'Authorization': 'Basic YWRtaW46YWRtaW4=',
+    };
+
     final $body = body;
     final $request =
         Request('POST', $url, client.baseUrl, body: $body, headers: $headers);

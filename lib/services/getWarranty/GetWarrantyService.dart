@@ -13,7 +13,7 @@ abstract class GetWarrantyService extends ChopperService {
     path: "/{code}",
   )
   // Future<Response> getWarrenty(@QueryMap() Map<String, dynamic> body);
-  Future<Response> getWarrenty(@Path('code') String code);
+  Future<Response> getWarrenty(@Path('code') code);
 
   static GetWarrantyService create() {
     final client = ChopperClient(

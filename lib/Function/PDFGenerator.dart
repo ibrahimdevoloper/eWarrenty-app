@@ -35,9 +35,9 @@ Future PDFGenerator({
   pdf.addPage(MultiPage(
     pageFormat: PdfPageFormat.a4,
     margin: EdgeInsets.zero,
-    header: (context) => Image.provider(header, fit: BoxFit.contain),
-    footer: (context) => Image.provider(footer, fit: BoxFit.contain),
-    maxPages: 1,
+    header: (context) => Image(header, fit: BoxFit.scaleDown),
+    footer: (context) => Image(footer, fit: BoxFit.scaleDown),
+    maxPages: 3,
     build: (context) {
       return [
         Center(
@@ -148,7 +148,7 @@ Future PDFGenerator({
     // print('before save');
     File file = File(path);
     // file.createSync();
-    await file.writeAsBytes(pdf.save());
+    await file.writeAsBytes(await pdf.save());
     // print('after save');
   } catch (e) {
     // print(e);

@@ -13,7 +13,7 @@ abstract class GetForgottenWarrantyByEmailService extends ChopperService {
     path: "/{email}",
   )
   // Future<Response> getWarrenty(@QueryMap() Map<String, dynamic> body);
-  Future<Response> getWarrenties(@Path('email') String email);
+  Future<Response> getWarrenties(@Path('email') email);
 
   static GetForgottenWarrantyByEmailService create() {
     final client = ChopperClient(

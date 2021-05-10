@@ -32,7 +32,7 @@ class _AddMarketPageState extends State<AddMarketPage> {
     return ResponsiveSafeArea(builder: (context, snapshot) {
       return Scaffold(
         body: BlocConsumer<AddMarketCubit, AddMarketState>(
-          cubit: BlocProvider.of<AddMarketCubit>(context),
+          bloc: BlocProvider.of<AddMarketCubit>(context),
           listenWhen: (previous, current) {
             // print("AddMarketLoaded IS TRUE: ${current is AddMarketLoaded}");
             // print("AddMarketLoaded IS TRUE: ${current}");
@@ -271,7 +271,7 @@ class NameTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddMarketCubit, AddMarketState>(
-      cubit: BlocProvider.of<AddMarketCubit>(context),
+      bloc: BlocProvider.of<AddMarketCubit>(context),
       buildWhen: (previous, current) {
         return current is AddMarketNameReset || current is AddMarketNameError;
       },
@@ -351,7 +351,7 @@ class AddressTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddMarketCubit, AddMarketState>(
-      cubit: BlocProvider.of<AddMarketCubit>(context),
+      bloc: BlocProvider.of<AddMarketCubit>(context),
       buildWhen: (previous, current) {
         return current is AddMarketAddressReset ||
             current is AddMarketAddressError;
@@ -430,7 +430,7 @@ class PhoneNumberTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddMarketCubit, AddMarketState>(
-      cubit: BlocProvider.of<AddMarketCubit>(context),
+      bloc: BlocProvider.of<AddMarketCubit>(context),
       buildWhen: (previous, current) {
         return current is AddMarketPhoneNumberError ||
             current is AddMarketPhoneNumberReset;
@@ -813,7 +813,7 @@ class EmailTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddMarketCubit, AddMarketState>(
-      cubit: BlocProvider.of<AddMarketCubit>(context),
+      bloc: BlocProvider.of<AddMarketCubit>(context),
       buildWhen: (previous, current) {
         return current is AddMarketEmailError || current is AddMarketEmailReset;
       },

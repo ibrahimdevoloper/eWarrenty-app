@@ -13,6 +13,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:upgrader/upgrader.dart';
 
 import 'app_localizations.dart';
 
@@ -109,9 +110,11 @@ class MyApp extends StatelessWidget {
                 // primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home: provider.languageCode.isEmpty
-                  ? ChooseLanguagePage()
-                  : HomePage(),
+              home: UpgradeAlert(
+                child: provider.languageCode.isEmpty
+                    ? ChooseLanguagePage()
+                    : HomePage(),
+              ),
             );
           });
         } else {
