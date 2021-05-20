@@ -9,6 +9,8 @@ import 'package:ewarrenty/Models/car_type.dart';
 import 'package:ewarrenty/Models/market.dart';
 import 'package:ewarrenty/Models/warranty.dart';
 import 'package:ewarrenty/services/initData/InitDataService.dart';
+import 'package:ewarrenty/services/sendCar/SendCarService.dart';
+import 'package:ewarrenty/services/sendMarket/SendMarketService.dart';
 import 'package:ewarrenty/services/sendWarranty/SendWarrantyService.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
@@ -29,6 +31,14 @@ class InitDataCubit extends Cubit<InitDataState> {
   int _carTypeId;
   int _carPropertyId;
   Market _market;
+
+  Map<String, dynamic> _marketMap;
+  Map<String, dynamic> _carMap;
+  int _carMapCounter = -1;
+  int carMapId() {
+    _carMapCounter--;
+    return _carMapCounter;
+  }
 
   bool _carTypeIdIsError = false;
   bool _carPropertyIdIsError = false;
@@ -78,12 +88,6 @@ class InitDataCubit extends Cubit<InitDataState> {
 
   String _newCarName;
 
-  String get notes => _notes;
-
-  set notes(String value) {
-    _notes = value;
-  }
-
   InitDataCubit() : super(InitDataInitial()) {
     // service = SendWarrantyService.create();
 
@@ -129,53 +133,6 @@ class InitDataCubit extends Cubit<InitDataState> {
   //       (_newMarketName != null && _newMarketAddress != null);
   // }
 
-  bool getFinalValidtion() {
-    return !(_carTypeIdIsError ||
-        _carPropertyIdIsError ||
-        _marketIsError ||
-        _batteryIsError ||
-        _countryIsError ||
-        _billDateIsError ||
-        _serialNumberIsError ||
-        _fullNameIsError ||
-        _addressIsError ||
-        _eMailIsError ||
-        _phoneNumberIsError ||
-        _carNumberIsError ||
-        _frontBatteryPathIsError ||
-        _fixedBatteryPathIsError ||
-        _carNumberPathIsError ||
-        _billImagePathIsError);
-  }
-
-  List<Battery> get batteries => _batteries;
-
-  set batteries(List<Battery> value) {
-    _batteries = value;
-  }
-
-  get carTypeIdStream => _carTypesStreamController.stream;
-
-  carTypeIdSelectedValue(value) {
-    _carTypeId = value;
-    // print(_carTypeId);
-    _carTypesStreamController.sink.add(value);
-  }
-
-  get carPropertyIdStream => _carPropertiesStreamController.stream;
-
-  carPropertyIdSelectedValue(value) {
-    _carPropertyId = value;
-    _carPropertiesStreamController.sink.add(value);
-  }
-
-  get marketIdStream => _marketStreamController.stream;
-
-  marketSelectedValue(value) {
-    _market = value;
-    _marketStreamController.sink.add(value);
-  }
-
   _getInitData() {
     emit(InitDataLoading());
     InitDataService initDataService = InitDataService.create();
@@ -215,44 +172,122 @@ class InitDataCubit extends Cubit<InitDataState> {
     });
   }
 
-  submitWarrantyData() {
+  submitWarrantyData() async {
     // emit(InitDataLoading());
     emit(InitDataSubmitLoading());
-    SendWarrantyService.create()
-        .sendWarrenty(
-      battery_front_image: frontBatteryPath,
-      battery_model_id: battery.id,
-      battery_serial_number: serialNumber,
-      bought_date: billDate,
-      car_number: carNumber,
-      car_number_image: carNumberPath,
-      car_property_id: carPropertyId,
-      car_type_id: carTypeId,
-      customer_country: countryName,
-      customer_email: eMail,
-      customer_name: fullName,
-      customer_phone_number: "${countryCode.dialCode}$phoneNumber",
-      fixed_battery_image: fixedBatteryPath,
-      customer_address: address,
-      market_id: market.id,
-      bill_image: billImagePath,
-      notes: "clear",
-    )
-        .then((value) {
-      print("billImagePath: $billImagePath");
-      print("AddWarrantybody:${value.body}");
-      print("AddWarrantyisSuccessful:${value.isSuccessful}");
-      print("AddWarrantyError:${value.error.toString()}");
-      print("battery Id:${battery.id}");
+    print("_carMap.isNotEmpty: ${_carMap.isNotEmpty}");
+    if (_carMap.isNotEmpty) {
+      try {
+        var value = await SendCarService.create().sendCar(
+          body: _carMap,
+        );
+        if (value.statusCode >= 200 && value.statusCode <= 299) {
+          if (value.body.containsKey("error")) {
+            Map<String, dynamic> errorMap = value.body;
+            // print("AddWarrantyErrorMap:${value.body}");
+            emit(InitDataSubmitError(errorMap['error'], errorMap['error']));
+          } else {
+            var data = value.body;
+            var carType = CarType.fromJson(data);
+            _carTypeId = carType.id;
+          }
+        } else {
+          firebaseCrashLog(
+            code: value.statusCode.toString(),
+            tag: "InitDataCubit.sendNewCar",
+            message: value.error.toString(),
+          );
+          emit(
+            InitDataSubmitError("خطأ بالاتصال: ${value.statusCode}",
+                "Connection Error: ${value.statusCode}"),
+          );
+        }
+      } catch (e) {
+        // print(e);
+        firebaseCrashLog(
+          tag: "InitDataCubit.sendNewCar",
+          message: e.toString(),
+        );
+        emit(
+          InitDataSubmitError(
+            "تأكد من اتصالك بالانترنيت",
+            "check your internet connection",
+          ),
+        );
+      }
+    }
+    print("_marketMap.isNotEmpty: ${_marketMap.isNotEmpty}");
+    if (_marketMap.isNotEmpty) {
+      try {
+        var value = await SendMarketService.create().sendMarket(
+          body: _marketMap,
+        );
+        if (value.statusCode >= 200 && value.statusCode <= 299) {
+          if (value.body.containsKey("error")) {
+            Map<String, dynamic> errorMap = value.body;
+            emit(InitDataSubmitError(errorMap['error'], errorMap['error']));
+          } else {
+            var data = value.body;
+            var market = Market.fromJson(data);
+            _market = market;
+          }
+        } else {
+          firebaseCrashLog(
+            code: value.statusCode.toString(),
+            tag: "InitDataCubit.sendNewMarket",
+            message: value.error.toString(),
+          );
+          emit(
+            InitDataSubmitError("خطأ بالاتصال: ${value.statusCode}",
+                "Connection Error: ${value.statusCode}"),
+          );
+        }
+      } catch (e) {
+        // print(e);
+        firebaseCrashLog(
+          tag: "InitDataCubit.sendNewMarket",
+          message: e.toString(),
+        );
+        emit(
+          InitDataSubmitError(
+            "تأكد من اتصالك بالانترنيت",
+            "check your internet connection",
+          ),
+        );
+      }
+    }
+    try {
+      var value = await SendWarrantyService.create().sendWarrenty(
+        battery_front_image: _frontBatteryPath,
+        battery_model_id: _battery.id,
+        battery_serial_number: _serialNumber,
+        bought_date: _billDate,
+        car_number: _carNumber,
+        car_number_image: _carNumberPath,
+        car_property_id: _carPropertyId,
+        car_type_id: _carTypeId,
+        customer_country: _countryName,
+        customer_email: _eMail,
+        customer_name: _fullName,
+        customer_phone_number: "${_countryCode.dialCode}$_phoneNumber",
+        fixed_battery_image: _fixedBatteryPath,
+        customer_address: _address,
+        market_id: _market.id,
+        bill_image: _billImagePath,
+        notes: "clear",
+      );
+      // print("billImagePath: $billImagePath");
+      // print("AddWarrantybody:${value.body}");
+      // print("AddWarrantyisSuccessful:${value.isSuccessful}");
+      // print("AddWarrantyError:${value.error.toString()}");
+      // print("battery Id:${battery.id}");
       if (value.error.toString() != null) {
         var errorString = value.error.toString();
         // print("AddWarrantyError:${value.error.toString()}");
       }
-
       // print("AddWarrantyError:${getJSONMap(
       //     value.body
       // )}");
-
       if (value.statusCode >= 200 && value.statusCode <= 299) {
         if (value.body.containsKey("error")) {
           Map<String, dynamic> errorMap = value.body;
@@ -282,21 +317,7 @@ class InitDataCubit extends Cubit<InitDataState> {
           print(data);
           emit(InitDataSubmitSent(Warranty.fromJson(data)));
         }
-      }
-      // else if (value.statusCode == 400) {
-      //   print("error :400 ,${value.error} ");
-      //   var error = getJSONMap(value.error);
-      //   var errorArabic = error['messageAr'];
-      //   var errorEnglish = error['messageEn'];
-      //
-      //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-      // } else if (value.statusCode == 502) {
-      //   var error = getJSONMap(value.error);
-      //   var errorArabic = error['messageAr'];
-      //   var errorEnglish = error['messageEn'];
-      //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-      // }
-      else {
+      } else {
         firebaseCrashLog(
           code: value.statusCode.toString(),
           tag: "InitDataCubit.submitWarrantyData",
@@ -307,23 +328,75 @@ class InitDataCubit extends Cubit<InitDataState> {
               "Connection Error: ${value.statusCode}"),
         );
       }
-    })
-          ..catchError((e) {
-            // print(e);
-            firebaseCrashLog(
-              tag: "InitDataCubit.submitWarrantyData",
-              message: e.toString(),
-            );
-            emit(
-              InitDataSubmitError(
-                "تأكد من اتصالك بالانترنيت",
-                "check your internet connection",
-              ),
-            );
-          });
+    } catch (e) {
+      // print(e);
+      firebaseCrashLog(
+        tag: "InitDataCubit.submitWarrantyData",
+        message: e.toString(),
+      );
+      emit(
+        InitDataSubmitError(
+          "تأكد من اتصالك بالانترنيت",
+          "check your internet connection",
+        ),
+      );
+    }
   }
 
-  sendNewCar(String lang) {}
+  // sendNewCar(String lang) {}
+
+  bool getFinalValidtion() {
+    return !(_carTypeIdIsError ||
+        _carPropertyIdIsError ||
+        _marketIsError ||
+        _batteryIsError ||
+        _countryIsError ||
+        _billDateIsError ||
+        _serialNumberIsError ||
+        _fullNameIsError ||
+        _addressIsError ||
+        _eMailIsError ||
+        _phoneNumberIsError ||
+        _carNumberIsError ||
+        _frontBatteryPathIsError ||
+        _fixedBatteryPathIsError ||
+        _carNumberPathIsError ||
+        _billImagePathIsError);
+  }
+
+  String get notes => _notes;
+
+  set notes(String value) {
+    _notes = value;
+  }
+
+  List<Battery> get batteries => _batteries;
+
+  set batteries(List<Battery> value) {
+    _batteries = value;
+  }
+
+  get carTypeIdStream => _carTypesStreamController.stream;
+
+  carTypeIdSelectedValue(value) {
+    _carTypeId = value;
+    // print(_carTypeId);
+    _carTypesStreamController.sink.add(value);
+  }
+
+  get carPropertyIdStream => _carPropertiesStreamController.stream;
+
+  carPropertyIdSelectedValue(value) {
+    _carPropertyId = value;
+    _carPropertiesStreamController.sink.add(value);
+  }
+
+  get marketIdStream => _marketStreamController.stream;
+
+  marketSelectedValue(value) {
+    _market = value;
+    _marketStreamController.sink.add(value);
+  }
 
   String get carNumberPath => _carNumberPath;
 
@@ -561,5 +634,17 @@ class InitDataCubit extends Cubit<InitDataState> {
 
   set newCarName(String value) {
     _newCarName = value;
+  }
+
+  Map<String, dynamic> get marketMap => _marketMap;
+
+  set marketMap(Map<String, dynamic> value) {
+    _marketMap = value;
+  }
+
+  Map<String, dynamic> get carMap => _carMap;
+
+  set carMap(Map<String, dynamic> value) {
+    _carMap = value;
   }
 }

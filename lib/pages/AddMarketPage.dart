@@ -2,8 +2,8 @@ import 'package:country_code_picker/country_code.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:ewarrenty/Blocs/AddMarket/add_market_cubit.dart';
 import 'package:ewarrenty/Blocs/InitData/init_data_cubit.dart';
-import 'package:ewarrenty/Models/market.dart';
 import 'package:ewarrenty/Wrappers/ResponsiveSafeArea.dart';
+import 'package:ewarrenty/dialogs/pleaseContinueTheWarrantyFormAfterAddingMarketDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +36,9 @@ class _AddMarketPageState extends State<AddMarketPage> {
           listenWhen: (previous, current) {
             // print("AddMarketLoaded IS TRUE: ${current is AddMarketLoaded}");
             // print("AddMarketLoaded IS TRUE: ${current}");
-            return current is AddMarketError || current is AddMarketLoaded;
+            return current is AddMarketError ||
+                current is AddMarketLoaded ||
+                current is AddMarketMapLoaded;
           },
           listener: (context, state) {
             if (state is AddMarketError) {
@@ -53,9 +55,20 @@ class _AddMarketPageState extends State<AddMarketPage> {
               );
               Scaffold.of(context).showSnackBar(snackbar);
             }
-            if (state is AddMarketLoaded) {
+            // else if (state is AddMarketLoaded) {
+            //   // print("AddMarketPage ${state.market}");
+            //   Navigator.of(context).pop<Market>(state.market);
+            // }
+            else if (state is AddMarketMapLoaded) {
               // print("AddMarketPage ${state.market}");
-              Navigator.of(context).pop<Market>(state.market);
+              Navigator.of(context).pop<Map<String, dynamic>>(state.map);
+              if (state.map.isNotEmpty)
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      pleaseContinueTheWarrantyFormAfterAddingMarketDialog(
+                          context),
+                );
             }
           },
           buildWhen: (previous, current) {
@@ -204,17 +217,8 @@ class _InitialAddMarketWidgetState extends State<InitialAddMarketWidget> {
               //   mCubit.emit(AddMarketEmailError());
               // }
               if (mCubit.getValidation()) {
-                BlocProvider.of<AddMarketCubit>(context).sendNewMarket(
-                    // onDone: () {
-                    //   var snackBar = SnackBar(
-                    //     content: Text("jksdvbjkbkjbjkbsdvbkj"),
-                    //     duration: Duration(milliseconds: 600),
-                    //   );
-                    //   Scaffold.of(context).showSnackBar(snackBar);
-                    //   // Navigator.pop(
-                    //   //     context, BlocProvider.of<AddMarketCubit>(context).market);
-                    // },
-                    );
+                // BlocProvider.of<AddMarketCubit>(context).sendNewMarket();
+                mCubit.returnNewMarketMap();
               } else {
                 var snackBar = SnackBar(
                   content: Text(AppLocalizations.of(context)

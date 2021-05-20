@@ -17,10 +17,10 @@ import 'package:ewarrenty/Models/market.dart';
 import 'package:ewarrenty/Wrappers/DropdownBoxWrapper.dart';
 import 'package:ewarrenty/Wrappers/SuggestionsBoxWrapper.dart';
 import 'package:ewarrenty/app_localizations.dart';
+import 'package:ewarrenty/dialogs/pleaseContinueTheWarrantyFormAfterAddingMarketDialog.dart';
 import 'package:ewarrenty/dialogs/showSummeryDialog.dart';
 import 'package:ewarrenty/dialogs/whereIsSerialNumberDialog.dart';
 import 'package:ewarrenty/pages/AddCarPage.dart';
-// import 'package:ewarrenty/BottomSheets/AddMarketBottomSheet.dart';
 import 'package:ewarrenty/pages/AddMarketPage.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -28,7 +28,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -102,72 +101,26 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                   if (mCubit.battery == null) {
                     mCubit.batteryIsError = true;
                     mCubit.emit(InitDataBatteryChoosenTextFieldError());
-                    // var snackBar = SnackBar(
-                    //   content: Text(AppLocalizations.of(context)
-                    //       .translate("pleaseChooseBatteryModel")),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                   }
                   if (mCubit.billDate == null) {
                     mCubit.emit(InitDataBillDateError());
                     mCubit.billDateIsError = true;
-                    // var snackBar = SnackBar(
-                    //   content: Text(AppLocalizations.of(context)
-                    //       .translate("chooseBillDate")),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                   }
                   if (mCubit.serialNumber == null) {
-                    //TODO: tanslate "add Serial Number"
                     mCubit.emit(InitDataSerialNumberError());
                     mCubit.serialNumberIsError = true;
-                    // var snackBar = SnackBar(
-                    //   content: Text("Please Add Serial Number"),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                   }
                   if (mCubit.fullName == null) {
-                    //TODO: tanslate "Please Add Your Full Name In English"
                     mCubit.emit(InitDataFullNameError());
                     mCubit.fullNameIsError = true;
-                    // var snackBar = SnackBar(
-                    //   content: Text("Please Your Full Name In English"),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                   }
                   if (mCubit.address == null) {
-                    //TODO: tanslate "Please Add Your Address In English"
                     mCubit.emit(InitDataAddressError());
                     mCubit.addressIsError = true;
-                    // var snackBar = SnackBar(
-                    //   content: Text("Please Add Your Address In English"),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                   }
-                  // if (mCubit.eMail == null) {
-                  //   //TODO: tanslate "Please Add Your E-mail"
-                  //   mCubit.emit(InitDataEmailError());
-                  //   mCubit.eMailIsError = true;
-                  //   // var snackBar = SnackBar(
-                  //   //   content: Text("Please Add Your E-mail"),
-                  //   //   duration: Duration(milliseconds: 600),
-                  //   // );
-                  //   // Scaffold.of(context).showSnackBar(snackBar);
-                  // }
                   if (mCubit.phoneNumber == null) {
-                    //TODO: tanslate "Please Add Your phone number"
                     mCubit.emit(InitDataPhoneNumberError());
                     mCubit.phoneNumberIsError = true;
-                    // var snackBar = SnackBar(
-                    //   content: Text("Please Add Your phone number"),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                   }
                   if (mCubit.carPropertyId == null) {
                     //TODO: tanslate "Please Add Your Car Property Type"
@@ -200,25 +153,15 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     // Scaffold.of(context).showSnackBar(snackBar);
                   }
                   if (mCubit.countryName == null) {
-                    //TODO: tanslate "Please Add Your Country"
                     mCubit.emit(InitDataCountryError());
                     mCubit.countryIsError = true;
-                    // var snackBar = SnackBar(
-                    //   content: Text("Please Add Your Country"),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                   }
                   if (mCubit.market == null) {
                     //TODO: tanslate "Please Add Your Market"
-                    mCubit.emit(InitDataMarketError());
-                    mCubit.marketIsError = true;
-                    // var snackBar = SnackBar(
-                    //   content: Text("Please Add Your Market"),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
-
+                    if (mCubit.marketMap == null) {
+                      mCubit.emit(InitDataMarketError());
+                      mCubit.marketIsError = true;
+                    }
                   }
                   if (mCubit.frontBatteryPath == null) {
                     //TODO: tanslate "Please capture Your battery front"
@@ -226,76 +169,31 @@ class _AddWarrantyPageState extends State<AddWarrantyPage> {
                     mCubit.battery == null
                         ? mCubit.emit(InitDataFrontBatteryImageError())
                         : mCubit.emit(InitDataFrontBatteryImageError());
-                    // var snackBar = SnackBar(
-                    //   content: Text("Please capture Your battery front"),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                   }
                   if (mCubit.fixedBatteryPath == null) {
-                    //TODO: tanslate "Please capture Your fixed battery"
                     mCubit.fixedBatteryPathIsError = true;
                     mCubit.emit(InitDataFixedBatteryImageError());
-                    // var snackBar = SnackBar(
-                    //   content: Text("Please capture Your fixed battery"),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                   }
                   if (mCubit.carNumberPath == null) {
-                    //TODO: tanslate "Please capture Your car"
                     mCubit.carNumberPathIsError = true;
                     mCubit.emit(InitDataCarNumberImageError());
-                    // var snackBar = SnackBar(
-                    //   content: Text("Please capture Your Car "),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                   }
                   if (mCubit.billImagePath == null) {
-                    //TODO: tanslate "Please capture Your car"
                     mCubit.billImagePathIsError = true;
                     mCubit.emit(InitDataBillImageImageError());
-                    // var snackBar = SnackBar(
-                    //   content: Text("Please capture Your Car "),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                   }
                   if (mCubit.carTypeId == null) {
-                    //TODO: tanslate "Please capture Your car"
                     mCubit.emit(InitDataCarTypeError());
                     mCubit.carTypeIdIsError = true;
-
-                    // var snackBar = SnackBar(
-                    //   content: Text("Please capture Your Car "),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                   }
                   if (mCubit.carPropertyId == null) {
-                    //TODO: tanslate "Please capture Your car"
                     mCubit.emit(InitDataCarPropertyError());
                     mCubit.carPropertyIdIsError = true;
-                    // var snackBar = SnackBar(
-                    //   content: Text("Please capture Your Car "),
-                    //   duration: Duration(milliseconds: 600),
-                    // );
-                    // Scaffold.of(context).showSnackBar(snackBar);
                   }
-                  // print(mCubit.toString());
                   var finalValidation = mCubit.getFinalValidtion();
                   // print(finalValidation);
                   if (finalValidation) {
-                    //TODO: test the connection to the api
-                    // if (mCubit.carTypeId != null && mCubit.market != null)
                     await mCubit.submitWarrantyData();
-                    // else if (mCubit.carTypeId == null && mCubit.market != null)
-                    //   await mCubit.submitWarrantyDataWithoutCar();
-                    // else if (mCubit.carTypeId != null && mCubit.market == null)
-                    //   await mCubit.submitWarrantyDataWithoutMarket();
-                    // else if (mCubit.carTypeId == null && mCubit.market == null)
-                    //   await mCubit.submitWarrantyDataWithoutMarketAndCar();
                   } else {
                     var snackBar = SnackBar(
                       content: Text(AppLocalizations.of(context)
@@ -1493,30 +1391,37 @@ class MarketDropdown extends StatelessWidget {
                   //   // print(value);
                   // });
                   Navigator.of(context)
-                      .push(MaterialPageRoute(
-                          builder: (context) =>
-                              BlocProvider<AddMarketCubit>.value(
-                                value: AddMarketCubit(
-                                  countryCode: countryCode,
-                                  language: AppLocalizations.of(context)
-                                      .locale
-                                      .languageCode,
-                                ),
-                                child: AddMarketPage(
-                                  countryCode: countryCode,
-                                ),
-                              )))
+                      .push(
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider<AddMarketCubit>.value(
+                        value: AddMarketCubit(
+                          countryCode: countryCode,
+                          language:
+                              AppLocalizations.of(context).locale.languageCode,
+                        ),
+                        child: AddMarketPage(
+                          countryCode: countryCode,
+                        ),
+                      ),
+                    ),
+                  )
                       .then((value) {
-                    // print("Add Warranty:$value");
-                    Market market = value;
+                    print("Add Warranty:$value");
+                    // Market market = value;
                     _marketTextEditingController.text =
                         AppLocalizations.of(context)
                                 .locale
                                 .languageCode
                                 .contains("ar")
-                            ? market.nameAr
-                            : market.nameEn;
-                    BlocProvider.of<InitDataCubit>(context).market = value;
+                            ? value["name_ar"]
+                            : value["name_en"];
+                    BlocProvider.of<InitDataCubit>(context).marketMap = value;
+                    print(BlocProvider.of<InitDataCubit>(context).marketMap);
+                    showDialog(
+                        context: context,
+                        builder: (context) =>
+                            pleaseContinueTheWarrantyFormAfterAddingMarketDialog(
+                                context));
                     // print(value);
                   });
                 } else {
@@ -1653,6 +1558,7 @@ class MarketDropdown extends StatelessWidget {
               suggestionsBox);
         },
         onSuggestionSelected: (suggestion) {
+          BlocProvider.of<InitDataCubit>(context).marketMap = null;
           FocusScope.of(context).unfocus();
           Market suggestedMarket = suggestion;
           _marketTextEditingController.text =
@@ -1789,7 +1695,6 @@ class CarTypeDropdown extends StatelessWidget {
                     )
                         .then((value) {
                       // print("Add Warranty.AddCarPage:$value");
-                      CarType carType = value;
                       // _marketTextEditingController.text =
                       // AppLocalizations.of(context)
                       //     .locale
@@ -1797,34 +1702,47 @@ class CarTypeDropdown extends StatelessWidget {
                       //     .contains("ar")
                       //     ? market.nameAr
                       //     : market.nameEn;
+                      // CarType carType = value;
+                      var cubit = BlocProvider.of<InitDataCubit>(context);
+                      // final Map<String, dynamic> map = value;
+                      CarType carType = CarType(
+                        id: cubit.carMapId(),
+                        nameAr: value["name_ar"],
+                        nameEn: value["name_en"],
+                      );
                       if (carType != null) {
-                        BlocProvider.of<InitDataCubit>(context)
-                            .carTypes
-                            .add(carType);
-                        BlocProvider.of<InitDataCubit>(context)
-                            .emit(InitDataCarTypeReset());
-                        BlocProvider.of<InitDataCubit>(context)
-                            .carTypeIdSelectedValue(carType.id);
+                        cubit.carTypes.add(carType);
+                        cubit.emit(
+                          InitDataCarTypeReset(),
+                        );
+                        cubit.carTypeIdSelectedValue(carType.id);
+                        cubit.carMap = value;
                         print(value);
                       }
                     });
+                  } else {
+                    BlocProvider.of<InitDataCubit>(context).carMap = null;
                   }
                 },
                 isExpanded: true,
-                hint: Text(AppLocalizations.of(context).translate("carModel")),
+                hint: Text(
+                  AppLocalizations.of(context).translate("carModel"),
+                ),
                 value: snapshot.data,
                 items: carTypes
-                    .map((e) => DropdownMenuItem<int>(
-                          value: e.id,
-                          child: Text(
-                            AppLocalizations.of(context)
-                                    .locale
-                                    .languageCode
-                                    .contains("ar")
-                                ? e.nameAr ?? e.nameEn
-                                : e.nameEn ?? e.nameAr,
-                          ),
-                        ))
+                    .map(
+                      (e) => DropdownMenuItem<int>(
+                        value: e.id,
+                        child: Text(
+                          AppLocalizations.of(context)
+                                  .locale
+                                  .languageCode
+                                  .contains("ar")
+                              ? e.nameAr ?? e.nameEn
+                              : e.nameEn ?? e.nameAr,
+                        ),
+                      ),
+                    )
                     .toList(),
               );
             }),

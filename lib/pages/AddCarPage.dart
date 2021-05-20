@@ -2,6 +2,7 @@ import 'package:ewarrenty/Blocs/AddCar/add_car_cubit.dart';
 import 'package:ewarrenty/Models/car_type.dart';
 import 'package:ewarrenty/Wrappers/ResponsiveSafeArea.dart';
 import 'package:ewarrenty/app_localizations.dart';
+import 'package:ewarrenty/dialogs/pleaseContinueTheWarrantyFormAfterAddingCar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,7 +23,9 @@ class _AddCarPageState extends State<AddCarPage> {
         return Scaffold(
           body: BlocConsumer<AddCarCubit, AddCarState>(
             listenWhen: (previous, current) {
-              return current is AddCarError || current is AddCarLoaded;
+              return current is AddCarError ||
+                  current is AddCarLoaded ||
+                  current is AddCarMapLoaded;
             },
             listener: (context, state) {
               if (state is AddCarError) {
@@ -39,6 +42,17 @@ class _AddCarPageState extends State<AddCarPage> {
                 Scaffold.of(context).showSnackBar(snackbar);
               } else if (state is AddCarLoaded) {
                 Navigator.of(context).pop<CarType>(state.market);
+              } else if (state is AddCarMapLoaded) {
+                Navigator.of(context).pop<Map<String, dynamic>>(state.map);
+                print("state.map.isNotEmpty :${state.map.isNotEmpty}");
+                if (state.map.isNotEmpty) {
+                  showDialog(
+                    context: context,
+                    builder: (context) =>
+                        pleaseContinueTheWarrantyFormAfterAddingCarDialog(
+                            context),
+                  );
+                }
               }
             },
             buildWhen: (previous, current) {
@@ -119,7 +133,8 @@ class InitialCarAddionWidget extends StatelessWidget {
                 //     ),
                 //   );
                 // });
-                mCubit.sendNewCar();
+                // mCubit.returnNewMarketMap();
+                mCubit.returnNewMarketMap();
               }
             }),
         Expanded(child: Center(child: Image.asset("assets/images/logo.png")))

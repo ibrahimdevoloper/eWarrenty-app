@@ -48,6 +48,11 @@ class AddMarketLoaded extends AddMarketState {
   AddMarketLoaded(this.market);
 }
 
+class AddMarketMapLoaded extends AddMarketState {
+  final Map<String, dynamic> map;
+  AddMarketMapLoaded(this.map);
+}
+
 //state when the New Market Name Resets
 class AddMarketNameReset extends AddMarketState {
   AddMarketNameReset();

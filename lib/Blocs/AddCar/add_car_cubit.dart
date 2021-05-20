@@ -26,6 +26,18 @@ class AddCarCubit extends Cubit<AddCarState> {
   //   _language = value;
   // }
 
+  returnNewMarketMap() {
+    Map<String, dynamic> map = {
+      "name_ar": _language.contains("ar") ? _name : "",
+      "name_en": _language.contains("en") ? _name : "",
+    };
+    emit(
+      AddCarMapLoaded(
+        map,
+      ),
+    );
+  }
+
   sendNewCar() {
     emit(AddCarLoading());
     // print("${_countryCode.dialCode}$_phoneNumber");

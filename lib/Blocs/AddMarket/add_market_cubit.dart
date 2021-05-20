@@ -41,9 +41,25 @@ class AddMarketCubit extends Cubit<AddMarketState> {
         isEmailError);
   }
 
+  returnNewMarketMap() {
+    Map<String, dynamic> map = {
+      "name_ar": _language.contains("ar") ? _name : "",
+      "name_en": _language.contains("en") ? _name : "",
+      "address_ar": _language.contains("ar") ? _address : "",
+      "address_en": _language.contains("en") ? _address : "",
+      "country": (_countryCode.name) ?? "",
+      "email": _email ?? "",
+      "phone_number": "${_countryCode.dialCode}$_phoneNumber",
+    };
+    emit(
+      AddMarketMapLoaded(
+        map,
+      ),
+    );
+  }
+
   sendNewMarket() {
     emit(AddMarketLoading());
-    // print("${_countryCode.dialCode}$_phoneNumber");
     Map<String, dynamic> map = {
       "name_ar": _language.contains("ar") ? _name : "",
       "name_en": _language.contains("en") ? _name : "",
@@ -61,14 +77,7 @@ class AddMarketCubit extends Cubit<AddMarketState> {
       if (value.statusCode >= 200 && value.statusCode <= 299) {
         if (value.body.containsKey("error")) {
           Map<String, dynamic> errorMap = value.body;
-          // print("AddWarrantyErrorMap:${value.body}");
           emit(AddMarketError(errorMap['error'], errorMap['error']));
-          // if (errorMap['error'].contains('this serial number')) {
-          //   var errorArabic = "إن هذا الرقم التسلسلي غير موجود" ;
-          //   var errorEnglish = "This Serial Number Do NOT Exist" ;
-          //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-          // }
-
         } else {
           var data = value.body;
           var market = Market.fromJson(data);
@@ -79,21 +88,7 @@ class AddMarketCubit extends Cubit<AddMarketState> {
             ),
           );
         }
-      }
-      // else if (value.statusCode == 400) {
-      //   print("error :400 ,${value.error} ");
-      //   var error = getJSONMap(value.error);
-      //   var errorArabic = error['messageAr'];
-      //   var errorEnglish = error['messageEn'];
-      //
-      //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-      // } else if (value.statusCode == 502) {
-      //   var error = getJSONMap(value.error);
-      //   var errorArabic = error['messageAr'];
-      //   var errorEnglish = error['messageEn'];
-      //   emit(InitDataSubmitError(errorArabic, errorEnglish));
-      // }
-      else {
+      } else {
         firebaseCrashLog(
           code: value.statusCode.toString(),
           tag: "AddMarketCubit.sendNewMarket",

@@ -46,6 +46,12 @@ class AddCarLoaded extends AddCarState {
   AddCarLoaded(this.market);
 }
 
+class AddCarMapLoaded extends AddCarState {
+  final Map<String, dynamic> map;
+
+  AddCarMapLoaded(this.map);
+}
+
 //state when the New Market Name Resets
 class AddCarNameReset extends AddCarState {
   AddCarNameReset();
