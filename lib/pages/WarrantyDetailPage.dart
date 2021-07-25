@@ -18,7 +18,9 @@ class WarrantyDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAnalytics().setCurrentScreen(screenName: "WarrantyDetailPage",screenClassOverride: "WarrantyDetailPage");
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "WarrantyDetailPage",
+        screenClassOverride: "WarrantyDetailPage");
     final insideBoxStyle = TextStyle(
         color: Color.fromRGBO(0x00, 0x4A, 0x80, 1.00),
         fontSize: Theme.of(context).textTheme.subtitle1.fontSize);
@@ -137,7 +139,14 @@ class WarrantyDetailPage extends StatelessWidget {
                           style: insideBoxStyle,
                         ),
                         Text(
-                          "${AppLocalizations.of(context).translate("endDate")}: ${dateFormater(DateTime(_warranty.boughtDateAsDateTime.year, _warranty.boughtDateAsDateTime.month + _warranty.warrantyDurationInt, _warranty.boughtDateAsDateTime.day))}",
+                          "${AppLocalizations.of(context).translate("endDate")}: ${dateFormater(
+                            DateTime(
+                              _warranty.boughtDateAsDateTime.year,
+                              _warranty.boughtDateAsDateTime.month +
+                                  _warranty.warrantyDurationInt,
+                              _warranty.boughtDateAsDateTime.day,
+                            ),
+                          )}",
                           style: insideBoxStyle,
                         ),
                       ],
@@ -165,10 +174,15 @@ class WarrantyDetailPage extends StatelessWidget {
                         Text(
                             "${AppLocalizations.of(context).translate("marketAddress")}: ${AppLocalizations.of(context).locale.languageCode.contains("ar") ? _warranty.market.addressAr : _warranty.market.addressEn}",
                             style: insideBoxStyle),
-                        Text(
-                          "${AppLocalizations.of(context).translate("marketEMail")}: ${_warranty.market.email}",
-                          style: insideBoxStyle,
-                        ),
+                        _warranty.market.email != null
+                            ? Text(
+                                "${AppLocalizations.of(context).translate("marketEMail")}: ${_warranty.market.email}",
+                                style: insideBoxStyle,
+                              )
+                            : Container(
+                                height: 0,
+                                width: 0,
+                              ),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [

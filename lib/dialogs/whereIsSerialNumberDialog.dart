@@ -33,7 +33,7 @@ AlertDialog whereIsSerialNumberDialog(BuildContext context,
       ),
     ),
     actions: [
-      FlatButton(
+      TextButton(
         onPressed: () {
           Navigator.pop(context);
         },

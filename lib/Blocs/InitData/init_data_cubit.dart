@@ -175,8 +175,8 @@ class InitDataCubit extends Cubit<InitDataState> {
   submitWarrantyData() async {
     // emit(InitDataLoading());
     emit(InitDataSubmitLoading());
-    print("_carMap.isNotEmpty: ${_carMap.isNotEmpty}");
-    if (_carMap.isNotEmpty) {
+    // print("_carMap.isNotEmpty: ${_carMap.isNotEmpty}");
+    if (_carMap != null) {
       try {
         var value = await SendCarService.create().sendCar(
           body: _carMap,
@@ -216,8 +216,8 @@ class InitDataCubit extends Cubit<InitDataState> {
         );
       }
     }
-    print("_marketMap.isNotEmpty: ${_marketMap.isNotEmpty}");
-    if (_marketMap.isNotEmpty) {
+    // print("_marketMap.isNotEmpty: ${_marketMap.isNotEmpty}");
+    if (_marketMap != null) {
       try {
         var value = await SendMarketService.create().sendMarket(
           body: _marketMap,

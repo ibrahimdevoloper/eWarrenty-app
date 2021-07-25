@@ -14,7 +14,7 @@ AlertDialog warrantyTermsDialog(BuildContext context) {
         child: Text(
             AppLocalizations.of(context).translate("warrantyTermsContent"))),
     actions: [
-      FlatButton(
+      TextButton(
         onPressed: () {
           Navigator.pop(context);
         },

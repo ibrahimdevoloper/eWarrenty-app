@@ -123,9 +123,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 leading: Icon(WarrantyIcons.warrenty_add),
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AddWarrantyPage()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddWarrantyPage(),
+                    ),
+                  );
                 },
               ),
               ListTile(

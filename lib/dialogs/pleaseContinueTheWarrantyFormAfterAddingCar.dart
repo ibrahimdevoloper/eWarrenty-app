@@ -15,7 +15,7 @@ AlertDialog pleaseContinueTheWarrantyFormAfterAddingCarDialog(
         child: Text(AppLocalizations.of(context).translate(
             "pleaseContinueTheWarrantyRegistrationByFillingTheRemainingFields"))),
     actions: [
-      FlatButton(
+      TextButton(
         onPressed: () {
           Navigator.pop(context);
         },

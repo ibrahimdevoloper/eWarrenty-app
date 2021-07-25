@@ -14,7 +14,7 @@ AlertDialog aboutCompanyDialog(BuildContext context) {
         child: Text(
             AppLocalizations.of(context).translate("aboutCompanyContent"))),
     actions: [
-      FlatButton(
+      TextButton(
         onPressed: () {
           Navigator.pop(context);
         },

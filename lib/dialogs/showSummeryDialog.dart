@@ -70,14 +70,14 @@ AlertDialog showSummeryDialog(BuildContext context, Warranty warrenty) {
       ),
     ),
     actions: [
-      FlatButton(
+      TextButton(
         onPressed: () {
           Navigator.pop(context);
           Navigator.pop(context);
         },
         child: Text(AppLocalizations.of(context).translate("ok")),
       ),
-      FlatButton(
+      TextButton(
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
