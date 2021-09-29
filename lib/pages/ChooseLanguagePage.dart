@@ -54,7 +54,7 @@ class _ChooseLanguagePageState extends State<ChooseLanguagePage>
         //     // stops: [0,0.35],
         //     colors: [
         //       Theme.of(context).primaryColor,
-        //       Theme.of(context).accentColor
+        //       Theme.of(context).colorScheme.secondary
         //     ],
         //   ),
         // ),

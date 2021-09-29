@@ -200,7 +200,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         aspectRatio: 4 / 3,
                         child: provider.languageCode.contains("en")
                             ? Container(
-                                color: Colors.indigo[800],
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color: Colors.indigo[800],
+                          ),
+
                                 child: Center(
                                   child: Text(
                                     "EN",
@@ -216,7 +220,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             : AspectRatio(
                                 aspectRatio: 4 / 3,
                                 child: Container(
-                                  color: Colors.indigo[800],
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    color: Colors.indigo[800],
+                                  ),
                                   child: Center(
                                     child: Text(
                                       "ض",
@@ -335,7 +342,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               child: Icon(
                                 WarrantyIcons.warrenty_correct,
                                 size: 56,
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                               )),
                         ),
                         Consumer<LangProvider>(
@@ -359,7 +366,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               child: Icon(
                                 WarrantyIcons.warrenty_add,
                                 size: 56,
-                                color: Theme.of(context).accentColor,
+                                color: Theme.of(context).colorScheme.secondary,
                               )),
                         ),
                       ],

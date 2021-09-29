@@ -89,7 +89,7 @@ class WarrantyDetailPage extends StatelessWidget {
                       colors: [
                         Colors.blue[700],
                         // Theme.of(context).primaryColor,
-                        // Theme.of(context).accentColor
+                        // Theme.of(context).colorScheme.secondary
                         // Colors.deepPurpleAccent[500],
                         Colors.indigo[900]
                       ],

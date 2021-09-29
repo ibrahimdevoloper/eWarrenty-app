@@ -274,7 +274,7 @@ class ForgottenWarrantyByPhoneNumberTextField extends StatelessWidget {
                       AppLocalizations.of(context).translate("yourPhoneNumber"),
                   labelStyle: TextStyle(
                     color: _phoneNumberFieldNode.hasFocus
-                        ? Theme.of(context).accentColor
+                        ? Theme.of(context).colorScheme.secondary
                         : Colors.blue,
                   ),
                   // enabledBorder: OutlineInputBorder(
@@ -284,7 +284,7 @@ class ForgottenWarrantyByPhoneNumberTextField extends StatelessWidget {
                   // focusedBorder: OutlineInputBorder(
                   //   borderRadius: BorderRadius.all(Radius.circular(4.0)),
                   //   borderSide: BorderSide(
-                  //     color: Theme.of(context).accentColor,
+                  //     color: Theme.of(context).colorScheme.secondary,
                   //   ),
                   // ),
                   // enabledBorder: OutlineInputBorder(
@@ -407,7 +407,7 @@ class ForgottenWarrantyByEmailTextField extends StatelessWidget {
                       AppLocalizations.of(context).translate("yourEmail"),
                   labelStyle: TextStyle(
                     color: _emailFieldNode.hasFocus
-                        ? Theme.of(context).accentColor
+                        ? Theme.of(context).colorScheme.secondary
                         : Colors.blue,
                   ),
                   // enabledBorder: OutlineInputBorder(
@@ -419,7 +419,7 @@ class ForgottenWarrantyByEmailTextField extends StatelessWidget {
                   //   borderRadius:
                   //       BorderRadius.all(Radius.circular(4.0)),
                   //   borderSide: BorderSide(
-                  //     color: Theme.of(context).accentColor,
+                  //     color: Theme.of(context).colorScheme.secondary,
                   //   ),
                   // ),
                   // enabledBorder: OutlineInputBorder(

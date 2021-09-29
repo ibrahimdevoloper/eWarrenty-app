@@ -6,7 +6,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,10 +49,11 @@ class MyApp extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           SharedPreferences _pref = snapshot.data[0];
-          FirebaseApp _firebaseApp = snapshot.data[1];
+          // FirebaseApp _firebaseApp = snapshot.data[1];
           FlutterError.onError =
               FirebaseCrashlytics.instance.recordFlutterError;
-          FirebaseMessaging messaging = FirebaseMessaging.instance;
+          // FirebaseMessaging messaging = FirebaseMessaging.instance;
+          final ThemeData theme = ThemeData();
           return Consumer<LangProvider>(builder: (context, provider, _) {
             provider.prefs = _pref;
             if (provider.prefs.containsKey(PrefKeys.lang)) {
@@ -103,12 +104,16 @@ class MyApp extends StatelessWidget {
                 return supportedLocales.first;
               },
               title: 'Marvel tech\'s E-Warranty',
-              theme: ThemeData(
+              theme: theme.copyWith(
                 textTheme: GoogleFonts.cairoTextTheme(
                   Theme.of(context).textTheme,
                 ),
-                primaryColor: Color.fromARGB(0xFF, 0x1F, 0x8D, 0xC5),
-                accentColor: Color.fromARGB(0xFF, 0xFD, 0xB9, 0x13),
+                colorScheme: theme.colorScheme.copyWith(
+                  primary: Color.fromARGB(0xFF, 0x1F, 0x8D, 0xC5),
+                  secondary: Color.fromARGB(0xFF, 0xFD, 0xB9, 0x13),
+                ),
+                primaryColor:Color.fromARGB(0xFF, 0x1F, 0x8D, 0xC5) ,
+                // colorScheme.secondary: Color.fromARGB(0xFF, 0xFD, 0xB9, 0x13),
                 // primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
@@ -120,6 +125,7 @@ class MyApp extends StatelessWidget {
             );
           });
         } else {
+          final ThemeData theme = ThemeData();
           return MaterialApp(
               debugShowCheckedModeBanner: false,
               // locale: provider.languageCode.isEmpty
@@ -154,12 +160,15 @@ class MyApp extends StatelessWidget {
                 return supportedLocales.first;
               },
               title: 'Marvel tech\'s E-Warranty',
-              theme: ThemeData(
+              theme: theme.copyWith(
                 textTheme: GoogleFonts.cairoTextTheme(
                   Theme.of(context).textTheme,
                 ),
-                primaryColor: Color.fromARGB(0xFF, 0x1F, 0x8D, 0xC5),
-                accentColor: Color.fromARGB(0xFF, 0xFD, 0xB9, 0x13),
+                colorScheme: theme.colorScheme.copyWith(
+                  primary: Color.fromARGB(0xFF, 0x1F, 0x8D, 0xC5),
+                  secondary: Color.fromARGB(0xFF, 0xFD, 0xB9, 0x13),
+                ),
+                // colorScheme.secondary: Color.fromARGB(0xFF, 0xFD, 0xB9, 0x13),
                 // primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
@@ -191,8 +200,8 @@ class _MySplashScreenState extends State<MySplashScreen> {
           end: Alignment.bottomRight,
           // stops: [0,0.35],
           colors: [
-            Theme.of(context).primaryColor,
-            Theme.of(context).accentColor
+            Theme.of(context).colorScheme.primary,
+            Theme.of(context).colorScheme.secondary,
           ],
         ),
       ),

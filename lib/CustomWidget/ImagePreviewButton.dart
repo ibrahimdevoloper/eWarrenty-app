@@ -24,7 +24,7 @@ class CustomButtonForImagePreview extends StatelessWidget {
             ? LinearGradient(
                 colors: [
                   Colors.redAccent[700],
-                  // Theme.of(context).accentColor
+                  // Theme.of(context).colorScheme.secondary
                   Colors.black
                 ],
                 begin: Alignment.topLeft,
@@ -34,7 +34,7 @@ class CustomButtonForImagePreview extends StatelessWidget {
                 stops: [0.1, 0.85],
                 colors: [
                   Theme.of(context).primaryColor,
-                  // Theme.of(context).accentColor
+                  // Theme.of(context).colorScheme.secondary
                   // Colors.deepPurpleAccent[500],
                   Colors.indigo[600]
                 ],

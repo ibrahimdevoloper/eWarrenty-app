@@ -305,7 +305,7 @@ class NameTextField extends StatelessWidget {
               AppLocalizations.of(context).translate("addYourMarketNameError"),
           // labelStyle: TextStyle(
           //   color: _addressFieldNode.hasFocus
-          //       ? Theme.of(context).accentColor
+          //       ? Theme.of(context).colorScheme.secondary
           //       : Colors.blue,
           // ),
           enabledBorder: OutlineInputBorder(
@@ -315,7 +315,7 @@ class NameTextField extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(4.0)),
             borderSide: BorderSide(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           // enabledBorder: OutlineInputBorder(
@@ -388,7 +388,7 @@ class AddressTextField extends StatelessWidget {
               AppLocalizations.of(context).translate("addYourMarketAddress"),
           // labelStyle: TextStyle(
           //   color: _addressFieldNode.hasFocus
-          //       ? Theme.of(context).accentColor
+          //       ? Theme.of(context).colorScheme.secondary
           //       : Colors.blue,
           // ),
           enabledBorder: OutlineInputBorder(
@@ -398,7 +398,7 @@ class AddressTextField extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(4.0)),
             borderSide: BorderSide(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           // enabledBorder: OutlineInputBorder(
@@ -505,7 +505,7 @@ class PhoneNumberTextField extends StatelessWidget {
                   .translate("addYourMarketPhoneNumber"),
               // labelStyle: TextStyle(
               //   color: _phoneNumberFieldNode.hasFocus
-              //       ? Theme.of(context).accentColor
+              //       ? Theme.of(context).colorScheme.secondary
               //       : Colors.blue,
               // ),
               enabledBorder: OutlineInputBorder(
@@ -515,7 +515,7 @@ class PhoneNumberTextField extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4.0)),
                 borderSide: BorderSide(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
               // enabledBorder: OutlineInputBorder(
@@ -598,7 +598,7 @@ class PhoneNumberTextField extends StatelessWidget {
                   .translate("addYourMarketPhoneNumber"),
               // labelStyle: TextStyle(
               //   color: _phoneNumberFieldNode.hasFocus
-              //       ? Theme.of(context).accentColor
+              //       ? Theme.of(context).colorScheme.secondary
               //       : Colors.blue,
               // ),
               enabledBorder: OutlineInputBorder(
@@ -608,7 +608,7 @@ class PhoneNumberTextField extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4.0)),
                 borderSide: BorderSide(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
               // enabledBorder: OutlineInputBorder(
@@ -677,7 +677,7 @@ class PhoneNumberTextField extends StatelessWidget {
         //           .translate("addYourMarketPhoneNumber"),
         //       // labelStyle: TextStyle(
         //       //   color: _phoneNumberFieldNode.hasFocus
-        //       //       ? Theme.of(context).accentColor
+        //       //       ? Theme.of(context).colorScheme.secondary
         //       //       : Colors.blue,
         //       // ),
         //       enabledBorder: OutlineInputBorder(
@@ -687,7 +687,7 @@ class PhoneNumberTextField extends StatelessWidget {
         //       focusedBorder: OutlineInputBorder(
         //         borderRadius: BorderRadius.all(Radius.circular(4.0)),
         //         borderSide: BorderSide(
-        //           color: Theme.of(context).accentColor,
+        //           color: Theme.of(context).colorScheme.secondary,
         //         ),
         //       ),
         //       // enabledBorder: OutlineInputBorder(
@@ -770,7 +770,7 @@ class PhoneNumberTextField extends StatelessWidget {
                   .translate("addYourMarketPhoneNumber"),
               // labelStyle: TextStyle(
               //   color: _phoneNumberFieldNode.hasFocus
-              //       ? Theme.of(context).accentColor
+              //       ? Theme.of(context).colorScheme.secondary
               //       : Colors.blue,
               // ),
               enabledBorder: OutlineInputBorder(
@@ -780,7 +780,7 @@ class PhoneNumberTextField extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4.0)),
                 borderSide: BorderSide(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
               // enabledBorder: OutlineInputBorder(
@@ -842,7 +842,7 @@ class EmailTextField extends StatelessWidget {
               AppLocalizations.of(context).translate("addYourMarketEmail"),
           // labelStyle: TextStyle(
           //   color: _emailFieldNode.hasFocus
-          //       ? Theme.of(context).accentColor
+          //       ? Theme.of(context).colorScheme.secondary
           //       : Colors.blue,
           // ),
           enabledBorder: OutlineInputBorder(
@@ -852,7 +852,7 @@ class EmailTextField extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(4.0)),
             borderSide: BorderSide(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           // enabledBorder: OutlineInputBorder(
