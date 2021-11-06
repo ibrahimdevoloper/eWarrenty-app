@@ -80,6 +80,7 @@ class MyApp extends StatelessWidget {
                 AppLocalizations.delegate,
                 // Built-in localization of basic text for Material widgets
                 GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
                 // Built-in localization for text direction LTR/RTL
                 GlobalWidgetsLocalizations.delegate,
               ],
