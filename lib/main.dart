@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ewarrenty/Providers/LangProvider.dart';
 import 'package:ewarrenty/helpers/PrefKeys.dart';
 import 'package:ewarrenty/pages/ChooseLanguagePage.dart';
@@ -6,6 +8,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +55,21 @@ class MyApp extends StatelessWidget {
           // FirebaseApp _firebaseApp = snapshot.data[1];
           FlutterError.onError =
               FirebaseCrashlytics.instance.recordFlutterError;
-          // FirebaseMessaging messaging = FirebaseMessaging.instance;
+          FirebaseMessaging messaging = FirebaseMessaging.instance;
+          if(Platform.isIOS){
+            messaging.requestPermission(alert: true,sound: true,provisional: true,announcement: false,badge: false,carPlay: false,criticalAlert: false,).then((settings){
+              if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+                print('User granted permission');
+                FirebaseAnalytics().logEvent(name: "iOS User granted permission",);
+              } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+                print('User granted provisional permission');
+                FirebaseAnalytics().logEvent(name: "User granted provisional permission",);
+              } else {
+                print('User declined or has not accepted permission');
+                FirebaseAnalytics().logEvent(name: "User declined or has not accepted permission",);
+              }
+            });
+          }
           final ThemeData theme = ThemeData();
           return Consumer<LangProvider>(builder: (context, provider, _) {
             provider.prefs = _pref;
@@ -142,6 +159,7 @@ class MyApp extends StatelessWidget {
                 AppLocalizations.delegate,
                 // Built-in localization of basic text for Material widgets
                 GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
                 // Built-in localization for text direction LTR/RTL
                 GlobalWidgetsLocalizations.delegate,
               ],
